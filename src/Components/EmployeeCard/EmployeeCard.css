@@ -1,0 +1,35 @@
+.employeeCard {
+  padding: 1rem;
+  border: 1px solid black;
+  width: 350px;
+}
+
+.employeeCard button {
+  border: 1px solid black;
+  padding: 0.5rem;
+  display: block;
+  justify-self: end;
+
+  color: white;
+}
+
+.emName {
+  font-weight: var(--bold);
+  font-size: 1.2rem;
+  text-align: left;
+}
+
+.frame {
+  width: 100%;
+  height: 200px;
+  border: 1px solid var(--mainColor);
+  margin: 0 0 1rem;
+}
+
+.yay {
+  background-color: green;
+}
+
+.aww {
+  background-color: rgb(199, 15, 15);
+}

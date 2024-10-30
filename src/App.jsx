@@ -1,13 +1,18 @@
-import './App.css'
+import './App.css';
+import EmployeeList from './Components/EmployeeList/EmployeeList';
+import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-    <h1>Employee Manager App</h1>
+      <Header />
+      <main>
+        <EmployeeList />
+      </main>
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
