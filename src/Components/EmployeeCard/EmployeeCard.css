@@ -1,15 +1,25 @@
 .employeeCard {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   padding: 1rem;
-  width: 350px;
+  max-width: 270px;
   filter: drop-shadow(4px 7px 20px rgba(0, 0, 0, 0.1));
   border-radius: 5px;
   background-color: white;
+  flex: 1 1 240px;
+}
+
+.employeeCard button {
+  color: white;
+  font-weight: bold;
+  margin: 1rem auto;
+}
+
+.employeeCard .title {
+  display: flex;
 }
 
 .emDetails {
-  flex: 100%;
   margin: 0 0 1rem;
 }
 
@@ -23,26 +33,25 @@
   width: 100%;
   height: 200px;
   border: 1px solid var(--subtle);
-  margin: 0 0 1rem;
+  margin: 0.5rem 0 1rem;
   position: relative;
 }
 
+.frame svg {
+  width: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 #changeRole {
-  font-weight: bold;
-  color: white;
-  margin: 0 0 0 auto;
+  margin: auto 0 auto auto;
+  height: fit-content;
 }
-
-.yay {
-  background-color: green;
-}
-
 .aww {
   background-color: rgb(199, 15, 15);
 }
 
-.star {
-  position: absolute;
-  right: 10px;
-  top: 10px;
+.error {
+  color: rgb(199, 15, 15);
 }

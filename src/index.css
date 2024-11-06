@@ -12,8 +12,7 @@
   font-size: 18px;
 
   --mainColor: #33333d;
-  --secondaryColor: #494985;
-  --light: #7f98d2;
+  --accent: #45456d;
   --subtle: #adadad;
 
   --light: 300;
@@ -25,6 +24,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-family: 'Roboto Condensed', sans-serif;
+  font-size: 16px;
   color: var(--mainColor);
   background-color: aliceblue;
   width: 80%;
@@ -32,14 +32,14 @@ body {
 }
 
 main {
-  min-height: calc(100vh - 5rem);
+  min-height: calc(100vh - 7rem);
 }
 
 button {
   border: none;
   border-radius: 5px;
-  background-color: #c1c1db;
-  padding: 0.5rem;
+  background-color: var(--accent);
+  padding: 0.3rem;
 
   &:hover {
     cursor: pointer;

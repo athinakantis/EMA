@@ -13,14 +13,16 @@ function App() {
 
   return (
     <>
-      <Header logOut={handleClick}/>
+      <Header handleClick={handleClick}/>
       <main>
         {isLoggedIn ? (
           <>
           <EmployeeList />
           </>
         ) : (
-          <button onClick={handleClick}>Log in</button>
+          <div id="logInPage">
+          <button id='logInBtn' onClick={handleClick}>Log in</button>
+          </div>
         )}
       </main>
       <Footer />

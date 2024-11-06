@@ -19,32 +19,47 @@ function EmployeeCard(props) {
 
   function changeRole() {
     if (role === 'Team Lead') {
-      props.setTeamLead('')
-      setRole(props.role)
+      props.setTeamLead('');
+      setRole(props.role);
     } else if (props.teamLead && role !== 'Team Lead') {
-      setMsg(`${props.teamLead} is currently team leader`);
+      setMsg(`Error: ${props.teamLead} is currently team leader`);
+      setTimeout(() => setMsg(''), 3000);
     } else if (!props.teamLead && role !== 'Team Lead') {
       props.setTeamLead(`${props.firstName} ${props.lastName}`);
-      setRole('Team Lead')
+      setRole('Team Lead');
     }
   }
 
   return (
     <div className='employeeCard'>
-      <p className='emName'>
-        {props.firstName} {props.lastName}
-      </p>
+      <div className='title'>
+        <p className='emName'>
+          {props.firstName} {props.lastName}
+        </p>
+        <button
+          id='changeRole'
+          onClick={changeRole}
+          type='button'
+          className={role === props.role ? 'yay' : 'aww'}
+        >
+          {role === props.role ? 'Promote' : 'Demote'}
+        </button>
+      </div>
       <div className='frame'>
         {role === 'Team Lead' && (
           <svg
-            className='star'
             xmlns='http://www.w3.org/2000/svg'
-            height='32px'
-            viewBox='0 -960 960 960'
-            width='32px'
-            fill='#000'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth={1.5}
+            stroke='currentColor'
+            className='size-6'
           >
-            <path d='m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z' />
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              d='M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z'
+            />
           </svg>
         )}
       </div>
@@ -54,25 +69,17 @@ function EmployeeCard(props) {
         <p>Salary: ${props.salary}</p>
         <p>Location: {props.location}</p>
         <p>
-          Employed for{' '}
+          Employed for 
           {yearsEmployed > 1
-            ? `${yearsEmployed} years`
+            ? ` ${yearsEmployed} years`
             : yearsEmployed === 1
-            ? `${yearsEmployed} year`
-            : yearsEmployed < 1 && `${monthsEmployed} months`}
+            ? ` ${yearsEmployed} year`
+            : yearsEmployed < 1 && ` ${monthsEmployed} months`}
         </p>
       </div>
-      {msg && <p>{msg}</p>}
+      {msg && <p className='error'>{msg}</p>}
       {milestone && <button>Schedule recognition meeting</button>}
       {monthsEmployed < 6 && <button>Schedule probation review</button>}
-      <button
-        id='changeRole'
-        onClick={changeRole}
-        type='button'
-        className={role === props.role ? 'yay' : 'aww'}
-      >
-        {role === props.role ? 'Promote' : 'Demote'}
-      </button>
     </div>
   );
 }
