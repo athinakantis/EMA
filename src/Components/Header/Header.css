@@ -13,4 +13,5 @@ header button {
   width: 40px;
   height: 40px;
   fill: black;
+  position: relative;
 }

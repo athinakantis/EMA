@@ -1,11 +1,13 @@
 import './Header.css';
 import '../../assets/Logo.svg';
+
 function Header(props) {
+
   return (
     <header>
       <img src='../../src/assets/Logo.png' alt='Image of WorkWave logo' />
 
-      <button onClick={props.logOut}>
+      <button onClick={props.handleClick}>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           height='40px'
