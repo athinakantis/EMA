@@ -1,4 +1,7 @@
 #employeeList {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
+  margin: 4rem 0;
+  justify-content: center;
 }

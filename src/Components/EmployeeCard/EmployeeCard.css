@@ -1,16 +1,26 @@
 .employeeCard {
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
-  border: 1px solid black;
-  width: 350px;
+  max-width: 270px;
+  filter: drop-shadow(4px 7px 20px rgba(0, 0, 0, 0.1));
+  border-radius: 5px;
+  background-color: white;
+  flex: 1 1 240px;
 }
 
 .employeeCard button {
-  border: 1px solid black;
-  padding: 0.5rem;
-  display: block;
-  justify-self: end;
-
   color: white;
+  font-weight: bold;
+  margin: 1rem auto;
+}
+
+.employeeCard .title {
+  display: flex;
+}
+
+.emDetails {
+  margin: 0 0 1rem;
 }
 
 .emName {
@@ -22,14 +32,26 @@
 .frame {
   width: 100%;
   height: 200px;
-  border: 1px solid var(--mainColor);
-  margin: 0 0 1rem;
+  border: 1px solid var(--subtle);
+  margin: 0.5rem 0 1rem;
+  position: relative;
 }
 
-.yay {
-  background-color: green;
+.frame svg {
+  width: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
+#changeRole {
+  margin: auto 0 auto auto;
+  height: fit-content;
+}
 .aww {
   background-color: rgb(199, 15, 15);
+}
+
+.error {
+  color: rgb(199, 15, 15);
 }
