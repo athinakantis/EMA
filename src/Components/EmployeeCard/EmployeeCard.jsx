@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './EmployeeCard.css';
 
 function EmployeeCard(props) {
-  const [role, setRole] = useState(props.initialRole);
+  const [role, setRole] = useState(props.role);
   const [msg, setMsg] = useState('');
   const currentDate = new Date();
   const startDate = new Date(props.startDate);
@@ -13,12 +13,20 @@ function EmployeeCard(props) {
     monthsEmployed = currentDate.getMonth() - startDate.getMonth();
   }
 
-  if (yearsEmployed === 5 || yearsEmployed === 10 || yearsEmployed === 15) {
+  if (yearsEmployed % 5 === 0 && yearsEmployed !== 0) {
     milestone = true;
   }
 
   function changeRole() {
-    role === 'Team Lead' ? setRole(props.initialRole) : setRole('Team Lead');
+    if (role === 'Team Lead') {
+      props.setTeamLead('')
+      setRole(props.role)
+    } else if (props.teamLead && role !== 'Team Lead') {
+      setMsg(`${props.teamLead} is currently team leader`);
+    } else if (!props.teamLead && role !== 'Team Lead') {
+      props.setTeamLead(`${props.firstName} ${props.lastName}`);
+      setRole('Team Lead')
+    }
   }
 
   return (
@@ -61,9 +69,9 @@ function EmployeeCard(props) {
         id='changeRole'
         onClick={changeRole}
         type='button'
-        className={role === props.initialRole ? 'yay' : 'aww'}
+        className={role === props.role ? 'yay' : 'aww'}
       >
-        {role === props.initialRole ? 'Promote' : 'Demote'}
+        {role === props.role ? 'Promote' : 'Demote'}
       </button>
     </div>
   );
