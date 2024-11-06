@@ -112,11 +112,13 @@ function EmployeeList() {
       {employees.map((employee) => {
         return (
           <EmployeeCard
-            fullName={employee.fullName}
+            firstName={employee.firstName}
+            lastName={employee.lastName}
             initialRole={employee.role}
             department={employee.department}
             salary={employee.salary}
             location={employee.location}
+            startDate={employee.startDate}
             key={`employee-${employee.id}`}
           />
         );
