@@ -5,7 +5,7 @@ function Header(props) {
 
   return (
     <header>
-      <img src='../../src/assets/Logo.png' alt='Image of WorkWave logo' />
+      <img src='../../src/assets/Logo.svg' alt='Image of WorkWave logo' />
 
       <button onClick={props.handleClick}>
         <svg
