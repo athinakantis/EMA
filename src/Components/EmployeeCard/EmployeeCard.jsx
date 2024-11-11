@@ -2,7 +2,9 @@ import { useState } from 'react';
 import './EmployeeCard.css';
 
 function EmployeeCard(props) {
-  const [role, setRole] = useState(props.role);
+  const {initialRole, teamLead, firstName, lastName, department, salary, location, setTeamLead} = props;
+
+  const [role, setRole] = useState(initialRole);
   const [msg, setMsg] = useState('');
   const currentDate = new Date();
   const startDate = new Date(props.startDate);
@@ -19,13 +21,13 @@ function EmployeeCard(props) {
 
   function changeRole() {
     if (role === 'Team Lead') {
-      props.setTeamLead('');
-      setRole(props.role);
-    } else if (props.teamLead && role !== 'Team Lead') {
+      setTeamLead('');
+      setRole(initialRole);
+    } else if (teamLead && role !== 'Team Lead') {
       setMsg(`Error: ${props.teamLead} is currently team leader`);
       setTimeout(() => setMsg(''), 3000);
-    } else if (!props.teamLead && role !== 'Team Lead') {
-      props.setTeamLead(`${props.firstName} ${props.lastName}`);
+    } else if (!teamLead && role !== 'Team Lead') {
+      setTeamLead(`${firstName} ${lastName}`);
       setRole('Team Lead');
     }
   }
@@ -34,18 +36,19 @@ function EmployeeCard(props) {
     <div className='employeeCard'>
       <div className='title'>
         <p className='emName'>
-          {props.firstName} {props.lastName}
+          {firstName} {lastName}
         </p>
         <button
           id='changeRole'
           onClick={changeRole}
           type='button'
-          className={role === props.role ? 'yay' : 'aww'}
+          className={role === initialRole ? 'yay' : 'aww'}
         >
-          {role === props.role ? 'Promote' : 'Demote'}
+          {role === initialRole ? 'Promote' : 'Demote'}
         </button>
       </div>
       <div className='frame'>
+        <img src={`https://robohash.org/${firstName}.png?set=set5&size=150x150`}></img>
         {role === 'Team Lead' && (
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -65,9 +68,9 @@ function EmployeeCard(props) {
       </div>
       <div className='emDetails'>
         <p>{role}</p>
-        <p>Department: {props.department}</p>
-        <p>Salary: ${props.salary}</p>
-        <p>Location: {props.location}</p>
+        <p>Department: {department}</p>
+        <p>Salary: ${salary}</p>
+        <p>Location: {location}</p>
         <p>
           Employed for 
           {yearsEmployed > 1
