@@ -8,7 +8,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   function handleClick() {
-    setIsLoggedIn(!isLoggedIn);
+    setIsLoggedIn(prev => !prev);
   }
 
   return (
