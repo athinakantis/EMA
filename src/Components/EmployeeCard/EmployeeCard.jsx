@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './EmployeeCard.css';
 import Button from '../Button';
+import { calcMonthsWorked, calcYearsWorked } from '../../utils/calcTimeWorked';
 
 function EmployeeCard(props) {
     const {
@@ -10,6 +11,7 @@ function EmployeeCard(props) {
         lastName,
         department,
         salary,
+        startDate,
         location,
         setTeamLead,
         handleClick,
@@ -18,18 +20,14 @@ function EmployeeCard(props) {
 
     const [role, setRole] = useState(initialRole);
     const [msg, setMsg] = useState('');
-    const currentDate = new Date();
-    const startDate = new Date(props.startDate);
+    const [edit, setEdit] = useState(false)
 
-    let yearsEmployed = currentDate.getFullYear() - startDate.getFullYear();
-    let monthsEmployed, milestone;
-    if (yearsEmployed === 0) {
-        monthsEmployed = currentDate.getMonth() - startDate.getMonth();
+    let monthsEmployed;
+    let yearsEmployed = calcYearsWorked(startDate);
+    if (yearsEmployed < 1) {
+        monthsEmployed = calcMonthsWorked(startDate)
     }
-
-    if (yearsEmployed % 5 === 0 && yearsEmployed !== 0) {
-        milestone = true;
-    }
+    
 
     function changeRole() {
         if (role === 'Team Lead') {
@@ -96,10 +94,10 @@ function EmployeeCard(props) {
                 </p>
             </div>
             {msg && <p className='error'>{msg}</p>}
-            {milestone && <button>Schedule recognition meeting</button>}
+            {yearsEmployed % 5 === 0 && <button>Schedule recognition meeting</button>}
             {monthsEmployed < 6 && <button>Schedule probation review</button>}
 
-            <Button text='Edit' handleClick={handleClick} />
+            <Button text={edit ? 'Save' : 'Edit'} handleClick={handleClick} />
         </div>
     );
 }
