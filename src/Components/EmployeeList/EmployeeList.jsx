@@ -2,7 +2,7 @@ import { useState } from 'react';
 import EmployeeCard from '../EmployeeCard/EmployeeCard';
 import './EmployeeList.css';
 
-function EmployeeList() {
+function EmployeeList({handleClick}) {
   const [teamLead, setTeamLead] = useState('');
   const employees = [
     {
@@ -126,6 +126,7 @@ function EmployeeList() {
             {...employee}
             teamLead={teamLead}
             setTeamLead={setTeamLead}
+            handleClick={() => handleClick(employee.id)}
           />
         );
       })}
