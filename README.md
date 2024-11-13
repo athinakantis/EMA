@@ -2,8 +2,11 @@
 
 ## Features
 
-- Promotion and demotion option of employees
-- List rendering
+-   Promotion and demotion option of employees
+-   List rendering
+-   Login option
+-   Edit employee option
+-   Employees are sorted by department in alphabetical order
 
 ## How To Use It
 
@@ -19,27 +22,27 @@ Finally launch the application by running
 
 ## Technologies Used
 
-- React
-- HTML
-- JS
-- CSS
+-   React
+-   HTML
+-   JS
+-   CSS
 
 ## What I've practiced and learnt
 
-- Conditonal rendering
-- useState hooks
+-   Conditonal rendering
+-   useState hooks
 
 I was today years old when I realised that I need to use the return keyword when rendering a list that spans multiple lines, aka that is wrapped in the curly brackets.
 
 ```js
 {
-  employees.map((employee) => {
-    return (
-      <div>
-        <p>{employee.fullName}</p>
-      </div>
-    );
-  });
+    employees.map((employee) => {
+        return (
+            <div>
+                <p>{employee.fullName}</p>
+            </div>
+        );
+    });
 }
 ```
 
