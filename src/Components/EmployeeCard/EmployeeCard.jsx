@@ -6,14 +6,14 @@ import { calcMonthsWorked, calcYearsWorked } from '../../utils/calcTimeWorked';
 function EmployeeCard(props) {
     const {
         initialRole,
-        teamLead,
         firstName,
         lastName,
         department,
         salary,
         startDate,
         location,
-        setTeamLead,
+        dept,
+        setDept,
         employmentType,
     } = props;
 
@@ -32,16 +32,16 @@ function EmployeeCard(props) {
         monthsEmployed = calcMonthsWorked(startDate);
     }
 
-    function changeRole() {
+    function handleRoleChange() {
         if (role === 'Team Lead') {
-            setTeamLead('');
+            setDept({ ...dept, [person.department]: '' });
             setRole(initialRole);
-        } else if (teamLead && role !== 'Team Lead') {
-            setMsg(`Error: ${teamLead} is currently team leader`);
+        } else if (dept[person.department]) {
+            setMsg(`Error: ${dept[person.department]} is currently team leader`);
             setTimeout(() => setMsg(''), 3000);
-        } else if (!teamLead && role !== 'Team Lead') {
+        } else if (!dept[person.department] && role !== 'Team Lead') {
             setMsg('');
-            setTeamLead(`${firstName} ${lastName}`);
+            setDept({ ...dept, [person.department]: `${firstName} ${lastName}` });
             setRole('Team Lead');
         }
     }
@@ -82,10 +82,10 @@ function EmployeeCard(props) {
                     <Button
                         role='secondary'
                         id='changeRole'
-                        handleClick={changeRole}
+                        handleClick={handleRoleChange}
                         type='button'
                         text={role === initialRole ? 'Promote' : 'Demote'}
-                        classes={role !== initialRole && 'demote'}
+                        classes={role !== initialRole ? 'demote' : undefined}
                     />
                 </div>
             </div>
@@ -130,9 +130,13 @@ function EmployeeCard(props) {
             </div>
             {msg && <p className='error'>{msg}</p>}
             {yearsEmployed % 5 === 0 && yearsEmployed > 1 && (
-                <button className='schedule'>Schedule recognition meeting</button>
+                <button className='schedule'>
+                    Schedule recognition meeting
+                </button>
             )}
-            {monthsEmployed < 6 && <button className='schedule'>Schedule probation review</button>}
+            {monthsEmployed < 6 && (
+                <button className='schedule'>Schedule probation review</button>
+            )}
         </div>
     );
 }

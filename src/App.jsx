@@ -12,17 +12,13 @@ function App() {
     setIsLoggedIn(prev => !prev);
   }
 
-  function handleClick(id) {
-    console.log('I was clicked', id);
-  }
-
   return (
     <>
       <Header handleClick={toggleLogin}/>
       <main>
         {isLoggedIn ? (
           <>
-          <EmployeeList handleClick={(id) => handleClick(id)}/>
+          <EmployeeList/>
           </>
         ) : (
           <div id="logInPage">

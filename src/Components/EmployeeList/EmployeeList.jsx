@@ -5,10 +5,15 @@ import employees from '../../data/employees';
 import Filter from '../Filter/Filter';
 
 function EmployeeList({ handleClick }) {
-    const [teamLead, setTeamLead] = useState('');
     const [sortedEmployees, setSortedEmployees] = useState(
         employees.sort((a, b) => a.department.localeCompare(b.department))
     );
+    const [dept, setDept] = useState({
+        IT: '',
+        Marketing: '',
+        Admin: '',
+        Finance: ''
+    })
 
     return (
         <>
@@ -24,9 +29,8 @@ function EmployeeList({ handleClick }) {
                         <EmployeeCard
                             key={`employee-${employee.id}`}
                             {...employee}
-                            teamLead={teamLead}
-                            setTeamLead={setTeamLead}
-                            handleClick={() => handleClick(employee.id)}
+                            setDept={setDept}
+                            dept={dept}
                         />
                     );
                 })}

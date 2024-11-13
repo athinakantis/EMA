@@ -2,12 +2,12 @@
 
 ## Features
 
--   Promotion and demotion option of employees
 -   List rendering
 -   Login option
--   Edit employee option
+-   Possibility to edit employee location, salary and department
 -   Employees are sorted by department in alphabetical order
 -   Options to sort by department, salary or location
+-   Option to promote one member of each department to teamleader
 
 ## How To Use It
 
