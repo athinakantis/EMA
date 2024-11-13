@@ -1,13 +1,13 @@
 import './Header.css';
 import '../../assets/Logo.svg';
 
-function Header(props) {
+function Header({handleClick}) {
 
   return (
     <header>
       <img src='../../src/assets/Logo.svg' alt='Image of WorkWave logo' />
 
-      <button onClick={props.handleClick}>
+      <button onClick={handleClick}>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           height='40px'

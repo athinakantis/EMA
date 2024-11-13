@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './EmployeeCard.css';
-import Button from '../Button/Button';
+import Button from '../CustomComponents/Button/Button';
 import { calcMonthsWorked, calcYearsWorked } from '../../utils/calcTimeWorked';
 
 function EmployeeCard(props) {
@@ -68,19 +68,26 @@ function EmployeeCard(props) {
     }
 
     return (
-        <div className={`employeeCard ${person.department}`}>
+        <div className={`employeeCard ${person.department} ${edit}`}>
             <div className='title'>
                 <p className='emName'>
                     {firstName} {lastName}
                 </p>
-                <button
-                    id='changeRole'
-                    onClick={changeRole}
-                    type='button'
-                    className={role === initialRole ? 'yay' : 'aww'}
-                >
-                    {role === initialRole ? 'Promote' : 'Demote'}
-                </button>
+                <div className='emOptions'>
+                    <Button
+                        role='secondary'
+                        text={edit ? 'Save' : 'Edit'}
+                        handleClick={() => setEdit((prev) => !prev)}
+                    />
+                    <Button
+                        role='secondary'
+                        id='changeRole'
+                        handleClick={changeRole}
+                        type='button'
+                        text={role === initialRole ? 'Promote' : 'Demote'}
+                        classes={role !== initialRole && 'demote'}
+                    />
+                </div>
             </div>
             <div className='frame'>
                 <img
@@ -122,16 +129,10 @@ function EmployeeCard(props) {
                 </p>
             </div>
             {msg && <p className='error'>{msg}</p>}
-            {yearsEmployed % 5 === 0 && (
-                <button>Schedule recognition meeting</button>
+            {yearsEmployed % 5 === 0 && yearsEmployed > 1 && (
+                <button className='schedule'>Schedule recognition meeting</button>
             )}
-            {monthsEmployed < 6 && <button>Schedule probation review</button>}
-
-            <Button
-                role='secondary'
-                text={edit ? 'Save' : 'Edit'}
-                handleClick={() => setEdit((prev) => !prev)}
-            />
+            {monthsEmployed < 6 && <button className='schedule'>Schedule probation review</button>}
         </div>
     );
 }

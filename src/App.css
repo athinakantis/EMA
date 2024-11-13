@@ -11,11 +11,13 @@
 }
 
 input,
-button {
+button,
+select {
     font-size: inherit;
     font-family: inherit;
 }
 
 button {
     padding: 0.3rem 1rem;
+    background-color: var(--mainColor);
 }
