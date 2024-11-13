@@ -9,7 +9,7 @@ const options = {
     },
     salary: {
         id: 2,
-        data: ['Highest to lowest', 'Lowest to highest']
+        data: ['Descending: Highest to lowest', 'Ascending: Lowest to highest']
     }
 }
 
