@@ -2,7 +2,7 @@ import { useState } from 'react';
 import EmployeeCard from '../EmployeeCard/EmployeeCard';
 import './EmployeeList.css';
 import employees from '../../data/employees';
-import Filter from '../../FilterEmployee/Filter';
+import Filter from '../Filter/Filter';
 
 function EmployeeList({ handleClick }) {
     const [teamLead, setTeamLead] = useState('');
@@ -11,23 +11,27 @@ function EmployeeList({ handleClick }) {
     );
 
     return (
-        <section id='employeeList'>
-            <Filter
-                employees={employees}
-                setSortedEmployees={setSortedEmployees}
-            />
-            {sortedEmployees.map((employee) => {
-                return (
-                    <EmployeeCard
-                        key={`employee-${employee.id}`}
-                        {...employee}
-                        teamLead={teamLead}
-                        setTeamLead={setTeamLead}
-                        handleClick={() => handleClick(employee.id)}
-                    />
-                );
-            })}
-        </section>
+        <>
+            <div className='options'>
+                <Filter
+                    employees={employees}
+                    setSortedEmployees={setSortedEmployees}
+                />
+            </div>
+            <section id='employeeList'>
+                {sortedEmployees.map((employee) => {
+                    return (
+                        <EmployeeCard
+                            key={`employee-${employee.id}`}
+                            {...employee}
+                            teamLead={teamLead}
+                            setTeamLead={setTeamLead}
+                            handleClick={() => handleClick(employee.id)}
+                        />
+                    );
+                })}
+            </section>
+        </>
     );
 }
 
