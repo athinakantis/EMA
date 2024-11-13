@@ -1,0 +1,9 @@
+button[role='secondary'] {
+    background-color: white;
+    color: black;
+    border: 1px solid lightblue;
+}
+
+button.demote {
+    border: 1px solid red;
+}
