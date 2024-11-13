@@ -6,9 +6,11 @@ import employees from '../../data/employees';
 function EmployeeList({ handleClick }) {
     const [teamLead, setTeamLead] = useState('');
 
+    const sortedEmployees = employees.sort((a, b) => a.department.localeCompare(b.department))
+
     return (
         <section id='employeeList'>
-            {employees.map((employee) => {
+            {sortedEmployees.map((employee) => {
                 return (
                     <EmployeeCard
                         key={`employee-${employee.id}`}

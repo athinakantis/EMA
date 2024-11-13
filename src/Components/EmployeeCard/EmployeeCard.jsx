@@ -14,7 +14,6 @@ function EmployeeCard(props) {
         startDate,
         location,
         setTeamLead,
-        handleClick,
         employmentType,
     } = props;
 
@@ -50,7 +49,6 @@ function EmployeeCard(props) {
     function handleChange(e) {
         const { name, value } = e.target;
         setPerson((prev) => ({ ...prev, [name]: value }));
-        console.log(name, value)
     }
 
     function renderInput(field, value) {
@@ -70,7 +68,7 @@ function EmployeeCard(props) {
     }
 
     return (
-        <div className='employeeCard'>
+        <div className={`employeeCard ${person.department}`}>
             <div className='title'>
                 <p className='emName'>
                     {firstName} {lastName}

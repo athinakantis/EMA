@@ -12,7 +12,7 @@
 .employeeCard button {
     color: white;
     font-weight: bold;
-    margin: 1rem auto;
+    margin: 0.3rem auto;
 }
 
 .employeeCard .title {
@@ -30,6 +30,7 @@
 }
 
 .frame {
+    background-color: white;
     display: flex;
     align-items: end;
     justify-content: center;
@@ -38,6 +39,7 @@
     border: 1px solid var(--subtle);
     margin: 0.5rem 0 1rem;
     position: relative;
+    overflow: hidden;
 }
 
 .frame img {
@@ -61,4 +63,21 @@
 
 .error {
     color: rgb(199, 15, 15);
+}
+
+/* Department Styling */
+.Finance {
+    background-color: lightcyan;
+}
+
+.IT {
+    background-color: lightgoldenrodyellow;
+}
+
+.Admin {
+    background-color: silver;
+}
+
+.Marketing {
+    background-color: pink;
 }
