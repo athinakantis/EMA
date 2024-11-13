@@ -4,9 +4,13 @@
     padding: 1rem;
     max-width: 270px;
     filter: drop-shadow(4px 7px 20px rgba(0, 0, 0, 0.1));
-    border-radius: 5px;
+    border-radius: 3px;
     background-color: white;
     flex: 1 1 240px;
+}
+
+.employeeCard.true {
+    border: 1px solid rgba(110, 76, 196, 0.8);
 }
 
 .employeeCard button {
@@ -67,17 +71,17 @@
 
 /* Department Styling */
 .Finance {
-    background-color: lightcyan;
+    border: 1px solid pink;
 }
 
 .IT {
-    background-color: lightgoldenrodyellow;
+    border: 1px solid rgb(115, 115, 214);
 }
 
 .Admin {
-    background-color: silver;
+    border: 1px solid rgb(104, 179, 201);
 }
 
 .Marketing {
-    background-color: pink;
+    border: 1px solid rgb(130, 55, 129);
 }

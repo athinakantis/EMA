@@ -68,7 +68,7 @@ function EmployeeCard(props) {
     }
 
     return (
-        <div className={`employeeCard ${person.department}`}>
+        <div className={`employeeCard ${person.department} ${edit}`}>
             <div className='title'>
                 <p className='emName'>
                     {firstName} {lastName}

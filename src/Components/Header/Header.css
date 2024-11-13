@@ -1,17 +1,21 @@
 header {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem 0 0;
-  align-items: baseline;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0 0;
+    align-items: baseline;
 }
 
 header button {
-  background-color: transparent;
+    background-color: transparent;
+}
+
+header img {
+    width: 5rem;
 }
 
 #settingsBtn {
-  width: 40px;
-  height: 40px;
-  fill: black;
-  position: relative;
+    width: 40px;
+    height: 40px;
+    fill: black;
+    position: relative;
 }
