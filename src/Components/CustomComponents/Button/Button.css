@@ -2,6 +2,10 @@ button[role='secondary'] {
     background-color: white;
     color: black;
     border: 1px solid lightblue;
+
+    &:hover {
+        background-color: rgb(239, 245, 247);
+    }
 }
 
 button.demote {

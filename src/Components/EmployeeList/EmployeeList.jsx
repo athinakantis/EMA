@@ -4,11 +4,11 @@ import './EmployeeList.css';
 import employees from '../../data/employees';
 import Filter from '../Filter/Filter';
 
-function EmployeeList({ handleClick }) {
+function EmployeeList() {
     const [sortedEmployees, setSortedEmployees] = useState(
         employees.sort((a, b) => a.department.localeCompare(b.department))
     );
-    const [dept, setDept] = useState({
+    const [teamLeads, setTeamLeads] = useState({
         IT: '',
         Marketing: '',
         Admin: '',
@@ -29,8 +29,9 @@ function EmployeeList({ handleClick }) {
                         <EmployeeCard
                             key={`employee-${employee.id}`}
                             {...employee}
-                            setDept={setDept}
-                            dept={dept}
+                            setTeamLeads={setTeamLeads}
+                            teamLeads={teamLeads}
+                            employees={sortedEmployees}
                         />
                     );
                 })}

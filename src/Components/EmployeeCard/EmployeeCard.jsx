@@ -5,6 +5,7 @@ import { calcMonthsWorked, calcYearsWorked } from '../../utils/calcTimeWorked';
 
 function EmployeeCard(props) {
     const {
+        id,
         initialRole,
         firstName,
         lastName,
@@ -12,9 +13,10 @@ function EmployeeCard(props) {
         salary,
         startDate,
         location,
-        dept,
-        setDept,
+        teamLeads,
+        setTeamLeads,
         employmentType,
+        employees
     } = props;
 
     const [role, setRole] = useState(initialRole);
@@ -25,6 +27,7 @@ function EmployeeCard(props) {
         location: location,
         salary: salary,
     });
+    const deptTeamLead = teamLeads[person.department];
 
     let monthsEmployed;
     let yearsEmployed = calcYearsWorked(startDate);
@@ -33,15 +36,15 @@ function EmployeeCard(props) {
     }
 
     function handleRoleChange() {
-        if (role === 'Team Lead') {
-            setDept({ ...dept, [person.department]: '' });
+        if (deptTeamLead === id) {
+            setTeamLeads({ ...teamLeads, [person.department]: ''});
             setRole(initialRole);
-        } else if (dept[person.department]) {
-            setMsg(`Error: ${dept[person.department]} is currently team leader`);
+        } else if (deptTeamLead && deptTeamLead !== id) {
+            setMsg(`Error: ${employees.find(e => e.id === deptTeamLead).firstName} is currently team leader`);
             setTimeout(() => setMsg(''), 3000);
-        } else if (!dept[person.department] && role !== 'Team Lead') {
+        } else if (!deptTeamLead) {
             setMsg('');
-            setDept({ ...dept, [person.department]: `${firstName} ${lastName}` });
+            setTeamLeads({ ...teamLeads, [person.department]: id });
             setRole('Team Lead');
         }
     }
@@ -93,7 +96,7 @@ function EmployeeCard(props) {
                 <img
                     src={`https://robohash.org/${firstName}.png?set=set5&size=175x175`}
                 ></img>
-                {role === 'Team Lead' && (
+                {deptTeamLead === id  && (
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
                         fill='none'
