@@ -7,6 +7,7 @@
 -   Login option
 -   Edit employee option
 -   Employees are sorted by department in alphabetical order
+-   Options to sort by department, salary or location
 
 ## How To Use It
 
