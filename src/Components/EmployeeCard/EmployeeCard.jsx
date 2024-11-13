@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './EmployeeCard.css';
-import Button from '../Button';
+import Button from '../Button/Button';
 import { calcMonthsWorked, calcYearsWorked } from '../../utils/calcTimeWorked';
 
 function EmployeeCard(props) {
@@ -15,19 +15,23 @@ function EmployeeCard(props) {
         location,
         setTeamLead,
         handleClick,
-        employmentType
+        employmentType,
     } = props;
 
     const [role, setRole] = useState(initialRole);
     const [msg, setMsg] = useState('');
-    const [edit, setEdit] = useState(false)
+    const [edit, setEdit] = useState(false);
+    const [person, setPerson] = useState({
+        department: department,
+        location: location,
+        salary: salary,
+    });
 
     let monthsEmployed;
     let yearsEmployed = calcYearsWorked(startDate);
     if (yearsEmployed < 1) {
-        monthsEmployed = calcMonthsWorked(startDate)
+        monthsEmployed = calcMonthsWorked(startDate);
     }
-    
 
     function changeRole() {
         if (role === 'Team Lead') {
@@ -41,6 +45,28 @@ function EmployeeCard(props) {
             setTeamLead(`${firstName} ${lastName}`);
             setRole('Team Lead');
         }
+    }
+
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setPerson((prev) => ({ ...prev, [name]: value }));
+        console.log(name, value)
+    }
+
+    function renderInput(field, value) {
+        return edit ? (
+            <input
+                type='text'
+                name={field}
+                value={value}
+                onChange={(e) => handleChange(e)}
+            />
+        ) : (
+            <p className={field}>
+                {`${field[0].toUpperCase()}${field.substring(1)}: `}
+                {field === 'salary' ? `$${value}` : `${value}`}
+            </p>
+        );
     }
 
     return (
@@ -80,10 +106,14 @@ function EmployeeCard(props) {
                 )}
             </div>
             <div className='emDetails'>
-                <p>{employmentType} {role}</p>
-                <p>Department: {department}</p>
-                <p>Salary: €{salary}</p>
-                <p>Location: {location}</p>
+                <p>
+                    {employmentType} {role}
+                </p>
+
+                {renderInput('department', person.department)}
+                {renderInput('location', person.location)}
+                {renderInput('salary', person.salary)}
+
                 <p>
                     Employed for
                     {yearsEmployed > 1
@@ -94,10 +124,16 @@ function EmployeeCard(props) {
                 </p>
             </div>
             {msg && <p className='error'>{msg}</p>}
-            {yearsEmployed % 5 === 0 && <button>Schedule recognition meeting</button>}
+            {yearsEmployed % 5 === 0 && (
+                <button>Schedule recognition meeting</button>
+            )}
             {monthsEmployed < 6 && <button>Schedule probation review</button>}
 
-            <Button text={edit ? 'Save' : 'Edit'} handleClick={handleClick} />
+            <Button
+                role='secondary'
+                text={edit ? 'Save' : 'Edit'}
+                handleClick={() => setEdit((prev) => !prev)}
+            />
         </div>
     );
 }
