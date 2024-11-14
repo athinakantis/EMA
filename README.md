@@ -30,10 +30,7 @@ Finally launch the application by running
 
 ## What I've practiced and learnt
 
--   Conditonal rendering
--   useState hooks
-
-I was today years old when I realised that I need to use the return keyword when rendering a list that spans multiple lines, aka that is wrapped in the curly brackets.
+### Mapping, and when to return
 
 ```js
 {
@@ -47,4 +44,37 @@ I was today years old when I realised that I need to use the return keyword when
 }
 ```
 
-If only one element is returned, it is fine to exclude the return keyword.
+Alternatively:
+
+```js
+{
+    employees.map((employee) => (
+        <div>
+            <p>{employee.fullName}</p>
+            <p>{employee.department}</p>
+        </div>
+    ));
+}
+```
+
+If **only one element** is returned it is fine to exclude the return keyword.
+
+### useState with objects
+
+Althought somewhat familiar with it, this project really helped me practice the concept of using state with objects
+
+#### Initial object value
+
+```js
+const [person, setPerson] = useState({
+    name: 'John Doe',
+    age: 25,
+    isStudent: true,
+});
+```
+
+#### Updating properties
+
+```js
+setPerson({ ...prev, [isStudent]: false });
+```

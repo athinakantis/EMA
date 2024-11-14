@@ -16,7 +16,7 @@ function EmployeeCard(props) {
         teamLeads,
         setTeamLeads,
         employmentType,
-        employees
+        employees,
     } = props;
 
     const [role, setRole] = useState(initialRole);
@@ -37,10 +37,14 @@ function EmployeeCard(props) {
 
     function handleRoleChange() {
         if (deptTeamLead === id) {
-            setTeamLeads({ ...teamLeads, [person.department]: ''});
+            setTeamLeads({ ...teamLeads, [person.department]: '' });
             setRole(initialRole);
         } else if (deptTeamLead && deptTeamLead !== id) {
-            setMsg(`Error: ${employees.find(e => e.id === deptTeamLead).firstName} is currently team leader`);
+            setMsg(
+                `Error: ${
+                    employees.find((e) => e.id === deptTeamLead).firstName
+                } is currently team leader`
+            );
             setTimeout(() => setMsg(''), 3000);
         } else if (!deptTeamLead) {
             setMsg('');
@@ -56,22 +60,24 @@ function EmployeeCard(props) {
 
     function renderInput(field, value) {
         return edit ? (
-            <input
-                type='text'
-                name={field}
-                value={value}
-                onChange={(e) => handleChange(e)}
-            />
+            <>
+                <input
+                    type='text'
+                    name={field}
+                    value={value}
+                    onChange={(e) => handleChange(e)}
+                />
+            </>
         ) : (
-            <p className={field}>
-                {`${field[0].toUpperCase()}${field.substring(1)}: `}
-                {field === 'salary' ? `$${value}` : `${value}`}
-            </p>
+            <span>
+            {field === 'salary' ? `€${value}` : `${value}`}
+            </span> 
+
         );
     }
 
     return (
-        <div className={`employeeCard ${person.department} ${edit}`}>
+        <div className={`employeeCard ${person.department}`}>
             <div className='title'>
                 <p className='emName'>
                     {firstName} {lastName}
@@ -96,7 +102,7 @@ function EmployeeCard(props) {
                 <img
                     src={`https://robohash.org/${firstName}.png?set=set5&size=175x175`}
                 ></img>
-                {deptTeamLead === id  && (
+                {deptTeamLead === id && (
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
                         fill='none'
@@ -115,20 +121,25 @@ function EmployeeCard(props) {
             </div>
             <div className='emDetails'>
                 <p>
-                    {employmentType} {role}
+                    Role <span>{role}</span>
                 </p>
 
-                {renderInput('department', person.department)}
-                {renderInput('location', person.location)}
-                {renderInput('salary', person.salary)}
+                <p>Employment type <span>{employmentType}</span></p>
+
+                <p>Department {renderInput('department', person.department)}</p>
+                <p>Location {renderInput('location', person.location)}</p>
+                <p>Salary {renderInput('salary', person.salary)}</p>
 
                 <p>
-                    Employed for
+                    Time employed
+                    <span>
+
                     {yearsEmployed > 1
                         ? ` ${yearsEmployed} years`
                         : yearsEmployed === 1
                         ? ` ${yearsEmployed} year`
                         : yearsEmployed < 1 && ` ${monthsEmployed} months`}
+                        </span>
                 </p>
             </div>
             {msg && <p className='error'>{msg}</p>}
