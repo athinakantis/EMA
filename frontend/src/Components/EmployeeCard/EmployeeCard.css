@@ -7,6 +7,11 @@
     border-radius: 3px;
     background-color: white;
     flex: 1 1 300px;
+    transition: all 400ms;
+
+    &:hover {
+        filter: drop-shadow(4px 7px 20px rgba(81, 93, 144, 0.5));
+    }
 }
 
 .employeeCard.true {
@@ -15,14 +20,30 @@
 
 .schedule {
     color: white;
-    font-weight: bold;
+
     margin: 0 0 0.3rem;
     width: max-content;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
+
+    &:hover {
+        background-color: var(--accent);
+    }
 }
 
 .employeeCard .title {
     display: flex;
     justify-content: space-between;
+}
+
+.emOptions {
+    width: fit-content;
+    height: min-content;
+}
+
+.emOptions button {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
 }
 
 .emOptions :not(:last-child) {

@@ -3,10 +3,13 @@ import EmployeeList from './Components/EmployeeList/EmployeeList';
 import Header from './Components/Header/Header';
 import Button from './Components/CustomComponents/Button/Button';
 import Footer from './Components/Footer/Footer';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [employees, setEmployees] = useState([]);
 
   function toggleLogin() {
     setIsLoggedIn(prev => !prev);

@@ -1,19 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import EmployeeCard from '../EmployeeCard/EmployeeCard';
 import './EmployeeList.css';
 import employees from '../../data/employees';
 import Filter from '../Filter/Filter';
+import axios from 'axios';
 
 function EmployeeList() {
     const [sortedEmployees, setSortedEmployees] = useState(
         employees.sort((a, b) => a.department.localeCompare(b.department))
     );
+    const [test, setTest] = useState([])
+
     const [teamLeads, setTeamLeads] = useState({
         IT: '',
         Marketing: '',
         Admin: '',
-        Finance: ''
-    })
+        Finance: '',
+    });
+
+    useEffect(() => {
+        axios
+            .get(`${process.env.REACT_APP_API_URL}/employees`)
+            .then((response) => {
+                setTest(response.data);
+                console.log(response.data);
+            })
+            .catch((error) => console.error('Error fetching data: ', error));
+    });
 
     return (
         <>
@@ -24,7 +37,7 @@ function EmployeeList() {
                 />
             </div>
             <section id='employeeList'>
-                {sortedEmployees.map((employee) => {
+                {test.map((employee) => {
                     return (
                         <EmployeeCard
                             key={`employee-${employee.id}`}

@@ -10,4 +10,8 @@ button[role='secondary'] {
 
 button.demote {
     border: 1px solid red;
+
+    &:hover {
+        background-color: rgb(255, 248, 248);
+    }
 }
