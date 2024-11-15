@@ -18,7 +18,7 @@
     border: 1px solid rgba(110, 76, 196, 0.8);
 }
 
-.schedule {
+.employeeCard button {
     color: white;
 
     margin: 0 0 0.3rem;
@@ -36,18 +36,15 @@
     justify-content: space-between;
 }
 
-.emOptions {
-    width: fit-content;
-    height: min-content;
+.title button {
+    margin: 0;
+    display: inline-block;
 }
 
-.emOptions button {
+.employeeCard button {
+    width: fit-content;
     font-size: 0.8rem;
     padding: 0.2rem 0.5rem;
-}
-
-.emOptions :not(:last-child) {
-    margin: 0 0.3rem 0 0;
 }
 
 .emDetails {

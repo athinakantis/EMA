@@ -7,15 +7,15 @@ function EmployeeCard(props) {
     const {
         id,
         initialRole,
-        firstName,
-        lastName,
+        firstname,
+        lastname,
+        employment_type,
         department,
         salary,
-        startDate,
+        startdate,
         location,
         teamLeads,
         setTeamLeads,
-        employmentType,
         employees,
     } = props;
 
@@ -30,9 +30,9 @@ function EmployeeCard(props) {
     const deptTeamLead = teamLeads[person.department];
 
     let monthsEmployed;
-    let yearsEmployed = calcYearsWorked(startDate);
+    let yearsEmployed = calcYearsWorked(startdate);
     if (yearsEmployed < 1) {
-        monthsEmployed = calcMonthsWorked(startDate);
+        monthsEmployed = calcMonthsWorked(startdate);
     }
 
     function handleRoleChange() {
@@ -69,10 +69,7 @@ function EmployeeCard(props) {
                 />
             </>
         ) : (
-            <span>
-            {field === 'salary' ? `€${value}` : `${value}`}
-            </span> 
-
+            <span>{field === 'salary' ? `€${value}` : `${value}`}</span>
         );
     }
 
@@ -80,27 +77,17 @@ function EmployeeCard(props) {
         <div className={`employeeCard ${person.department}`}>
             <div className='title'>
                 <p className='emName'>
-                    {firstName} {lastName}
+                    {firstname} {lastname}
                 </p>
-                <div className='emOptions'>
-                    <Button
-                        role='secondary'
-                        text={edit ? 'Save' : 'Edit'}
-                        handleClick={() => setEdit((prev) => !prev)}
-                    />
-                    <Button
-                        role='secondary'
-                        id='changeRole'
-                        handleClick={handleRoleChange}
-                        type='button'
-                        text={role === initialRole ? 'Promote' : 'Demote'}
-                        classes={role !== initialRole ? 'demote' : undefined}
-                    />
-                </div>
+                <Button
+                    role='secondary'
+                    text={edit ? 'Save' : 'Edit'}
+                    handleClick={() => setEdit((prev) => !prev)}
+                />
             </div>
             <div className='frame'>
                 <img
-                    src={`https://robohash.org/${firstName}.png?set=set5&size=175x175`}
+                    src={`https://robohash.org/${firstname}.png?set=set5&size=175x175`}
                 ></img>
                 {deptTeamLead === id && (
                     <svg
@@ -124,7 +111,9 @@ function EmployeeCard(props) {
                     Role <span>{role}</span>
                 </p>
 
-                <p>Employment type <span>{employmentType}</span></p>
+                <p>
+                    Employment type <span>{employment_type}</span>
+                </p>
 
                 <p>Department {renderInput('department', person.department)}</p>
                 <p>Location {renderInput('location', person.location)}</p>
@@ -133,16 +122,23 @@ function EmployeeCard(props) {
                 <p>
                     Time employed
                     <span>
-
-                    {yearsEmployed > 1
-                        ? ` ${yearsEmployed} years`
-                        : yearsEmployed === 1
-                        ? ` ${yearsEmployed} year`
-                        : yearsEmployed < 1 && ` ${monthsEmployed} months`}
-                        </span>
+                        {yearsEmployed > 1
+                            ? ` ${yearsEmployed} years`
+                            : yearsEmployed === 1
+                            ? ` ${yearsEmployed} year`
+                            : yearsEmployed < 1 && ` ${monthsEmployed} months`}
+                    </span>
                 </p>
             </div>
             {msg && <p className='error'>{msg}</p>}
+            <Button
+                role='secondary'
+                id='changeRole'
+                handleClick={handleRoleChange}
+                type='button'
+                text={role === initialRole ? 'Promote' : 'Demote'}
+                classes={role !== initialRole ? 'demote' : undefined}
+            />
             {yearsEmployed % 5 === 0 && yearsEmployed > 1 && (
                 <button className='schedule'>
                     Schedule recognition meeting
