@@ -3,7 +3,8 @@ import EmployeeList from './Components/EmployeeList/EmployeeList';
 import Header from './Components/Header/Header';
 import Button from './Components/CustomComponents/Button/Button';
 import Footer from './Components/Footer/Footer';
-import { useState } from 'react';
+import React, { useState } from 'react';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
