@@ -10,7 +10,7 @@ function Filter({ employees, setSortedEmployees }) {
             setFilterGroup(e.target.value);
         } else {
             setFilterGroup('');
-            setSortedEmployees(employees.sort((a, b) => a.department.localeCompare(b.department)))
+            setSortedEmployees(employees.sort((a, b) => a.firstname.localeCompare(b.firstname)))
         }
     }
 

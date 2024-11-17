@@ -7,6 +7,7 @@ import axios from 'axios';
 
 function EmployeeList() {
     const [employees, setEmployees] = useState([])
+    const [sortedEmployees, setSortedEmployees] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     const [teamLeads, setTeamLeads] = useState({
@@ -18,26 +19,26 @@ function EmployeeList() {
 
     useEffect(() => {
         const fetchAPI = async () => {
-        try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/employees`);
-            setEmployees(response.data); // Set the fetched data
-            setIsLoading(false); // Set loading to false
-        } catch (error) {
-            console.error('Error fetching data: ', error);
-        }
-    };
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/employees`);
+                setEmployees(response.data); // Set the fetched data
+                setSortedEmployees(response.data.sort((a, b) => a.firstname.localeCompare(b.firstname)))
+                setIsLoading(false); // Set loading to false
+            } catch (error) {
+                console.error('Error fetching data: ', error);
+            }
+        };
 
-    fetchAPI(); // Call the async function
-
-        
+        fetchAPI(); // Call the async function
     }, []);
 
     return (
         <>
             <div className='options'>
             </div>
+            <Filter employees={employees} setSortedEmployees={setSortedEmployees} />
             <section id='employeeList'>
-                {Array.isArray(employees) && employees.map((employee) => {
+                {Array.isArray(sortedEmployees) && sortedEmployees.map((employee) => {
                     return (
                         <EmployeeCard
                             key={`employee-${employee.id}`}

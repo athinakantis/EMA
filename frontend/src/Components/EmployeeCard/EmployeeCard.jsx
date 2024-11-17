@@ -87,7 +87,7 @@ function EmployeeCard(props) {
             </div>
             <div className='frame'>
                 <img
-                    src={`https://robohash.org/${firstname}.png?set=set5&size=175x175`}
+                    src={`https://robohash.org/${firstname}${lastname}.png?set=set5&size=175x175`}
                 ></img>
                 {deptTeamLead === id && (
                     <svg

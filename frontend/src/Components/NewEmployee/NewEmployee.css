@@ -33,7 +33,7 @@
     border-bottom: 1px solid var(--subtle);
 }
 
-.newEmployeeCard button {
+.newEmployeeCard.edit button {
     margin: 1rem 0 0;
 
     &:hover {

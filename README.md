@@ -11,15 +11,20 @@
 
 ## How To Use It
 
-Clone the repository  
+1. Clone the repository  
 `git clone https://github.com/athinakantis/EMA.git`
 
-In the terminal, run npm install  
-This installs all the node modules needed to run the application  
+2. Navigate to the frontend directory and run  
+    `npm install`
+
+3. Navigate to the backend directory and run  
 `npm install`
 
-Finally launch the application by running  
-`npm run dev` in the terminal
+4. Navigate to the project root directory and run  
+`npm install`
+
+5. Finally, launch the application by running  
+`npm run dev` in the root directory
 
 ## Technologies Used
 
