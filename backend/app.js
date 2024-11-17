@@ -16,6 +16,8 @@ app.get('/', (req, res) => {
     res.send('Hello from the backend!');
 });
 
+
+
 const apiRoutes = require('./routes/api');
 app.use('/api', apiRoutes)
 

@@ -1,10 +1,11 @@
-.newEmployeeCard img {
+.newEmployeeCard.addNew img {
     width: 5rem;
 }
 
 .newEmployeeCard.addNew {
     align-items: center;
     text-align: center;
+    justify-content: center;
 }
 
 .addNew button {

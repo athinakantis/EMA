@@ -20,7 +20,7 @@ function EmployeeList() {
     useEffect(() => {
         const fetchAPI = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/employees`);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/employees`);
                 setEmployees(response.data); // Set the fetched data
                 setSortedEmployees(response.data.sort((a, b) => a.firstname.localeCompare(b.firstname)))
                 setIsLoading(false); // Set loading to false
