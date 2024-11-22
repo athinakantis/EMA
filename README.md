@@ -2,36 +2,36 @@
 
 ## Features
 
--   List rendering
--   Login option
--   Possibility to edit employee location, salary and department
--   Employees are sorted by department in alphabetical order
--   Options to sort by department, salary or location
--   Option to promote one member of each department to teamleader
+- List rendering
+- Login option
+- Possibility to edit employee location, salary and department
+- Employees are sorted by department in alphabetical order
+- Options to sort by department, salary or location
+- Option to promote one member of each department to teamleader
 
 ## How To Use It
 
 1. Clone the repository  
-`git clone https://github.com/athinakantis/EMA.git`
+   `git clone https://github.com/athinakantis/EMA.git`
 
 2. Navigate to the frontend directory and run  
-    `npm install`
+   `npm install`
 
 3. Navigate to the backend directory and run  
-`npm install`
+   `npm install`
 
 4. Navigate to the project root directory and run  
-`npm install`
+   `npm install`
 
 5. Finally, launch the application by running  
-`npm run dev` in the root directory
+   `npm run dev` in the root directory
 
 ## Technologies Used
 
--   React
--   HTML
--   JS
--   CSS
+- React
+- HTML
+- JS
+- CSS
 
 ## What I've practiced and learnt
 
@@ -39,13 +39,13 @@
 
 ```js
 {
-    employees.map((employee) => {
-        return (
-            <div>
-                <p>{employee.fullName}</p>
-            </div>
-        );
-    });
+  employees.map((employee) => {
+    return (
+      <div>
+        <p>{employee.fullName}</p>
+      </div>
+    );
+  });
 }
 ```
 
@@ -53,12 +53,12 @@ Alternatively:
 
 ```js
 {
-    employees.map((employee) => (
-        <div>
-            <p>{employee.fullName}</p>
-            <p>{employee.department}</p>
-        </div>
-    ));
+  employees.map((employee) => (
+    <div>
+      <p>{employee.fullName}</p>
+      <p>{employee.department}</p>
+    </div>
+  ));
 }
 ```
 
@@ -72,14 +72,20 @@ Althought somewhat familiar with it, this project really helped me practice the 
 
 ```js
 const [person, setPerson] = useState({
-    name: 'John Doe',
-    age: 25,
-    isStudent: true,
+  name: 'John Doe',
+  age: 25,
+  isStudent: true,
 });
 ```
 
 #### Updating properties
 
 ```js
-setPerson({ ...prev, [isStudent]: false });
+function handleChange(e) {
+  const { value, name } = e.target;
+  setPerson({ ...prev, [name]: value });
+}
 ```
+
+I've learnt to use destructuring with e.target for more readable code.  
+Also, that you do not need to explicitly pass the event object anymore.
