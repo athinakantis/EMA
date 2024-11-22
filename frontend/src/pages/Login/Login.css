@@ -1,0 +1,10 @@
+.logInBtn a {
+  text-decoration: none;
+  color: white;
+  margin: auto;
+}
+
+.logInBtn {
+  margin: auto;
+  display: block;
+}

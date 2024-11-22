@@ -14,7 +14,7 @@ function NewEmployee() {
         department: '',
         employment_type: '',
         location: '',
-        salary: 5000,
+        salary: null,
         startdate: currentDate
     })
 
@@ -33,7 +33,6 @@ function NewEmployee() {
     async function submitForm() {
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/add`, formData)
-            console.log('should be sent')
             console.log(response)
         } catch (error) {
             console.error(error)
