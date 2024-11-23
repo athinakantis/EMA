@@ -1,4 +1,5 @@
-.employeeCard, .newEmployeeCard {
+.employeeCard,
+.newEmployeeCard {
     display: flex;
     flex-direction: column;
     padding: 1.3rem 1rem;
@@ -24,7 +25,6 @@
     margin: 0 0 0.3rem;
     width: max-content;
     font-size: 0.8rem;
-    padding: 0.2rem 0.5rem;
 
     &:hover {
         background-color: var(--accent);
@@ -109,19 +109,35 @@
 
 /* Department Styling */
 .Finance {
-    border: 1px solid pink;
+    border: 1px solid rgb(255, 192, 203);
+
+    &:hover {
+        filter: drop-shadow(4px 7px 10px rgba(255, 192, 203, 1));
+    }
 }
 
 .IT {
     border: 1px solid rgb(155, 155, 235);
+
+    &:hover {
+        filter: drop-shadow(4px 7px 10px rgba(155, 155, 235, 1));
+    }
 }
 
 .Admin {
     border: 1px solid rgb(148, 192, 206);
+
+    &:hover {
+        filter: drop-shadow(4px 7px 10px rgba(148, 192, 206, 1));
+    }
 }
 
 .Marketing {
     border: 1px solid rgb(225, 170, 216);
+
+    &:hover {
+        filter: drop-shadow(4px 7px 10px rgba(225, 170, 216, 1));
+    }
 }
 
 .employeeCard input {

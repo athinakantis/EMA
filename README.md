@@ -5,8 +5,8 @@
 - List rendering
 - Login option
 - Possibility to edit employee location, salary and department
-- Employees are sorted by department in alphabetical order
-- Options to sort by department, salary or location
+- Employees are originally sorted in alphabetical order
+- Options to filter by department, location or salary
 - Option to promote one member of each department to teamleader
 
 ## How To Use It

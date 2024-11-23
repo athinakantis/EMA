@@ -1,7 +1,12 @@
+section {
+    width: 80%;
+    margin: 0 auto;
+}
+
 #employeeList {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin: 1rem 0;
-  justify-content: center;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+    justify-content: center;
 }

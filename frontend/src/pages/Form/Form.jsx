@@ -1,7 +1,11 @@
 import NewEmployee from '../../Components/NewEmployee/NewEmployee';
 
 function Form() {
-  return <NewEmployee />;
+  return (
+    <section id='addEmployee'>
+      <NewEmployee />
+    </section>
+  );
 }
 
 export default Form;

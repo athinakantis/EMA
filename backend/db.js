@@ -14,7 +14,7 @@ db.connect((error) => {
     if (error) {
         console.error(`Error connecting to the database: `, error.message)
     } else {
-        console.log('Connected to WorkWave database.')
+        console.log('Connected to staffOverflow database.')
     }
 });
 

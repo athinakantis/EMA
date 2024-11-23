@@ -5,6 +5,49 @@
 }
 
 .logInBtn {
-  margin: auto;
+  border-radius: 50px;
+  font-size: 1.5rem;
   display: block;
+  z-index: 3;
+
+  &:hover {
+    background-color: var(--dark);
+  }
+}
+
+#heroBanner h1 {
+  font-size: 2rem;
+  z-index: 2;
+  color: var(--accent);
+}
+
+#heroBanner h2 {
+  font-size: 3rem;
+  z-index: 2;
+  color: var(--accent);
+}
+
+#logInPage img {
+  width: 100%;
+}
+
+#heroBanner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('C:\Users\athin\Documents\Studies\React\WorkWave\frontend\public\annie-spratt-QckxruozjRg-unsplash_1920w.png');
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
+#heroBanner::after {
+  content: '';
+  display: block;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
