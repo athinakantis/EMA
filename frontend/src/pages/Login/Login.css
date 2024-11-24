@@ -1,53 +1,48 @@
-.logInBtn a {
-  text-decoration: none;
-  color: white;
-  margin: auto;
+#loginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.logInBtn {
-  border-radius: 50px;
-  font-size: 1.5rem;
-  display: block;
-  z-index: 3;
-
-  &:hover {
-    background-color: var(--dark);
-  }
+#loginContainer {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    padding: 2rem;
+    position: relative;
+    top: -170px;
+    border: 1px solid var(--subtle);
+    background-color: white;
+    border-radius: 15px;
 }
 
-#heroBanner h1 {
-  font-size: 2rem;
-  z-index: 2;
-  color: var(--accent);
+#logInPage h2 {
+    margin: 0 0 1rem;
 }
 
-#heroBanner h2 {
-  font-size: 3rem;
-  z-index: 2;
-  color: var(--accent);
+#logInPage input {
+    margin: 0 0 0.7rem;
+    text-align: end;
+    width: 200px;
 }
 
-#logInPage img {
-  width: 100%;
+#logInPage input:last-of-type {
+    margin: 0 0 0.7rem;
 }
 
-#heroBanner {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: url('C:\Users\athin\Documents\Studies\React\WorkWave\frontend\public\annie-spratt-QckxruozjRg-unsplash_1920w.png');
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
+#loginContainer div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
 }
 
-#heroBanner::after {
-  content: '';
-  display: block;
-  background-color: rgba(0, 0, 0, 0.5);
-  position: absolute;
-  width: 100%;
-  height: 100%;
+#logInPage a {
+    background-color: var(--mainColor);
+    width: fit-content;
+    padding: 0.3rem 0.5rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 0 0 0 auto;
 }
