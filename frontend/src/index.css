@@ -12,7 +12,7 @@
     font-size: 18px;
 
     --mainColor: #2a2a50;
-    --mainColorAccent: #383872;
+    --mainColorAccent: #8b8bbe;
     --dark: #212325;
     --accent: #f48023;
     --subtle: #ddddec;
@@ -20,6 +20,10 @@
     --light: 300;
     --medium: 500;
     --bold: 700;
+}
+
+#root {
+    min-height: 100vh;
 }
 
 body {
