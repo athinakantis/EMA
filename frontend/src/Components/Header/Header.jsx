@@ -1,5 +1,4 @@
 import './Header.css';
-import '../../assets/Logo.svg';
 import { Link } from 'react-router-dom';
 
 function Header() {
@@ -19,7 +18,7 @@ function Header() {
                         <Link to='/employees'>Employees</Link>
                     </li>
                     <li>
-                        <Link to='/new'>Add employee</Link>
+                        <Link to='/add'>Add employee</Link>
                     </li>
                     <li>
                         <Link to='/'>Log out</Link>
