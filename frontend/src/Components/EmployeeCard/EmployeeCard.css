@@ -103,10 +103,6 @@
     height: fit-content;
 }
 
-.error {
-    color: rgb(199, 15, 15);
-}
-
 /* Department Styling */
 .Finance {
     border: 1px solid rgb(255, 192, 203);

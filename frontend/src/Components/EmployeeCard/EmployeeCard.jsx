@@ -42,9 +42,7 @@ function EmployeeCard(props) {
         } else if (deptTeamLead && deptTeamLead !== id) {
             const teamLeader = employees.find((e) => e.id == deptTeamLead);
             setMsg(
-                `Error: ${
-                    teamLeader.firstname + ' ' + teamLeader.lastname
-                } is currently team leader`
+                `Error: ${teamLeader.firstname} ${teamLeader.lastname} is currently team leader`
             );
             setTimeout(() => setMsg(''), 3000);
         } else if (!deptTeamLead) {
