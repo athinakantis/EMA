@@ -6,25 +6,25 @@ import Form from '../pages/Form/Form';
 import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Root />,
-    errorElement: <Error />,
-    children: [
-      {
+    {
         path: '/',
-        element: <Login />,
-      },
-      {
-        path: '/employees',
-        element: <List />,
-      },
-      {
-        path: '/new',
-        element: <Form />,
-      },
-    ],
-  },
+        element: <Root />,
+        errorElement: <Error />,
+        children: [
+            {
+                path: '/',
+                element: <Login />,
+            },
+            {
+                path: '/employees',
+                element: <List />,
+            },
+            {
+                path: '/add',
+                element: <Form />,
+            },
+        ],
+    },
 ]);
 
 export default router;
