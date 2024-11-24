@@ -18,15 +18,26 @@
     margin: 0 0 0.6rem;
 }
 
-.newEmployeeCard form input {
+.newEmployeeCard form input,
+form select {
     border: none;
     background-color: ghostwhite;
     text-align: end;
+    margin: 0;
 
     width: 40%;
 
     &:focus {
         outline: 1px solid var(--subtle);
+    }
+}
+
+.newEmployeeCard option {
+    transition: background-color 300ms;
+    text-align: center;
+
+    &:hover {
+        background-color: var(--subtle);
     }
 }
 
