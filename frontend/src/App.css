@@ -17,8 +17,23 @@ select {
     font-family: inherit;
 }
 
+input {
+    padding: 0 0.3rem;
+    font-size: 0.8rem;
+}
+
 button {
     padding: 0.3rem 1rem;
     background-color: var(--mainColor);
     color: white;
+}
+
+a {
+    font-weight: 700;
+    text-underline-offset: 3px;
+}
+
+.error {
+    color: rgb(199, 15, 15);
+    font-weight: var(--bold);
 }
