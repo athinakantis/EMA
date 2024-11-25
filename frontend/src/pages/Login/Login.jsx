@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
 import './Login.css';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Button from '../../Components/CustomComponents/Button/Button';
 
 function Login({}) {
     const [user, setUser] = useState({});
+    const navigate = useNavigate();
 
     function handleUser(e) {
         const { username, password } = e.target;
@@ -36,7 +38,10 @@ function Login({}) {
                         />
                     </div>
                 </form>
-                <Link to='/employees'>Log in</Link>
+                <Button
+                    text='Login'
+                    handleClick={() => navigate('/home/employees')}
+                />
             </div>
         </section>
     );
