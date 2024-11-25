@@ -2,12 +2,13 @@
 
 ## Features
 
-- List rendering
-- Login option
-- Possibility to edit employee location, salary and department
-- Employees are originally sorted in alphabetical order
-- Options to filter by department, location or salary
-- Option to promote one member of each department to teamleader
+-   Creates a database for employees and enters 20 default employees if db doesn't already exist.
+-   List rendering
+-   Login option
+-   Possibility to edit employee location, salary and department
+-   Employees are originally sorted in alphabetical order
+-   Options to filter by department, location or salary
+-   Option to promote one member of each department to teamleader
 
 ## How To Use It
 
@@ -28,10 +29,10 @@
 
 ## Technologies Used
 
-- React
-- HTML
-- JS
-- CSS
+-   React
+-   HTML
+-   JS
+-   CSS
 
 ## What I've practiced and learnt
 
@@ -39,13 +40,13 @@
 
 ```js
 {
-  employees.map((employee) => {
-    return (
-      <div>
-        <p>{employee.fullName}</p>
-      </div>
-    );
-  });
+    employees.map((employee) => {
+        return (
+            <div>
+                <p>{employee.fullName}</p>
+            </div>
+        );
+    });
 }
 ```
 
@@ -53,12 +54,12 @@ Alternatively:
 
 ```js
 {
-  employees.map((employee) => (
-    <div>
-      <p>{employee.fullName}</p>
-      <p>{employee.department}</p>
-    </div>
-  ));
+    employees.map((employee) => (
+        <div>
+            <p>{employee.fullName}</p>
+            <p>{employee.department}</p>
+        </div>
+    ));
 }
 ```
 
@@ -72,9 +73,9 @@ Althought somewhat familiar with it, this project really helped me practice the 
 
 ```js
 const [person, setPerson] = useState({
-  name: 'John Doe',
-  age: 25,
-  isStudent: true,
+    name: 'John Doe',
+    age: 25,
+    isStudent: true,
 });
 ```
 
@@ -82,10 +83,34 @@ const [person, setPerson] = useState({
 
 ```js
 function handleChange(e) {
-  const { value, name } = e.target;
-  setPerson({ ...prev, [name]: value });
+    const { value, name } = e.target;
+    setPerson({ ...prev, [name]: value });
 }
 ```
 
 I've learnt to use destructuring with e.target for more readable code.  
 Also, that you do not need to explicitly pass the event object anymore.
+
+### Using conditions with props
+
+```js
+<Button
+    role='secondary'
+    text={edit ? 'Save' : 'Edit'}
+    handleClick={() => setEdit((prev) => !prev)}
+/>
+```
+
+I didn't realise until I really looked at it but here **we pass a prop depending on a condition**. I knew it was possible using i.e. className but I never really saw the nuance of it. And I figured we could do that with other types of data other than string, which turned out to be true.
+
+When validating an updated employee I added two different functions:
+
+```js
+<Button
+    role='secondary'
+    text={edit ? 'Save' : 'Edit'}
+    handleClick={edit ? handleUpdateEmployee : () => setEdit((prev) => !prev)}
+/>
+```
+
+If the user is editing, we handle the data the user has passed. If not, we set editing to true to enable editing mode.
