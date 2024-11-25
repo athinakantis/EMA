@@ -19,16 +19,7 @@ function NewEmployee() {
         startdate: currentDate,
     });
 
-    const {
-        firstname,
-        lastname,
-        role,
-        department,
-        employment_type,
-        location,
-        salary,
-        startdate,
-    } = formData;
+    const { firstname, lastname } = formData;
 
     function handleChange(e) {
         setMsg('');
@@ -39,7 +30,6 @@ function NewEmployee() {
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            console.log(formData);
             await validateNewEmp({ ...formData });
             setSubmitted(true);
         } catch (err) {
