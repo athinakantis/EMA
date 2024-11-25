@@ -8,7 +8,7 @@
 #loginContainer {
     display: flex;
     flex-direction: column;
-    width: fit-content;
+    width: 370px;
     padding: 2rem;
     position: relative;
     top: -170px;
@@ -24,7 +24,7 @@
 #logInPage input {
     margin: 0 0 0.7rem;
     text-align: end;
-    width: 200px;
+    width: 170px;
 }
 
 #logInPage input:last-of-type {
