@@ -16,6 +16,8 @@
     --dark: #212325;
     --accent: #f48023;
     --subtle: #ddddec;
+    --confirm: #284428;
+    --warning: #ff0000;
 
     --light: 300;
     --medium: 500;
@@ -44,7 +46,6 @@ main {
 button {
     border: none;
     border-radius: 5px;
-    background-color: var(--accent);
     padding: 0.3rem;
 
     &:hover {
