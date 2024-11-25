@@ -1,0 +1,55 @@
+#inspectEmployee {
+    margin: 4rem auto;
+    width: fit-content;
+}
+
+.inspect {
+    border: 1px solid var(--subtle);
+    border-radius: 15px;
+}
+
+.inspect h2 {
+    margin: 0 0 1rem;
+}
+
+.removeWarning {
+    color: var(--warning);
+    font-weight: var(--medium);
+    line-height: 1.2;
+    margin: 0 0 1rem;
+}
+
+.removeContainer {
+    margin: 1rem 0 0;
+}
+
+.warningContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+#inspectEmployee .btn.return {
+    background-color: transparent;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#inspectEmployee .btn.return img {
+    width: 1.4rem;
+}
+
+.btn.warningReturn {
+    background-color: var(--warning);
+    &:hover {
+        filter: brightness(150%);
+    }
+}
+
+.btn.confirm {
+    background-color: var(--confirm);
+    &:hover {
+        filter: brightness(150%);
+    }
+}
