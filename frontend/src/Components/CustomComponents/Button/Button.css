@@ -1,23 +1,20 @@
-button.secondary {
+.btn {
+    width: fit-content;
+}
+
+.btn.secondary {
     background-color: white;
     color: var(--dark);
     border: 1px solid var(--mainColorAccent);
     padding: 0.2rem 0.5rem;
     height: fit-content;
-
-    &:hover {
-        background-color: rgb(239, 245, 247);
-    }
+    color: var(--mainColor);
 }
 
-button.demote {
+.btn.demote {
     border: 1px solid red;
-
-    &:hover {
-        background-color: rgb(255, 248, 248);
-    }
 }
 
-button.primary {
+.btn.primary {
     background-color: var(--mainColorAccent);
 }
