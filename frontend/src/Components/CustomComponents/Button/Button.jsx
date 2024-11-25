@@ -5,12 +5,11 @@ function Button({
     handleClick,
     type = 'button',
     role = 'primary',
-    classes = 'default',
+    classes = 'btn',
 }) {
     return (
         <button
-            className={classes}
-            role={role}
+            className={`btn ${role}`}
             type={type}
             onClick={handleClick}
         >

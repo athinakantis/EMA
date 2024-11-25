@@ -18,6 +18,7 @@ function EmployeeCard(props) {
         teamLeads,
         setTeamLeads,
         employees,
+        handleNavigate,
     } = props;
 
     const [role, setRole] = useState(initialRole);
@@ -143,22 +144,31 @@ function EmployeeCard(props) {
                 </p>
             </div>
             {msg && <p className='error'>{msg}</p>}
-            <Button
-                role='secondary'
-                id='changeRole'
-                handleClick={handleRoleChange}
-                type='button'
-                text={role === initialRole ? 'Promote' : 'Demote'}
-                classes={role !== initialRole ? 'demote' : undefined}
-            />
-            {yearsEmployed % 5 === 0 && yearsEmployed > 1 && (
-                <button className='schedule'>
-                    Schedule recognition meeting
-                </button>
-            )}
-            {monthsEmployed < 6 && (
-                <button className='schedule'>Schedule probation review</button>
-            )}
+            <div className='emOptions'>
+                <Button
+                    role='secondary'
+                    id='changeRole'
+                    handleClick={handleRoleChange}
+                    type='button'
+                    text={role === initialRole ? 'Promote' : 'Demote'}
+                    classes={role !== initialRole ? 'demote' : undefined}
+                />
+                <Button
+                    text='See more'
+                    variant='secondary'
+                    handleClick={() => handleNavigate(id)}
+                />
+                {yearsEmployed % 5 === 0 && yearsEmployed > 1 && (
+                    <button className='schedule'>
+                        Schedule recognition meeting
+                    </button>
+                )}
+                {monthsEmployed < 6 && (
+                    <button className='schedule'>
+                        Schedule probation review
+                    </button>
+                )}
+            </div>
         </div>
     );
 }

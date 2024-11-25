@@ -3,6 +3,7 @@ import Login from '../pages/Login/Login';
 import List from '../pages/EmployeeList/EmployeeList';
 import Root from '../pages/Root/Root';
 import Form from '../pages/Form/Form';
+import SinglePage from '../pages/SinglePage';
 import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
                 path: '/add',
                 element: <Form />,
             },
+            {
+                path:'/employees/:id',
+                element: <SinglePage />
+            }
         ],
     },
 ]);

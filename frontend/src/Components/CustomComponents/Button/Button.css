@@ -1,4 +1,4 @@
-button[role='secondary'] {
+button.secondary {
     background-color: white;
     color: var(--dark);
     border: 1px solid var(--mainColorAccent);
@@ -16,4 +16,8 @@ button.demote {
     &:hover {
         background-color: rgb(255, 248, 248);
     }
+}
+
+button.primary {
+    background-color: var(--mainColorAccent);
 }

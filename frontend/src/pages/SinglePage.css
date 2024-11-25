@@ -1,0 +1,9 @@
+.inspect {
+    border: 1px solid var(--subtle);
+    border-radius: 15px;
+    margin: 4rem auto;
+}
+
+.inspect h2 {
+    margin: 0 0 1rem;
+}

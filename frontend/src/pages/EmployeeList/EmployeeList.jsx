@@ -4,10 +4,17 @@ import './EmployeeList.css';
 import Filter from '../../Components/Filter/Filter';
 import NewEmployee from '../../Components/NewEmployee/NewEmployee';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 function EmployeeList() {
     const [employees, setEmployees] = useState([]);
     const [sortedEmployees, setSortedEmployees] = useState([]);
+    const navigate = useNavigate()
+
+    function handleNavigate(id) {
+        navigate(`/employees/${id}`)
+    }
 
     const [teamLeads, setTeamLeads] = useState({
         IT: '',
@@ -60,6 +67,7 @@ function EmployeeList() {
                                         setTeamLeads={setTeamLeads}
                                         teamLeads={teamLeads}
                                         employees={employees}
+                                        handleNavigate={handleNavigate}
                                     />
                                 );
                             })}
