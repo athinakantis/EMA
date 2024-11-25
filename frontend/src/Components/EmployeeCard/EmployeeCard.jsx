@@ -80,7 +80,7 @@ function EmployeeCard(props) {
                 />
             </>
         ) : (
-            <span>{field === 'salary' ? `€${value}` : `${value}`}</span>
+            <span className={field}>{value}</span>
         );
     }
 
@@ -159,14 +159,16 @@ function EmployeeCard(props) {
                     handleClick={() => handleNavigate(id)}
                 />
                 {yearsEmployed % 5 === 0 && yearsEmployed > 1 && (
-                    <button className='schedule'>
-                        Schedule recognition meeting
-                    </button>
+                    <Button
+                        text='Schedule recognition meeting'
+                        className='schedule'
+                    />
                 )}
                 {monthsEmployed < 6 && (
-                    <button className='schedule'>
-                        Schedule probation review
-                    </button>
+                    <Button
+                        text='Schedule probation review'
+                        className='schedule'
+                    />
                 )}
             </div>
         </div>
