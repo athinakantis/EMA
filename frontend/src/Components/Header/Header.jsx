@@ -1,27 +1,27 @@
 import './Header.css';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function Header() {
     function toggleMenu() {}
     return (
         <header>
-            <Link to='/employees'>
+            <NavLink to='/employees'>
                 <img
                     src='../../src/assets/staffOverflow_logo.svg'
                     alt='Image of staffoverflow logo'
                 />
-            </Link>
+            </NavLink>
 
             <nav>
                 <ul>
                     <li>
-                        <Link to='/employees'>Employees</Link>
+                        <NavLink to='/home/employees'>Employees</NavLink>
                     </li>
                     <li>
-                        <Link to='/add'>Add employee</Link>
+                        <NavLink to='/home/add'>Add employee</NavLink>
                     </li>
                     <li>
-                        <Link to='/'>Log out</Link>
+                        <NavLink to='/'>Log out</NavLink>
                     </li>
                 </ul>
             </nav>

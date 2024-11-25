@@ -21,7 +21,7 @@ header nav ul li:not(:last-of-type) {
 
 header nav a {
     text-decoration: none;
-    color: var(--mainColor);
+    color: var(--dark);
 
     &::after {
         content: '';
@@ -36,4 +36,14 @@ header nav a {
     &:hover::after {
         width: 100%;
     }
+}
+
+header nav a.active::after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    display: block;
+    background-color: var(--mainColor);
+    transition: width 300ms;
+    opacity: 0.5;
 }
