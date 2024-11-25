@@ -43,4 +43,34 @@ router.post('/add', async (req, res) => {
     }
 });
 
+router.get('/employee/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const sql = `select * from employees where id=?`;
+
+        db.query(sql, [id]).then(([rows]) => {
+            res.send(rows);
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
+});
+
+router.delete('/employee/:id', async (req, res) => {
+    try {
+        console.log('received request to delete employee');
+        const { id } = req.params;
+        const sql = `delete from employees where id=? limit 1`;
+        db.query(sql, [id]);
+        res.send(
+            JSON.stringify({
+                status: 200,
+                message: 'Employee was successfully removed!',
+            })
+        );
+    } catch (err) {
+        console.log(err.message);
+    }
+});
+
 module.exports = router;
