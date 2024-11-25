@@ -37,3 +37,11 @@ a {
     color: rgb(199, 15, 15);
     font-weight: var(--bold);
 }
+
+.statusContainer {
+    padding: 2rem;
+    width: fit-content;
+    border: 1px solid var(--subtle);
+    background-color: white;
+    border-radius: 15px;
+}
