@@ -33,7 +33,23 @@ export function validateNewEmp({ ...formData }) {
         throw new Error('Missing location');
     }
 
-    if (+salary < 0) {
+    if (+salary < 0 || !+salary instanceof Number) {
+        throw new Error('Invalid salary');
+    }
+}
+
+export function validateUpdateEmp({ ...input }) {
+    const { department, location, salary } = input;
+
+    if (department.trim() < 1) {
+        throw new Error('Invalid department');
+    }
+
+    if (location.trim() < 1 || !location instanceof String) {
+        throw new Error('Invalid location');
+    }
+
+    if (+salary < 0 || !+salary) {
         throw new Error('Invalid salary');
     }
 }
