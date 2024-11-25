@@ -6,13 +6,8 @@
 }
 
 #errorContainer {
-    width: fit-content;
-    padding: 2rem;
     position: relative;
     top: -170px;
-    border: 1px solid var(--subtle);
-    background-color: white;
-    border-radius: 15px;
 }
 
 #errorContainer h2 {

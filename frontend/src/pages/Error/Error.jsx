@@ -7,7 +7,10 @@ function Error({ status = 404 }) {
 
     return (
         <section id='errorPage'>
-            <div id='errorContainer'>
+            <div
+                id='errorContainer'
+                className='statusContainer'
+            >
                 <img
                     src={`${
                         import.meta.env.VITE_REACT_URL
