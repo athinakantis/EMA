@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './EmployeeCard.css';
 import Button from '../CustomComponents/Button/Button';
 import { calcMonthsWorked, calcYearsWorked } from '../../utils/calcTimeWorked';
+import { validateUpdateEmp } from '../../utils/validateInput';
 
 function EmployeeCard(props) {
     const {
@@ -35,6 +36,16 @@ function EmployeeCard(props) {
         monthsEmployed = calcMonthsWorked(startdate);
     }
 
+    async function handleUpdateEmployee() {
+        try {
+            await validateUpdateEmp({ ...person });
+            setEdit((prev) => !prev);
+        } catch (err) {
+            console.error(err);
+            setMsg(err.message);
+        }
+    }
+
     function handleRoleChange() {
         if (deptTeamLead === id) {
             setTeamLeads({ ...teamLeads, [person.department]: '' });
@@ -64,7 +75,7 @@ function EmployeeCard(props) {
                     type='text'
                     name={field}
                     value={value}
-                    onChange={(e) => handleChange(e)}
+                    onChange={handleChange}
                 />
             </>
         ) : (
@@ -81,7 +92,11 @@ function EmployeeCard(props) {
                 <Button
                     role='secondary'
                     text={edit ? 'Save' : 'Edit'}
-                    handleClick={() => setEdit((prev) => !prev)}
+                    handleClick={
+                        edit
+                            ? handleUpdateEmployee
+                            : () => setEdit((prev) => !prev)
+                    }
                 />
             </div>
             <div className='frame'>
