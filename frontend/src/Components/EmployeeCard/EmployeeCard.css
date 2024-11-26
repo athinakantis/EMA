@@ -9,6 +9,7 @@
     background-color: white;
     flex: 1 1 300px;
     transition: all 400ms;
+    border: 1px solid var(--subtle);
 
     &:hover {
         filter: drop-shadow(4px 7px 20px rgba(81, 93, 144, 0.5));

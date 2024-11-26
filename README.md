@@ -2,12 +2,9 @@
 
 ## Features
 
--   Creates a database for employees and enters 20 default employees if db doesn't already exist.
--   List rendering
--   Login option
--   Possibility to edit employee location, salary and department
--   Employees are originally sorted in alphabetical order
--   Options to filter by department, location or salary
+-   Creates a database for employees and enters 20 default employees.
+-   Options to **update, remove or add employees**
+-   Options to filter employees based on **department, location or salary**
 -   Option to promote one member of each department to teamleader
 
 ## How To Use It
@@ -29,10 +26,14 @@
 
 ## Technologies Used
 
--   React
--   HTML
--   JS
--   CSS
+Framework: React
+
+-   Frontend packages:
+    -   axios
+-   Backend packages:
+    -   mysql2
+    -   express
+    -   dotenv
 
 ## What I've practiced and learnt
 

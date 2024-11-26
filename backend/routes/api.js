@@ -59,7 +59,7 @@ router.get('/employee/:id', async (req, res) => {
 
 router.delete('/employee/:id', async (req, res) => {
     try {
-        console.log('received request to delete employee');
+        console.log('Received request to delete employee');
         const { id } = req.params;
         const sql = `delete from employees where id=? limit 1`;
         db.query(sql, [id]);
@@ -76,10 +76,8 @@ router.delete('/employee/:id', async (req, res) => {
 
 router.put('/employee/:id', async (req, res) => {
     try {
-        console.log('received request to update employee');
+        console.log('Received request to update employee');
         const { department, location, salary, id } = req.body.data;
-        console.log(req.body)
-        console.log(department, location, salary, id)
         const sql = `update employees set department = ? , location = ? , salary = ? where id = ?`
         db.execute(sql, [department, location, salary, id]);
         res.send(JSON.stringify({ status: 200, message: 'Employee was successfully updated!' }))
