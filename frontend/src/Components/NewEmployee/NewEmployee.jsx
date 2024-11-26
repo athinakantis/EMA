@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './NewEmployee.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { validateNewEmp } from '../../utils/validateInput';
 
 function NewEmployee() {
@@ -9,16 +10,17 @@ function NewEmployee() {
     const [msg, setMsg] = useState('');
     const currentDate = new Date().toISOString().substring(0, 10);
     const [formData, setFormData] = useState({
-        firstname: 'Athina',
-        lastname: 'Kantis',
-        role: 'Web Designer',
-        department: 'IT',
-        employment_type: 'Full-Time',
-        location: 'Helsinki',
-        salary: 5000,
+        firstname: '',
+        lastname: '',
+        role: '',
+        department: 'default',
+        employment_type: 'default',
+        location: 'default',
+        salary: '',
         startdate: currentDate,
     });
 
+    const navigate = useNavigate()
     const { firstname, lastname } = formData;
 
     function handleChange(e) {
@@ -46,7 +48,7 @@ function NewEmployee() {
                         `${import.meta.env.VITE_API_URL}/add`,
                         formData
                     );
-                    console.log(response);
+                    navigate('/home/success', {state: response.data})
                 } catch (error) {
                     console.error(error);
                     setMsg(error.message);
@@ -112,9 +114,9 @@ function NewEmployee() {
                             >
                                 <option value='default'>---</option>
                                 <option value='IT'>IT</option>
-                                <option value='marketing'>Marketing</option>
-                                <option value='finance'>Finance</option>
-                                <option value='admin'>Admin</option>
+                                <option value='Marketing'>Marketing</option>
+                                <option value='Finance'>Finance</option>
+                                <option value='Admin'>Admin</option>
                             </select>
                         </div>
                         <div>
