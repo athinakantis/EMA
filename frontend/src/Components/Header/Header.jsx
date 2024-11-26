@@ -1,8 +1,14 @@
 import './Header.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import Button from '../CustomComponents/Button/Button';
 
 function Header() {
-    function toggleMenu() {}
+    const navigate = useNavigate()
+
+    function handleLogOut() {
+        localStorage.removeItem('username');
+        navigate('/')
+    }
     return (
         <header>
             <NavLink to='/home'>
@@ -21,7 +27,7 @@ function Header() {
                         <NavLink to='/home/add'>Add employee</NavLink>
                     </li>
                     <li>
-                        <NavLink to='/'>Log out</NavLink>
+                        <Button handleClick={handleLogOut} text='Log out'/>
                     </li>
                 </ul>
             </nav>
