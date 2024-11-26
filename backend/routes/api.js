@@ -38,6 +38,7 @@ router.post('/add', async (req, res) => {
             location,
             salary,
         ]);
+        res.send(JSON.stringify({ status: 200, message: 'Employee was successfully added!' }))
     } catch (err) {
         console.error(err);
     }
@@ -72,5 +73,19 @@ router.delete('/employee/:id', async (req, res) => {
         console.log(err.message);
     }
 });
+
+router.put('/employee/:id', async (req, res) => {
+    try {
+        console.log('received request to update employee');
+        const { department, location, salary, id } = req.body.data;
+        console.log(req.body)
+        console.log(department, location, salary, id)
+        const sql = `update employees set department = ? , location = ? , salary = ? where id = ?`
+        db.execute(sql, [department, location, salary, id]);
+        res.send(JSON.stringify({ status: 200, message: 'Employee was successfully updated!' }))
+    } catch (err) {
+        console.error(err.message)
+    }
+})
 
 module.exports = router;
