@@ -44,7 +44,7 @@ function EmployeeCard(props) {
         try {
             await validateUpdateEmp({ ...person });
             const response = await axios.put(`${import.meta.env.VITE_API_URL}/employee/${id}`,{ data: {department: person.department, location: person.location, salary: person.salary, id: id}})
-            navigate(`/home/success/`, { state: response.data })
+            navigate(`/home/success`, { state: response.data })
         } catch (err) {
             console.error(err);
             setMsg(err.message);

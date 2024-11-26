@@ -22,6 +22,7 @@ function Login({}) {
 
     return (
         <section id='logInPage'>
+                <img src={`${import.meta.env.VITE_REACT_URL}/staffOverflow_logo.svg`} alt="Staffoverflow Logo" />
             <div id='loginContainer'>
                 <h2>Log in</h2>
                 <form>

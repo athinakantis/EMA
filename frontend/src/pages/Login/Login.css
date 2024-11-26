@@ -1,8 +1,18 @@
-#loginPage {
+#logInPage {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    width: fit-content;
+    flex-direction: column;
+    position: relative;
+    top: -160px;
+    gap: 1rem;
+}
+
+#logInPage img {
+    width: 12rem;
+    align-self: start;
 }
 
 #loginContainer {
@@ -10,8 +20,6 @@
     flex-direction: column;
     width: 370px;
     padding: 2rem;
-    position: relative;
-    top: -170px;
     border: 1px solid var(--subtle);
     background-color: white;
     border-radius: 15px;
