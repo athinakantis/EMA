@@ -3,6 +3,8 @@ import './EmployeeCard.css';
 import Button from '../CustomComponents/Button/Button';
 import { calcMonthsWorked, calcYearsWorked } from '../../utils/calcTimeWorked';
 import { validateUpdateEmp } from '../../utils/validateInput';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function EmployeeCard(props) {
     const {
@@ -30,6 +32,7 @@ function EmployeeCard(props) {
         salary: salary,
     });
     const deptTeamLead = teamLeads[person.department];
+    const navigate = useNavigate()
 
     let monthsEmployed;
     let yearsEmployed = calcYearsWorked(startdate);
@@ -40,7 +43,8 @@ function EmployeeCard(props) {
     async function handleUpdateEmployee() {
         try {
             await validateUpdateEmp({ ...person });
-            setEdit((prev) => !prev);
+            const response = await axios.put(`${import.meta.env.VITE_API_URL}/employee/${id}`,{ data: {department: person.department, location: person.location, salary: person.salary, id: id}})
+            navigate(`/home/success/`, { state: response.data })
         } catch (err) {
             console.error(err);
             setMsg(err.message);
