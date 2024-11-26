@@ -25,13 +25,24 @@
     border-radius: 15px;
     border: 1px solid var(--subtle);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--dark);
-    transition: background-color 300ms;
+    transition: all 300ms;
+    gap: 0.5rem;
 
     &:hover {
-        background-color: var(--subtle);
+        filter: drop-shadow(4px 7px 20px rgba(0, 0, 0, 0.1));
     }
+
+    &:hover img {
+        transform: translateY(-10px);
+    }
+}
+
+.suggestion img {
+    width: 4rem;
+    transition: all 300ms;
 }

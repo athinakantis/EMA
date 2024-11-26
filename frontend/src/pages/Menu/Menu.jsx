@@ -1,11 +1,10 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Menu.css';
 import Button from '../../Components/CustomComponents/Button/Button';
-import { useState } from 'react';
 
 function Menu() {
     const location = useLocation();
-    const [username, setUsername] = useState(localStorage.getItem('username'));
+    const username = localStorage.getItem('username') || 'admin'
     const navigate = useNavigate();
 
     return (
@@ -19,16 +18,22 @@ function Menu() {
                     role='suggestion'
                     text='Remove an employee'
                     handleClick={() => navigate('/home/employees')}
+                    img='/personRemove.svg'
+                    imgAlt='Remove employee icon'
                 />
                 <Button
                     role='suggestion'
                     text='View employees'
                     handleClick={() => navigate('/home/employees')}
+                    img='/personList.svg'
+                    imgAlt='Remove employee icon'
                 />
                 <Button
                     role='suggestion'
                     text='Add employee'
                     handleClick={() => navigate('/home/add')}
+                    img='/personAdd.svg'
+                    imgAlt='Remove employee icon'
                 />
             </div>
         </section>
