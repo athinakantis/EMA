@@ -1,6 +1,6 @@
 import './Button.css';
 
-function Button({ text, handleClick, type = 'button', role = 'primary', img }) {
+function Button({ text, handleClick, type = 'button', role = 'primary', img, imgAlt }) {
     return (
         <button
             className={`btn ${role}`}
