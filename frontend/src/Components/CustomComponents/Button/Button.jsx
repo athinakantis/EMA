@@ -1,12 +1,18 @@
 import './Button.css';
 
-function Button({ text, handleClick, type = 'button', role = 'primary' }) {
+function Button({ text, handleClick, type = 'button', role = 'primary', img }) {
     return (
         <button
             className={`btn ${role}`}
             type={type}
             onClick={handleClick}
         >
+            {img && (
+                <img
+                    src={img}
+                    alt={imgAlt}
+                />
+            )}
             {text}
         </button>
     );

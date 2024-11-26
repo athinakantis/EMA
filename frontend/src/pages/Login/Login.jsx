@@ -4,12 +4,20 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../Components/CustomComponents/Button/Button';
 
 function Login({}) {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({
+        username: 'admin',
+        password: 'unicorn',
+    });
     const navigate = useNavigate();
 
     function handleUser(e) {
-        const { username, password } = e.target;
-        setUser({ username: username, password: password });
+        const { name, value } = e.target;
+        setUser({ ...user, [name]: value });
+    }
+
+    function handleNavigate() {
+        localStorage.setItem('username', user.username);
+        navigate('/home');
     }
 
     return (
@@ -23,7 +31,7 @@ function Login({}) {
                             type='text'
                             name='username'
                             id='username'
-                            value='admin'
+                            value={user.username}
                             onChange={handleUser}
                         />
                     </div>
@@ -34,13 +42,14 @@ function Login({}) {
                             type='password'
                             name='password'
                             id='password'
+                            value={user.password}
                             onChange={handleUser}
                         />
                     </div>
                 </form>
                 <Button
                     text='Login'
-                    handleClick={() => navigate('/home/employees')}
+                    handleClick={handleNavigate}
                 />
             </div>
         </section>

@@ -114,3 +114,32 @@ When validating an updated employee I added two different functions:
 ```
 
 If the user is editing, we handle the data the user has passed. If not, we set editing to true to enable editing mode.
+
+### Passing data through navigate
+
+```js
+//Login.jsx
+
+<Button
+    text='Login'
+    handleClick={() => navigate('/home', { state: user.username })}
+/>
+```
+
+```js
+// Menu.jsx
+import { useLocation } from 'react-router-dom';
+
+function Menu() {
+    const location = useLocation();
+    const [username, setUsername] = useState(location.state);
+}
+```
+
+Because I wanted to pass the username from my Login component to my Menu component, I had to research a little.  
+Navigate takes an **optional 'options' object** as a parameter. This object can store multiple optional properties, one of these being `state`  
+**State** can be of type **any**
+
+The **problem** with this code is that when you navigate from another page, back to menu, it will set the username to be null. _whomp whomp_
+
+Therefor my solution for now is to set the username in localstorage upon redirect, until maybe I find a better solution.

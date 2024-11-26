@@ -1,0 +1,37 @@
+#menuPage {
+    margin: 6rem auto 0;
+    width: 60%;
+}
+
+#menuPage h2 {
+    font-size: 2.5rem;
+}
+
+.welcomePrompt {
+    margin: 0 auto 2rem;
+}
+
+.suggestions {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
+
+.suggestion {
+    text-align: center;
+    flex: 1;
+    height: 300px;
+    background-color: white;
+    border-radius: 15px;
+    border: 1px solid var(--subtle);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    color: var(--dark);
+    transition: background-color 300ms;
+
+    &:hover {
+        background-color: var(--subtle);
+    }
+}

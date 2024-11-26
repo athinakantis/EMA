@@ -26,6 +26,12 @@ async function initializeDatabase() {
             console.log('Database does not exist. Creating it now...');
             await connection.query(`CREATE DATABASE staffoverflow;`);
             await connection.query(`USE staffoverflow;`);
+            // await connection.query(
+            //     `create user staffadmin@localhost identified by unicorn;`
+            // );
+            // await connection.query(
+            //     `grant all privileges on staffoverflow.* to staffadming@localhost;`
+            // );
             console.log('Employees table created or verified.');
             await connection.query(createTable);
             console.log('Initial data inserted into employees table.');
