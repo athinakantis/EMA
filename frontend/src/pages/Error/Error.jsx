@@ -1,9 +1,7 @@
-import statuscodes from '../../data/statuscodes';
 import './Error.css';
 import { Link } from 'react-router-dom';
 
-function Error({ status = 404 }) {
-    const error = statuscodes.find((i) => i.status === status);
+function Error({ status = 404, message = 'Page not found' }) {
 
     return (
         <section id='errorPage'>
@@ -19,7 +17,7 @@ function Error({ status = 404 }) {
                     className='logo'
                 />
                 <h2>
-                    {status} {error.message}
+                    {status} {message}
                 </h2>
                 <Link to='/'>Back home</Link>
             </div>
