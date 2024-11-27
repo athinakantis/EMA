@@ -22,6 +22,7 @@ function EmployeeList() {
         Finance: '',
     });
 
+    console.log(teamLeads);
     // Effect to fetch employee data from backend
     useEffect(() => {
         const fetchAPI = async () => {
@@ -60,9 +61,9 @@ function EmployeeList() {
                             sortedEmployees.map((employee) => {
                                 return (
                                     <EmployeeCard
-                                        key={`employee-${employee.id}`}
+                                        key={employee?.id}
                                         {...employee}
-                                        initialRole={employee.role}
+                                        initialRole={employee?.role}
                                         setTeamLeads={setTeamLeads}
                                         teamLeads={teamLeads}
                                         employees={employees}

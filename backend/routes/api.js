@@ -3,7 +3,8 @@ const router = express.Router();
 const db = require('../db');
 
 router.get('/employees', (req, res) => {
-    const sql = 'SELECT firstname, lastname, role FROM EMPLOYEES';
+    const sql =
+        'SELECT id, firstname, lastname, role, startdate FROM EMPLOYEES';
     db.query(sql)
         .then(([rows]) => {
             res.send(rows);
@@ -40,7 +41,13 @@ router.post('/add', async (req, res) => {
 
         const id = await db.execute('select max(id) as id from employees');
 
-        res.send(JSON.stringify({ status: 200, message: 'Employee was successfully added!', id: id }))
+        res.send(
+            JSON.stringify({
+                status: 200,
+                message: 'Employee was successfully added!',
+                id: id,
+            })
+        );
     } catch (err) {
         console.error(err);
     }
@@ -80,12 +87,17 @@ router.put('/employee/:id', async (req, res) => {
     try {
         console.log('Received request to update employee');
         const { department, location, salary, id } = req.body.data;
-        const sql = `update employees set department = ? , location = ? , salary = ? where id = ?`
+        const sql = `update employees set department = ? , location = ? , salary = ? where id = ?`;
         db.execute(sql, [department, location, salary, id]);
-        res.send(JSON.stringify({ status: 200, message: 'Employee was successfully updated!' }))
+        res.send(
+            JSON.stringify({
+                status: 200,
+                message: 'Employee was successfully updated!',
+            })
+        );
     } catch (err) {
-        console.error(err.message)
+        console.error(err.message);
     }
-})
+});
 
 module.exports = router;

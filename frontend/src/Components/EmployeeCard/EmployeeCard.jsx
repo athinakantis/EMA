@@ -20,17 +20,12 @@ function EmployeeCard(props) {
         employees,
         handleNavigate,
     } = props;
+    const navigate = useNavigate();
 
     const [role, setRole] = useState(initialRole);
     const [msg, setMsg] = useState('');
 
-    const [person, setPerson] = useState({
-        department: department,
-        location: location,
-        salary: salary,
-    });
-    const deptTeamLead = teamLeads[person.department];
-    const navigate = useNavigate();
+    const deptTeamLead = teamLeads[department];
 
     let monthsEmployed;
     let yearsEmployed = calcYearsWorked(startdate);
@@ -40,7 +35,7 @@ function EmployeeCard(props) {
 
     function handleRoleChange() {
         if (deptTeamLead === id) {
-            setTeamLeads({ ...teamLeads, [person.department]: '' });
+            setTeamLeads({ ...teamLeads, [department]: '' });
             setRole(initialRole);
         } else if (deptTeamLead && deptTeamLead !== id) {
             const teamLeader = employees.find((e) => e.id == deptTeamLead);
@@ -50,13 +45,13 @@ function EmployeeCard(props) {
             setTimeout(() => setMsg(''), 3000);
         } else if (!deptTeamLead) {
             setMsg('');
-            setTeamLeads({ ...teamLeads, [person.department]: id });
+            setTeamLeads({ ...teamLeads, [department]: id });
             setRole('Team Lead');
         }
     }
 
     return (
-        <div className={`employeeCard ${person.department}`}>
+        <div className={`employeeCard ${department}`}>
             <div className='title'>
                 <p className='emName'>
                     {firstname} {lastname}
