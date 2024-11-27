@@ -5,7 +5,7 @@
 .btn.secondary {
     background-color: white;
     color: var(--dark);
-    border: 1px solid var(--mainColorAccent);
+    border: 1px solid var(--dark);
     padding: 0.2rem 0.5rem;
     height: fit-content;
     color: var(--mainColor);
@@ -13,8 +13,4 @@
 
 .btn.demote {
     border: 1px solid red;
-}
-
-.btn.primary {
-    background-color: var(--mainColorAccent);
 }
