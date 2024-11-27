@@ -5,13 +5,8 @@
 
 .inspect {
     border: 1px solid var(--subtle);
-    border-radius: 15px;
+    border-radius: 3px;
 }
-
-.inspect h2 {
-    margin: 0 0 1rem;
-}
-
 .removeWarning {
     color: var(--warning);
     font-weight: var(--medium);
@@ -34,10 +29,14 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    padding: 0;
+    margin: 0 0 0.3rem;
+    text-align: end;
 }
 
-#inspectEmployee .btn.return img {
-    width: 1.4rem;
+#inspectEmployee .btn .return img {
+    width: 1.2rem;
+    margin: 0;
 }
 
 .btn.warningReturn {
