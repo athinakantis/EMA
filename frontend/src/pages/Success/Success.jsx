@@ -1,9 +1,15 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import './Success.css'
+import { useEffect } from "react";
 
 function Success() {
     const location = useLocation()
-    const {status, message} = location.state
+    const navigate = useNavigate();
+    const {status, message, id} = location.state
+
+    useEffect(() => {
+        setTimeout(() => navigate('/home/employees'), 3000)
+    }, [])
 
     return (
         <section id='successPage'>
