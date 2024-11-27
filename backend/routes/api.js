@@ -3,12 +3,12 @@ const router = express.Router();
 const db = require('../db');
 
 router.get('/employees', (req, res) => {
-    const sql = 'SELECT * FROM EMPLOYEES';
+    const sql = 'SELECT firstname, lastname, role FROM EMPLOYEES';
     db.query(sql)
         .then(([rows]) => {
             res.send(rows);
         })
-        .catch((err) => console.log);
+        .catch(console.log);
 });
 
 router.post('/add', async (req, res) => {
@@ -25,7 +25,6 @@ router.post('/add', async (req, res) => {
 
     try {
         console.log('Received request to api/add');
-        console.log(req.body);
         const sql = `INSERT INTO EMPLOYEES (firstname, lastname, employment_type, role, startdate, department, location, salary) VALUES(?, ?, ?, ?, ?, ?, ?, ?)`;
 
         db.execute(sql, [
@@ -38,7 +37,10 @@ router.post('/add', async (req, res) => {
             location,
             salary,
         ]);
-        res.send(JSON.stringify({ status: 200, message: 'Employee was successfully added!' }))
+
+        const id = await db.execute('select max(id) as id from employees');
+
+        res.send(JSON.stringify({ status: 200, message: 'Employee was successfully added!', id: id }))
     } catch (err) {
         console.error(err);
     }
