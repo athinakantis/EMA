@@ -22,7 +22,7 @@ function Filter({ employees, setSortedEmployees }) {
                 id='filterGroup'
                 onChange={(e) => handleFilterGroup(e)}
             >
-                <option value='Default'>---</option>
+                <option value='Default'>Name</option>
                 <option value='location'>Location</option>
                 <option value='department'>Department</option>
                 <option value='salary'>Salary</option>
