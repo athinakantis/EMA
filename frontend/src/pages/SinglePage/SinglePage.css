@@ -1,11 +1,18 @@
 #inspectEmployee {
     margin: 4rem auto;
-    width: fit-content;
+    width: 80%;
+    padding: 1rem;
 }
 
 .inspect {
     border: 1px solid var(--subtle);
     border-radius: 3px;
+    filter: none;
+    border: none;
+
+    &:hover {
+        filter: none;
+    }
 }
 .removeWarning {
     font-weight: var(--medium);
@@ -48,4 +55,12 @@
 #inspectEmployee .btn.return img {
     width: 1.2rem;
     margin: 0;
+}
+
+#employeeContainer {
+    background-color: white;
+    display: flex;
+}
+
+#employeeContainer .emDetails {
 }

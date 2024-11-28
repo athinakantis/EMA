@@ -113,33 +113,67 @@ function SinglePage() {
                 />
                 Back to list
             </button>
-            <div className='employeeCard inspect'>
-                <div className='title'>
-                    <h2>
-                        {employee?.firstname} {employee?.lastname}
-                    </h2>
-                    {edit ? (
+            <div id='employeeContainer'>
+                <div className='employeeCard inspect'>
+                    <div className='title'>
+                        <h2>
+                            {employee?.firstname} {employee?.lastname}
+                        </h2>
+                        {edit ? (
+                            <Button
+                                role='save'
+                                handleClick={handleUpdateEmployee}
+                                img={`${
+                                    import.meta.env.VITE_REACT_URL
+                                }/save_Icon.svg`}
+                            />
+                        ) : (
+                            <Button
+                                role='edit'
+                                handleClick={() => setEdit((prev) => !prev)}
+                                img={`${
+                                    import.meta.env.VITE_REACT_URL
+                                }/edit.svg`}
+                                imgAlt='Edit'
+                            />
+                        )}
+                    </div>
+                    <div className='frame'>
+                        <img
+                            src={`https://robohash.org/${employee?.firstname}${employee?.lastname}.png?set=set5&size=175x175`}
+                        />
+                    </div>
+
+                    {!remove ? (
                         <Button
-                            role='save'
-                            handleClick={handleUpdateEmployee}
-                            img={`${
-                                import.meta.env.VITE_REACT_URL
-                            }/save_Icon.svg`}
+                            text='Remove'
+                            role='removeEmp'
+                            handleClick={() => setRemove(true)}
                         />
                     ) : (
-                        <Button
-                            role='edit'
-                            handleClick={() => setEdit((prev) => !prev)}
-                            img={`${import.meta.env.VITE_REACT_URL}/edit.svg`}
-                            imgAlt='Edit'
-                        />
+                        <div className='removeContainer'>
+                            <p className='removeWarning'>
+                                Are you sure you want to remove{' '}
+                                {employee?.firstname} {employee?.lastname}? This
+                                action is irreversible!
+                            </p>
+
+                            <div className='warningContainer'>
+                                <Button
+                                    role='warningReturn'
+                                    text='No, go back ✘'
+                                    handleClick={() => setRemove(false)}
+                                />
+                                <Button
+                                    role='confirm'
+                                    text='Yes, remove ✔'
+                                    handleClick={() => handleRemove(id)}
+                                />
+                            </div>
+                        </div>
                     )}
                 </div>
-                <div className='frame'>
-                    <img
-                        src={`https://robohash.org/${employee?.firstname}${employee?.lastname}.png?set=set5&size=175x175`}
-                    />
-                </div>
+
                 <div className='emDetails'>
                     <p>
                         Role <span>{employee?.role}</span>
@@ -159,35 +193,6 @@ function SinglePage() {
                 </div>
 
                 {msg && <p className='error'>{msg}</p>}
-
-                {!remove ? (
-                    <Button
-                        text='Remove'
-                        role='removeEmp'
-                        handleClick={() => setRemove(true)}
-                    />
-                ) : (
-                    <div className='removeContainer'>
-                        <p className='removeWarning'>
-                            Are you sure you want to remove{' '}
-                            {employee?.firstname} {employee?.lastname}? This
-                            action is irreversible!
-                        </p>
-
-                        <div className='warningContainer'>
-                            <Button
-                                role='warningReturn'
-                                text='No, go back ✘'
-                                handleClick={() => setRemove(false)}
-                            />
-                            <Button
-                                role='confirm'
-                                text='Yes, remove ✔'
-                                handleClick={() => handleRemove(id)}
-                            />
-                        </div>
-                    </div>
-                )}
             </div>
         </section>
     );

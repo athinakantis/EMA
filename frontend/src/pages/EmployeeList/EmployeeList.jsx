@@ -36,11 +36,8 @@ function EmployeeList() {
         const getAll = async () => {
             try {
                 totalPages.current = calcListPages(await getEmployeeCount());
-                console.log(totalPages.current);
                 setEmployees(await getEmployeeRange(offset));
                 setSortedEmployees(await getAllEmployees());
-                console.log(page);
-                console.log(totalPages.current);
             } catch (error) {
                 console.error('Error fetching data: ', error);
             }
