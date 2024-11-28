@@ -6,7 +6,7 @@ import { validateNewEmp } from '../../utils/validateInput';
 import { addNewEmployee } from '../../utils/requests';
 
 function NewEmployee() {
-    const [isEditing, setIsEditing] = useState(false);
+    const [isEditing, setIsEditing] = useState(true);
     const [submitted, setSubmitted] = useState(false);
     const [msg, setMsg] = useState('');
     const currentDate = new Date().toISOString().substring(0, 10);
