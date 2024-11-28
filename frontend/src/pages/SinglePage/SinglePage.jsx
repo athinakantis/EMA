@@ -3,7 +3,6 @@ import Button from '../../Components/CustomComponents/Button/Button';
 import { updateFormCheck, validateUpdateEmp } from '../../utils/validateInput';
 import { useState, useEffect } from 'react';
 import Spinner from '../../Components/Spinner/Spinner';
-import axios from 'axios';
 import './SinglePage.css';
 import {
     getEmployee,
@@ -44,8 +43,7 @@ function SinglePage() {
     useEffect(() => {
         const fetchAPI = async () => {
             try {
-                const response = await getEmployee(id);
-                const employeeData = response.data[0];
+                const employeeData = await getEmployee(id);
                 setEmployee(employeeData);
                 setFormData({
                     department: employeeData.department,
