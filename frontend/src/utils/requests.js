@@ -1,16 +1,32 @@
 import axios from 'axios';
 
 /* GET */
-export function getAllEmployees() {
-    return axios.get(`${import.meta.env.VITE_API_URL}/employees`);
+export async function getAllEmployees() {
+    const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/employees`
+    );
+    return response.data;
 }
 
-export function getEmployee(id) {
-    return axios.get(`${import.meta.env.VITE_API_URL}/employee/${id}`);
+export async function getEmployeeRange(offset) {
+    const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/employees/range/${offset}`
+    );
+    return response.data;
 }
 
-export function getEmployeeCount() {
-    return axios.get(`${import.meta.env.VITE_API_URL}/employeeCount`);
+export async function getEmployee(id) {
+    const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/employee/${id}`
+    );
+    return response.data[0];
+}
+
+export async function getEmployeeCount() {
+    const employeeCount = await axios.get(
+        `${import.meta.env.VITE_API_URL}/employeeCount`
+    );
+    return employeeCount.data;
 }
 
 /* PUT */

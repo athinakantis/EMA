@@ -7,7 +7,3 @@ export function filterSalary(employees, order) {
         ? employees.toSorted((a, b) => a.salary - b.salary)
         : employees.toSorted((a, b) => a.salary - b.salary).reverse();
 }
-
-export function sortByName(employees) {
-    return employees.sort((a, b) => a.firstname.localeCompare(b.firstname));
-}

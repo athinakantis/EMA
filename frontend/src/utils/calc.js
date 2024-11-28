@@ -9,3 +9,7 @@ export function calcMonthsWorked(date) {
     const startDate = new Date(date);
     return currentDate.getMonth() - startDate.getMonth();
 }
+
+export function calcListPages(num) {
+    return Math.ceil(num / 8);
+}
