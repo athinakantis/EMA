@@ -144,3 +144,20 @@ Navigate takes an **optional 'options' object** as a parameter. This object can 
 The **problem** with this code is that when you navigate from another page, back to menu, it will set the username to be null. _whomp whomp_
 
 Therefor my solution for now is to set the username in localstorage upon redirect, until maybe I find a better solution.
+
+### useRef hook
+
+I by no means fully understand the useRef hook, but I found myself using when I implemented pagination into my app.
+
+In EmployeeList.jsx
+
+```js
+const totalPages = useRef(0);
+```
+
+I initially set the totalPages to zero.
+Later, I use a function I created to calculate how many pages will be needed based on how many total employees there are.
+
+```js
+totalPages.current = calcListPages(await getEmployeeCount());
+```
