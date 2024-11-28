@@ -1,17 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import EmployeeCard from '../../Components/EmployeeCard/EmployeeCard';
-import './EmployeeList.css';
 import Filter from '../../Components/Filter/Filter';
+import Button from '../../Components/CustomComponents/Button/Button';
 import NewEmployee from '../../Components/NewEmployee/NewEmployee';
 import { useNavigate } from 'react-router-dom';
-import { getAllEmployees, employeeCount } from '../../utils/requests';
-import { sortByName } from '../../utils/filterEmployees';
+import { calcListPages } from '../../utils/calc';
+import {
+    getAllEmployees,
+    getEmployeeCount,
+    getEmployeeRange,
+} from '../../utils/requests';
+import './EmployeeList.css';
 
 function EmployeeList() {
+    const navigate = useNavigate();
     const [employees, setEmployees] = useState([]);
     const [sortedEmployees, setSortedEmployees] = useState([]);
     const [offset, setOffset] = useState(0);
-    const navigate = useNavigate();
+    const [page, setPage] = useState(1);
+    const totalPages = useRef(0);
 
     function handleNavigate(id) {
         navigate(`/home/employees/${id}`);
@@ -28,11 +35,12 @@ function EmployeeList() {
     useEffect(() => {
         const getAll = async () => {
             try {
-                const employeeCount = employeeCount();
-                console.log(employeeCount);
-                const response = await getAllEmployees();
-                setEmployees(response.data);
-                setSortedEmployees(sortByName(response.data));
+                totalPages.current = calcListPages(await getEmployeeCount());
+                console.log(totalPages.current);
+                setEmployees(await getEmployeeRange(offset));
+                setSortedEmployees(await getAllEmployees());
+                console.log(page);
+                console.log(totalPages.current);
             } catch (error) {
                 console.error('Error fetching data: ', error);
             }
@@ -52,22 +60,62 @@ function EmployeeList() {
                         employees={employees}
                         setSortedEmployees={setSortedEmployees}
                     />
-                    <div id='employeeList'>
-                        {Array.isArray(sortedEmployees) &&
-                            sortedEmployees.map((employee) => {
-                                return (
-                                    <EmployeeCard
-                                        key={employee?.id}
-                                        {...employee}
-                                        initialRole={employee?.role}
-                                        setTeamLeads={setTeamLeads}
-                                        teamLeads={teamLeads}
-                                        employees={employees}
-                                        handleNavigate={handleNavigate}
+                    <div className='listContainer'>
+                        <div id='employeeList'>
+                            {Array.isArray(employees) &&
+                                employees.map((employee) => {
+                                    return (
+                                        <EmployeeCard
+                                            key={employee?.id}
+                                            {...employee}
+                                            initialRole={employee?.role}
+                                            setTeamLeads={setTeamLeads}
+                                            teamLeads={teamLeads}
+                                            employees={employees}
+                                            handleNavigate={handleNavigate}
+                                        />
+                                    );
+                                })}
+                            <div className='newEmployeeCard addNew'>
+                                <button onClick={() => navigate('/home/add')}>
+                                    <img
+                                        src={`${
+                                            import.meta.env.VITE_REACT_URL
+                                        }/add_icon.svg`}
+                                        alt='Add employee Icon'
                                     />
-                                );
-                            })}
-                        <NewEmployee />
+                                </button>
+                                <p>Add new employee</p>
+                            </div>
+                        </div>
+                        <div className='pageNavigation'>
+                            {page > 1 && (
+                                <Button
+                                    role='prevPage'
+                                    text='Previous page'
+                                    handleClick={() => {
+                                        setPage((prev) => prev - 1);
+                                        setOffset((prev) => prev - 8);
+                                    }}
+                                    img={`${
+                                        import.meta.env.VITE_REACT_URL
+                                    }/arrowBack.svg`}
+                                />
+                            )}
+                            {page < totalPages.current && (
+                                <Button
+                                    role='nextPage'
+                                    handleClick={() => {
+                                        setPage((prev) => prev + 1);
+                                        setOffset((prev) => prev + 8);
+                                    }}
+                                    img={`${
+                                        import.meta.env.VITE_REACT_URL
+                                    }/arrowNext.svg`}
+                                    text='Next page'
+                                />
+                            )}
+                        </div>
                     </div>
                 </>
             )}
