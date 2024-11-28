@@ -8,10 +8,21 @@
     border-radius: 3px;
 }
 .removeWarning {
-    color: var(--warning);
     font-weight: var(--medium);
     line-height: 1.2;
     margin: 0 0 1rem;
+}
+
+.inspect input {
+    border: none;
+    background-color: ghostwhite;
+    text-align: end;
+    margin: 0;
+    width: 40%;
+
+    &:focus-visible {
+        outline: 1px solid var(--subtle);
+    }
 }
 
 .removeContainer {
@@ -34,21 +45,7 @@
     text-align: end;
 }
 
-#inspectEmployee .btn .return img {
+#inspectEmployee .btn.return img {
     width: 1.2rem;
     margin: 0;
-}
-
-.btn.warningReturn {
-    background-color: var(--warning);
-    &:hover {
-        filter: brightness(150%);
-    }
-}
-
-.btn.confirm {
-    background-color: var(--confirm);
-    &:hover {
-        filter: brightness(150%);
-    }
 }

@@ -3,12 +3,14 @@ import EmployeeCard from '../../Components/EmployeeCard/EmployeeCard';
 import './EmployeeList.css';
 import Filter from '../../Components/Filter/Filter';
 import NewEmployee from '../../Components/NewEmployee/NewEmployee';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { getAllEmployees, employeeCount } from '../../utils/requests';
+import { sortByName } from '../../utils/filterEmployees';
 
 function EmployeeList() {
     const [employees, setEmployees] = useState([]);
     const [sortedEmployees, setSortedEmployees] = useState([]);
+    const [offset, setOffset] = useState(0);
     const navigate = useNavigate();
 
     function handleNavigate(id) {
@@ -22,31 +24,25 @@ function EmployeeList() {
         Finance: '',
     });
 
-    console.log(teamLeads);
     // Effect to fetch employee data from backend
     useEffect(() => {
-        const fetchAPI = async () => {
+        const getAll = async () => {
             try {
-                const response = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/employees`
-                );
+                const employeeCount = employeeCount();
+                console.log(employeeCount);
+                const response = await getAllEmployees();
                 setEmployees(response.data);
-                setSortedEmployees(
-                    response.data.sort((a, b) =>
-                        a.firstname.localeCompare(b.firstname)
-                    )
-                );
+                setSortedEmployees(sortByName(response.data));
             } catch (error) {
                 console.error('Error fetching data: ', error);
             }
         };
-
-        fetchAPI();
-    }, []);
+        getAll();
+    }, [offset]);
 
     return (
         <section id='list'>
-            {employees.length < 1 ? (
+            {employees?.length < 1 ? (
                 <div>
                     <p>There doesn't seem to be any employees currently!</p>
                 </div>

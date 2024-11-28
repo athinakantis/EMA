@@ -7,7 +7,10 @@
     text-align: center;
     justify-content: center;
     border: 1px solid var(--subtle);
-    min-height: 580px;
+}
+
+.newEmployeeCard .frame {
+    height: 200px;
 }
 
 .addNew button {
@@ -57,4 +60,12 @@ form select {
 
 .newEmployeeCard form > div:last-of-type {
     border: none;
+}
+
+#addEmployee .addNew {
+    height: 642px;
+}
+
+#addEmployee div {
+    max-width: 410px;
 }

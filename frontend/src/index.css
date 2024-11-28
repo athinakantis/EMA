@@ -15,9 +15,8 @@
     --mainColorAccent: #8b8bbe;
     --dark: #212325;
     --accent: #f48023;
+    --accentLight: #ffe5d0;
     --subtle: #ddddec;
-    --confirm: #284428;
-    --warning: #ff0000;
 
     --light: 300;
     --medium: 500;
@@ -41,14 +40,4 @@ body {
 main {
     min-height: calc(100vh - 5.1rem);
     margin: 2rem 0 0;
-}
-
-button {
-    border: none;
-    border-radius: 5px;
-    padding: 0.3rem;
-
-    &:hover {
-        cursor: pointer;
-    }
 }

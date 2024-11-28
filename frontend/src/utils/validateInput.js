@@ -53,3 +53,15 @@ export function validateUpdateEmp({ ...input }) {
         throw new Error('Invalid salary');
     }
 }
+
+export function updateFormCheck(formData, employee) {
+    return (
+        JSON.stringify(formData) ===
+        JSON.stringify({
+            department: employee.department,
+            location: employee.location,
+            salary: employee.salary,
+            id: employee.id.toString(),
+        })
+    );
+}

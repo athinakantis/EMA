@@ -3,6 +3,7 @@ import './NewEmployee.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { validateNewEmp } from '../../utils/validateInput';
+import { addNewEmployee } from '../../utils/requests';
 
 function NewEmployee() {
     const [isEditing, setIsEditing] = useState(false);
@@ -20,7 +21,7 @@ function NewEmployee() {
         startdate: currentDate,
     });
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const { firstname, lastname } = formData;
 
     function handleChange(e) {
@@ -44,11 +45,8 @@ function NewEmployee() {
         if (submitted) {
             async function submitForm() {
                 try {
-                    const response = await axios.post(
-                        `${import.meta.env.VITE_API_URL}/add`,
-                        formData
-                    );
-                    navigate('/home/success', {state: response.data})
+                    const response = addNewEmployee(formData);
+                    navigate('/home/success', { state: response.data });
                 } catch (error) {
                     console.error(error);
                     setMsg(error.message);
@@ -71,7 +69,7 @@ function NewEmployee() {
                         {firstname && lastname && (
                             <img
                                 src={`https://robohash.org/${firstname}${lastname}.png?set=set5&size=175x175`}
-                            ></img>
+                            />
                         )}
                     </div>
                     <form>

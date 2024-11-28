@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import Select from '../CustomComponents/Select/Select';
-import './Filter.css'
+import './Filter.css';
 
 function Filter({ employees, setSortedEmployees }) {
     const [filterGroup, setFilterGroup] = useState('');
 
     function handleFilterGroup(e) {
-        if (e.target.value !== 'Default') {
-            setFilterGroup(e.target.value);
+        const { value } = e.target;
+        if (value !== 'Default') {
+            setFilterGroup(value.toLowerCase());
         } else {
             setFilterGroup('');
-            setSortedEmployees(employees.sort((a, b) => a.firstname.localeCompare(b.firstname)))
+            setSortedEmployees(
+                employees.sort((a, b) => a.firstname.localeCompare(b.firstname))
+            );
         }
     }
 
@@ -23,9 +26,9 @@ function Filter({ employees, setSortedEmployees }) {
                 onChange={(e) => handleFilterGroup(e)}
             >
                 <option value='Default'>Name</option>
-                <option value='location'>Location</option>
-                <option value='department'>Department</option>
-                <option value='salary'>Salary</option>
+                <option value='Location'>Location</option>
+                <option value='Department'>Department</option>
+                <option value='Salary'>Salary</option>
             </select>
             {filterGroup && (
                 <Select

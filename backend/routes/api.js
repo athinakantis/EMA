@@ -3,13 +3,16 @@ const router = express.Router();
 const db = require('../db');
 
 router.get('/employees', (req, res) => {
-    const sql =
-        'SELECT id, firstname, lastname, role, startdate FROM EMPLOYEES';
+    const sql = 'select * from employees';
     db.query(sql)
         .then(([rows]) => {
             res.send(rows);
         })
         .catch(console.log);
+});
+
+router.get('/employeeCount', (req, res) => {
+    const sql = `select count(id) from employees;`;
 });
 
 router.post('/add', async (req, res) => {
@@ -26,7 +29,7 @@ router.post('/add', async (req, res) => {
 
     try {
         console.log('Received request to api/add');
-        const sql = `INSERT INTO EMPLOYEES (firstname, lastname, employment_type, role, startdate, department, location, salary) VALUES(?, ?, ?, ?, ?, ?, ?, ?)`;
+        const sql = `insert into employees (firstname, lastname, employment_type, role, startdate, department, location, salary) VALUES(?, ?, ?, ?, ?, ?, ?, ?)`;
 
         db.execute(sql, [
             firstname,
@@ -87,6 +90,7 @@ router.put('/employee/:id', async (req, res) => {
     try {
         console.log('Received request to update employee');
         const { department, location, salary, id } = req.body.data;
+        console.log(department, location, salary, id);
         const sql = `update employees set department = ? , location = ? , salary = ? where id = ?`;
         db.execute(sql, [department, location, salary, id]);
         res.send(

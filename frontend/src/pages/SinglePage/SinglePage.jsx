@@ -1,9 +1,15 @@
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Button from '../../Components/CustomComponents/Button/Button';
-import { validateUpdateEmp } from '../../utils/validateInput';
+import { updateFormCheck, validateUpdateEmp } from '../../utils/validateInput';
 import { useState, useEffect } from 'react';
+import Spinner from '../../Components/Spinner/Spinner';
 import axios from 'axios';
 import './SinglePage.css';
+import {
+    getEmployee,
+    updateEmployee,
+    deleteEmployee,
+} from '../../utils/requests';
 
 function SinglePage() {
     const navigate = useNavigate();
@@ -14,16 +20,17 @@ function SinglePage() {
     const [edit, setEdit] = useState(false);
     const [loading, setLoading] = useState(true);
     const [msg, setMsg] = useState('');
+    const [formData, setFormData] = useState({});
 
     // Delete employee
     useEffect(() => {
         const removeEmployee = async () => {
             try {
                 if (verifyRemove) {
-                    const response = await axios.delete(
-                        `${import.meta.env.VITE_API_URL}/employee/${id}`
-                    );
-                    navigate('/home/success', { state: response });
+                    const response = await deleteEmployee(id);
+                    navigate('/home/success', {
+                        state: response.data,
+                    });
                 }
             } catch (err) {
                 console.error(err);
@@ -37,11 +44,15 @@ function SinglePage() {
     useEffect(() => {
         const fetchAPI = async () => {
             try {
-                const response = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/employee/${id}`
-                );
-                setEmployee(response.data[0]);
-                console.log(response.data[0]);
+                const response = await getEmployee(id);
+                const employeeData = response.data[0];
+                setEmployee(employeeData);
+                setFormData({
+                    department: employeeData.department,
+                    location: employeeData.location,
+                    salary: employeeData.salary,
+                    id: id,
+                });
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data: ', error);
@@ -52,7 +63,7 @@ function SinglePage() {
 
     function handleChange(e) {
         const { name, value } = e.target;
-        setEmployee((prev) => ({ ...prev, [name]: value }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
     }
 
     function renderInput(field, value) {
@@ -76,18 +87,11 @@ function SinglePage() {
 
     async function handleUpdateEmployee() {
         try {
-            await validateUpdateEmp({ ...employee });
-            const response = await axios.put(
-                `${import.meta.env.VITE_API_URL}/employee/${id}`,
-                {
-                    data: {
-                        department: employee.department,
-                        location: employee.location,
-                        salary: employee.salary,
-                        id: id,
-                    },
-                }
-            );
+            if (updateFormCheck(formData, employee)) {
+                return setEdit((prev) => !prev);
+            }
+            validateUpdateEmp({ ...formData });
+            const response = updateEmployee(formData);
             navigate(`/home/success`, { state: response.data });
         } catch (err) {
             console.error(err);
@@ -96,32 +100,15 @@ function SinglePage() {
     }
 
     if (loading) {
-        return (
-            <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='1em'
-                height='1em'
-                viewBox='0 0 24 24'
-            >
-                <path
-                    fill='currentColor'
-                    d='M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z'
-                >
-                    <animateTransform
-                        attributeName='transform'
-                        dur='0.75s'
-                        repeatCount='indefinite'
-                        type='rotate'
-                        values='0 12 12;360 12 12'
-                    />
-                </path>
-            </svg>
-        );
+        return <Spinner />;
     }
 
     return (
         <section id='inspectEmployee'>
-            <button className='btn return' onClick={() => navigate(-1)}>
+            <button
+                className='btn return'
+                onClick={() => navigate(-1)}
+            >
                 <img
                     src={`${import.meta.env.VITE_REACT_URL}/returnIcon.svg`}
                     alt='Return icon'
@@ -133,16 +120,22 @@ function SinglePage() {
                     <h2>
                         {employee?.firstname} {employee?.lastname}
                     </h2>
-                    <Button
-                        role='secondary edit'
-                        handleClick={
-                            edit
-                                ? handleUpdateEmployee
-                                : () => setEdit((prev) => !prev)
-                        }
-                        img={`${import.meta.env.VITE_REACT_URL}/edit.svg`}
-                        imgAlt='Edit'
-                    />
+                    {edit ? (
+                        <Button
+                            role='save'
+                            handleClick={handleUpdateEmployee}
+                            img={`${
+                                import.meta.env.VITE_REACT_URL
+                            }/save_Icon.svg`}
+                        />
+                    ) : (
+                        <Button
+                            role='edit'
+                            handleClick={() => setEdit((prev) => !prev)}
+                            img={`${import.meta.env.VITE_REACT_URL}/edit.svg`}
+                            imgAlt='Edit'
+                        />
+                    )}
                 </div>
                 <div className='frame'>
                     <img
@@ -153,21 +146,28 @@ function SinglePage() {
                     <p>
                         Role <span>{employee?.role}</span>
                     </p>
+                    <p>
+                        Employment Type <span>{employee?.employment_type}</span>
+                    </p>
 
                     <p>
                         Department
-                        {renderInput('department', employee?.department)}
+                        {renderInput('department', formData?.department)}
                     </p>
                     <p>
-                        Location {renderInput('location', employee?.location)}
+                        Location {renderInput('location', formData?.location)}
                     </p>
-                    <p>Salary {renderInput('salary', employee?.salary)}</p>
+                    <p>Salary {renderInput('salary', formData?.salary)}</p>
                 </div>
 
                 {msg && <p className='error'>{msg}</p>}
 
                 {!remove ? (
-                    <Button text='Remove' handleClick={() => setRemove(true)} />
+                    <Button
+                        text='Remove'
+                        role='removeEmp'
+                        handleClick={() => setRemove(true)}
+                    />
                 ) : (
                     <div className='removeContainer'>
                         <p className='removeWarning'>

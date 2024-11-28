@@ -1,6 +1,6 @@
-const createdb = `create database if not exists staffoverflow;`
+const createdb = `create database if not exists staffoverflow;`;
 
-const usedb = `use staffoverflow;`
+const usedb = `use staffoverflow;`;
 
 const createTable = `CREATE TABLE IF NOT EXISTS employees (
     id INT AUTO_INCREMENT,
@@ -13,7 +13,23 @@ const createTable = `CREATE TABLE IF NOT EXISTS employees (
     location VARCHAR(30) NOT NULL,
     salary DECIMAL(8, 2) NOT NULL, -- Allow higher salary values
     PRIMARY KEY (id)
-);`
+);`;
+
+// Note to self: if creating teamleads and department table,
+// department of employees table has to be updated
+
+// const createTeamLeadsTable = `CREATE TABLE IF NOT EXISTS teamleads(
+//     departmentId varchar(30) NOT NULL,
+//     employeeId integer not null,
+//     primary key (departmentId, employeeId)
+//     foreign key (departmentId) references department(id),
+//     foreign key (employeeId) references employees(id)
+// );`;
+
+// `create table if not exists department(
+//     id integer not null,
+//     name varchar(30) not null
+// );`;
 
 const addEmployees = `INSERT INTO employees (firstname, lastname, employment_type, role, startdate, department, location, salary) VALUES
 ('Mia', 'Virtanen', 'Full-time', 'Developer', '2014-03-17', 'IT', 'Helsinki', 4580),
@@ -36,7 +52,7 @@ const addEmployees = `INSERT INTO employees (firstname, lastname, employment_typ
 ('Akseli', 'Koivisto', 'Full-time', 'Admin Assistant', '2019-03-08', 'Admin', 'Pasila', 3000),
 ('Aliisa', 'Peltonen', 'Full-time', 'Financial Analyst', '2012-11-21', 'Finance', 'Helsinki', 5200),
 ('Luukas', 'Leinonen', 'Full-time', 'Data Scientist', '2023-11-19', 'IT', 'Pasila', 5500);
-`
+`;
 
 const bigstring = `create database if not exists staffoverflow;use staffoverflow; CREATE TABLE IF NOT EXISTS employees (
     id INT AUTO_INCREMENT,
@@ -70,6 +86,6 @@ const bigstring = `create database if not exists staffoverflow;use staffoverflow
 ('Akseli', 'Koivisto', 'Full-time', 'Admin Assistant', '2019-03-08', 'Admin', 'Pasila', 3000),
 ('Aliisa', 'Peltonen', 'Full-time', 'Financial Analyst', '2012-11-21', 'Finance', 'Helsinki', 5200),
 ('Luukas', 'Leinonen', 'Full-time', 'Data Scientist', '2023-11-19', 'IT', 'Pasila', 5500);
-`
+`;
 
-module.exports = {createdb, usedb, createTable, addEmployees, bigstring}
+module.exports = { createdb, usedb, createTable, addEmployees, bigstring };

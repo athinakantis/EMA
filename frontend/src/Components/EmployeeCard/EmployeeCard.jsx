@@ -51,7 +51,7 @@ function EmployeeCard(props) {
     }
 
     return (
-        <div className={`employeeCard ${department}`}>
+        <div className={`employeeCard`}>
             <div className='title'>
                 <p className='emName'>
                     {firstname} {lastname}
@@ -59,7 +59,7 @@ function EmployeeCard(props) {
             </div>
             <div className='frame'>
                 <img
-                    src={`https://robohash.org/${firstname}${lastname}.png?set=set5&size=175x175`}
+                    src={`https://robohash.org/${firstname}${lastname}.png?set=set5&size=140x140`}
                 />
                 {deptTeamLead === id && (
                     <svg
@@ -108,13 +108,17 @@ function EmployeeCard(props) {
                 {yearsEmployed % 5 === 0 && yearsEmployed > 1 && (
                     <Button
                         text='Schedule recognition meeting'
-                        className='schedule recognition'
+                        role='schedule recognition'
+                        img={`${import.meta.env.VITE_REACT_URL}/cake.svg`}
                     />
                 )}
                 {monthsEmployed < 6 && (
                     <Button
-                        text='Schedule probation review'
-                        className='schedule probation'
+                        text='Schedule assessment review'
+                        role='schedule assessment'
+                        img={`${
+                            import.meta.env.VITE_REACT_URL
+                        }/chat_bubbles.svg`}
                     />
                 )}
             </div>
