@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../db');
 
 router.get('/employees', (req, res) => {
-    const sql = 'select * from employees';
+    const sql = 'select * from employees order by firstname';
     db.query(sql)
         .then(([rows]) => {
             res.send(rows);
@@ -11,8 +11,33 @@ router.get('/employees', (req, res) => {
         .catch(console.log);
 });
 
+router.get('/employees/range/:offset', (req, res) => {
+    const { offset } = req.params;
+
+    const sql = `select * from employees order by firstname limit 8 offset ?`;
+    db.query(sql, [+offset])
+        .then((data) => {
+            res.send(data[0]);
+        })
+        .catch(console.log);
+});
+
 router.get('/employeeCount', (req, res) => {
-    const sql = `select count(id) from employees;`;
+    const sql = `select count(id) as count from employees;`;
+
+    db.query(sql)
+        .then((data) => {
+            if (Number.isInteger(data[0][0].count)) {
+                res.send(JSON.stringify(data[0][0].count));
+            } else {
+                res.status(500).send(
+                    JSON.stringify({
+                        message: 'Error retrieving employeecount from database',
+                    })
+                );
+            }
+        })
+        .catch(console.log);
 });
 
 router.post('/add', async (req, res) => {
