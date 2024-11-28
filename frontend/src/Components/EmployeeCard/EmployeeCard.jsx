@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './EmployeeCard.css';
 import Button from '../CustomComponents/Button/Button';
-import { calcMonthsWorked, calcYearsWorked } from '../../utils/calcTimeWorked';
+import { calcMonthsWorked, calcYearsWorked } from '../../utils/calc';
 import { useNavigate } from 'react-router-dom';
 
 function EmployeeCard(props) {
