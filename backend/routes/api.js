@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
+// GET requests
 router.get('/employees', (req, res) => {
     const sql = 'select * from employees order by firstname';
     db.query(sql)
@@ -40,6 +41,20 @@ router.get('/employeeCount', (req, res) => {
         .catch(console.log);
 });
 
+router.get('/employee/:id/', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const sql = `select * from employees where id=?`;
+
+        db.query(sql, [id]).then(([rows]) => {
+            res.send(rows);
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
+});
+
+// POST requests
 router.post('/add', async (req, res) => {
     const {
         firstname,
@@ -81,19 +96,7 @@ router.post('/add', async (req, res) => {
     }
 });
 
-router.get('/employee/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        const sql = `select * from employees where id=?`;
-
-        db.query(sql, [id]).then(([rows]) => {
-            res.send(rows);
-        });
-    } catch (err) {
-        console.log(err.message);
-    }
-});
-
+// DELETE requests
 router.delete('/employee/:id', async (req, res) => {
     try {
         console.log('Received request to delete employee');
@@ -111,6 +114,7 @@ router.delete('/employee/:id', async (req, res) => {
     }
 });
 
+// PUT requests
 router.put('/employee/:id', async (req, res) => {
     try {
         console.log('Received request to update employee');
