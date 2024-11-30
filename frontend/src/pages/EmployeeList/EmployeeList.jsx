@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import EmployeeCard from '../../Components/EmployeeCard/EmployeeCard';
 import Filter from '../../Components/Filter/Filter';
 import Button from '../../Components/CustomComponents/Button/Button';
-import NewEmployee from '../../Components/NewEmployee/NewEmployee';
 import { useNavigate } from 'react-router-dom';
 import { calcListPages } from '../../utils/calc';
 import {
@@ -38,6 +37,7 @@ function EmployeeList() {
                 totalPages.current = calcListPages(await getEmployeeCount());
                 setEmployees(await getEmployeeRange(offset));
                 setSortedEmployees(await getAllEmployees());
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching data: ', error);
             }

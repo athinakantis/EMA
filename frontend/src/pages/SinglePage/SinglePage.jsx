@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Button from '../../Components/CustomComponents/Button/Button';
 import { updateFormCheck, validateUpdateEmp } from '../../utils/validateInput';
 import { useState, useEffect } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Spinner from '../../Components/Spinner/Spinner';
 import './SinglePage.css';
 import {
@@ -97,10 +98,6 @@ function SinglePage() {
         }
     }
 
-    if (loading) {
-        return <Spinner />;
-    }
-
     return (
         <section id='inspectEmployee'>
             <button
@@ -119,28 +116,11 @@ function SinglePage() {
                         <h2>
                             {employee?.firstname} {employee?.lastname}
                         </h2>
-                        {edit ? (
-                            <Button
-                                role='save'
-                                handleClick={handleUpdateEmployee}
-                                img={`${
-                                    import.meta.env.VITE_REACT_URL
-                                }/save_Icon.svg`}
-                            />
-                        ) : (
-                            <Button
-                                role='edit'
-                                handleClick={() => setEdit((prev) => !prev)}
-                                img={`${
-                                    import.meta.env.VITE_REACT_URL
-                                }/edit.svg`}
-                                imgAlt='Edit'
-                            />
-                        )}
                     </div>
                     <div className='frame'>
-                        <img
+                        <LazyLoadImage
                             src={`https://robohash.org/${employee?.firstname}${employee?.lastname}.png?set=set5&size=175x175`}
+                            placeholderSrc={<Spinner />}
                         />
                     </div>
 
@@ -175,6 +155,22 @@ function SinglePage() {
                 </div>
 
                 <div className='emDetails'>
+                    {edit ? (
+                        <Button
+                            role='save'
+                            handleClick={handleUpdateEmployee}
+                            img={`${
+                                import.meta.env.VITE_REACT_URL
+                            }/save_Icon.svg`}
+                        />
+                    ) : (
+                        <Button
+                            role='edit'
+                            handleClick={() => setEdit((prev) => !prev)}
+                            img={`${import.meta.env.VITE_REACT_URL}/edit.svg`}
+                            imgAlt='Edit'
+                        />
+                    )}
                     <p>
                         Role <span>{employee?.role}</span>
                     </p>

@@ -24,12 +24,11 @@
 }
 
 #root {
-    min-height: 100vh;
+    min-height: 99vh;
 }
 
 body {
     min-width: 320px;
-    min-height: 100vh;
     font-family: 'Geist', sans-serif;
     font-size: 16px;
     color: var(--dark);
@@ -38,6 +37,6 @@ body {
 }
 
 main {
-    min-height: calc(100vh - 5.1rem);
+    min-height: calc(100vh - 10rem);
     margin: 2rem 0 0;
 }

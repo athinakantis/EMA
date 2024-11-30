@@ -1,14 +1,17 @@
 #inspectEmployee {
     margin: 4rem auto;
-    width: 80%;
+    width: 60%;
     padding: 1rem;
+    min-height: calc(100vh - 12rem);
 }
 
-.inspect {
+#inspectEmployee .inspect {
     border: 1px solid var(--subtle);
     border-radius: 3px;
     filter: none;
     border: none;
+    flex: 50%;
+    max-width: 100%;
 
     &:hover {
         filter: none;
@@ -60,7 +63,14 @@
 #employeeContainer {
     background-color: white;
     display: flex;
+    height: 80%;
 }
 
 #employeeContainer .emDetails {
+    display: block;
+    padding: 2rem;
+    flex: 50%;
+}
+
+.inspect .frame {
 }
