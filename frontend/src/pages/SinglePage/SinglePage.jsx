@@ -90,7 +90,7 @@ function SinglePage() {
                 return setEdit((prev) => !prev);
             }
             validateUpdateEmp({ ...formData });
-            const response = updateEmployee(formData);
+            const response = await updateEmployee(formData);
             navigate(`/home/success`, { state: response.data });
         } catch (err) {
             console.error(err);
@@ -119,73 +119,81 @@ function SinglePage() {
                     </div>
                     <div className='frame'>
                         <LazyLoadImage
-                            src={`https://robohash.org/${employee?.firstname}${employee?.lastname}.png?set=set5&size=175x175`}
-                            placeholderSrc={<Spinner />}
+                            src={`https://robohash.org/${employee?.firstname}${employee?.lastname}.png?set=set5&size=300x300`}
+                            placeholder={<Spinner />}
                         />
                     </div>
-
-                    {!remove ? (
-                        <Button
-                            text='Remove'
-                            role='removeEmp'
-                            handleClick={() => setRemove(true)}
-                        />
-                    ) : (
-                        <div className='removeContainer'>
-                            <p className='removeWarning'>
-                                Are you sure you want to remove{' '}
-                                {employee?.firstname} {employee?.lastname}? This
-                                action is irreversible!
-                            </p>
-
-                            <div className='warningContainer'>
-                                <Button
-                                    role='warningReturn'
-                                    text='No, go back ✘'
-                                    handleClick={() => setRemove(false)}
-                                />
-                                <Button
-                                    role='confirm'
-                                    text='Yes, remove ✔'
-                                    handleClick={() => handleRemove(id)}
-                                />
-                            </div>
-                        </div>
-                    )}
                 </div>
 
-                <div className='emDetails'>
-                    {edit ? (
-                        <Button
-                            role='save'
-                            handleClick={handleUpdateEmployee}
-                            img={`${
-                                import.meta.env.VITE_REACT_URL
-                            }/save_Icon.svg`}
-                        />
-                    ) : (
-                        <Button
-                            role='edit'
-                            handleClick={() => setEdit((prev) => !prev)}
-                            img={`${import.meta.env.VITE_REACT_URL}/edit.svg`}
-                            imgAlt='Edit'
-                        />
-                    )}
-                    <p>
-                        Role <span>{employee?.role}</span>
-                    </p>
-                    <p>
-                        Employment Type <span>{employee?.employment_type}</span>
-                    </p>
+                <div className='emInfo'>
+                    <div className='emDetails'>
+                        {edit ? (
+                            <Button
+                                role='save'
+                                handleClick={handleUpdateEmployee}
+                                img={`${
+                                    import.meta.env.VITE_REACT_URL
+                                }/save_Icon.svg`}
+                            />
+                        ) : (
+                            <Button
+                                role='edit'
+                                handleClick={() => setEdit((prev) => !prev)}
+                                img={`${
+                                    import.meta.env.VITE_REACT_URL
+                                }/edit.svg`}
+                                imgAlt='Edit'
+                            />
+                        )}
+                        <p>
+                            Role <span>{employee?.role}</span>
+                        </p>
+                        <p>
+                            Employment Type{' '}
+                            <span>{employee?.employment_type}</span>
+                        </p>
 
-                    <p>
-                        Department
-                        {renderInput('department', formData?.department)}
-                    </p>
-                    <p>
-                        Location {renderInput('location', formData?.location)}
-                    </p>
-                    <p>Salary {renderInput('salary', formData?.salary)}</p>
+                        <p>
+                            Department
+                            {renderInput('department', formData?.department)}
+                        </p>
+                        <p>
+                            Location{' '}
+                            {renderInput('location', formData?.location)}
+                        </p>
+                        <p>Salary {renderInput('salary', formData?.salary)}</p>
+                    </div>
+
+                    <div className='removeContainer'>
+                        {!remove ? (
+                            <Button
+                                text='Remove'
+                                role='removeEmp'
+                                handleClick={() => setRemove(true)}
+                            />
+                        ) : (
+                            <>
+                                <p className='removeWarning'>
+                                    Are you sure you want to remove{' '}
+                                    {employee?.firstname} {employee?.lastname}?
+                                    This action is irreversible!
+                                </p>
+
+                                <div className='warningContainer'>
+                                    <Button
+                                        role='warningReturn'
+                                        text='No, go back ✘'
+                                        handleClick={() => setRemove(false)}
+                                    />
+                                    <Button
+                                        role='confirm'
+                                        text='Yes, remove ✔'
+                                        handleClick={() => handleRemove(id)}
+                                    />
+                                </div>
+                            </>
+                        )}
+                    </div>
                 </div>
 
                 {msg && <p className='error'>{msg}</p>}

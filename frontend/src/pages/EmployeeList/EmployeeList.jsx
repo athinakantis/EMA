@@ -16,6 +16,7 @@ function EmployeeList() {
     const [employees, setEmployees] = useState([]);
     const [sortedEmployees, setSortedEmployees] = useState([]);
     const [offset, setOffset] = useState(0);
+    const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const totalPages = useRef(0);
 

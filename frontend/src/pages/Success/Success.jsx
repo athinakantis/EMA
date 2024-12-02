@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 function Success() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { status, message, id } = location.state;
+    const { message, id } = location.state;
 
     useEffect(() => {
         setTimeout(() => navigate('/home/employees'), 3000);

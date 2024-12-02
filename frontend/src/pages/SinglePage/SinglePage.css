@@ -10,7 +10,7 @@
     border-radius: 3px;
     filter: none;
     border: none;
-    flex: 50%;
+    flex: 40%;
     max-width: 100%;
 
     &:hover {
@@ -63,14 +63,36 @@
 #employeeContainer {
     background-color: white;
     display: flex;
-    height: 80%;
+    min-height: 420px;
 }
 
-#employeeContainer .emDetails {
-    display: block;
-    padding: 2rem;
+#employeeContainer .emInfo {
+    padding: 0.7rem 0.9rem 1rem;
     flex: 50%;
+    margin: 0;
+    justify-content: space-between;
+    flex-direction: column;
+    display: flex;
+}
+
+.emDetails input {
+    text-align: end;
 }
 
 .inspect .frame {
+    height: 100%;
+}
+
+.btn:is(.edit, .save) {
+    margin: 0 0 1rem auto;
+    display: block;
+
+    & img {
+        width: 1.7rem;
+    }
+}
+
+.removeEmp {
+    margin: 0 0 0 auto;
+    display: block;
 }

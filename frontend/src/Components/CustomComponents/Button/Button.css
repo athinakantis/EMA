@@ -38,7 +38,7 @@ main button {
 
 .emOptions button,
 .removeContainer .btn,
-.inspect .removeEmp {
+.removeEmp {
     width: fit-content;
     border: none;
     font-size: 0.7rem;

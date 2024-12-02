@@ -42,7 +42,7 @@
     display: flex;
 }
 
-.emDetails p {
+.emDetails p:not(.removeWarning) {
     flex: 100%;
     display: flex;
     justify-content: space-between;
