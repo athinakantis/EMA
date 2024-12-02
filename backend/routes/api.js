@@ -115,7 +115,7 @@ router.delete('/employee/:id', async (req, res) => {
 });
 
 // PUT requests
-router.put('/employee/:id', async (req, res) => {
+router.patch('/employee/:id', async (req, res) => {
     try {
         console.log('Received request to update employee');
         const { department, location, salary, id } = req.body.data;
