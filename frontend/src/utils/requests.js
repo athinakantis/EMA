@@ -29,9 +29,9 @@ export async function getEmployeeCount() {
     return employeeCount.data;
 }
 
-/* PUT */
+/* PATCH */
 export function updateEmployee(formData) {
-    return axios.put(
+    return axios.patch(
         `${import.meta.env.VITE_API_URL}/employee/${formData.id}`,
         {
             data: {
