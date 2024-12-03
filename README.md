@@ -7,6 +7,25 @@
 -   Options to filter employees based on **department, location or salary**
 -   Option to promote one member of each department to teamleader
 
+## Prerequisites
+
+In mysql, there needs to be a user with privileges to create a database.  
+If there is no user you can create it by running a few commands:
+
+1. `mysql`
+2. `create user username@localhost identified by 'secret123'`
+3. `grant all privileges on staffoverflow.* to username@localhost`
+
+Then, create an `.env` file in the `/backend` directory with the following properties:
+
+```
+DB_HOST = localhost
+DB_USER = username
+DB_PASSWORD = secret123,
+```
+
+Now the program will use your user details when running the database!
+
 ## How To Use It
 
 1. Clone the repository  
@@ -160,7 +179,7 @@ const totalPages = useRef(0);
 ```
 
 I initially set the totalPages to zero.
-Later, I use a function I created to calculate how many pages will be needed based on how many total employees there are.
+Later, I use a function I created to calculate how many pages will be needed based on how many total employees or filtered employees there are.
 
 ```js
 totalPages.current = calcListPages(await getEmployeeCount());
