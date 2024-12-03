@@ -7,6 +7,18 @@ section {
     width: 100%;
 }
 
+#emptyList {
+    background-color: white;
+    border-radius: 15px;
+    width: fit-content;
+    padding: 2rem;
+    border: 1px solid var(--subtle);
+    margin: 6rem auto 0;
+}
+
+#emptyList p {
+}
+
 #employeeList {
     display: flex;
     gap: 1rem;

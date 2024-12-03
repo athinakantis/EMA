@@ -16,13 +16,13 @@ function Select({ group, setFilter, setOffset }) {
             name='emFilter'
             id='emFilter'
         >
-            <option value='Default'></option>
+            <option value='Default'>No filter</option>
             {data.map((option) => (
                 <option
                     key={option.id}
-                    value={option}
+                    value={option.value}
                 >
-                    {option}
+                    {option.data}
                 </option>
             ))}
         </select>

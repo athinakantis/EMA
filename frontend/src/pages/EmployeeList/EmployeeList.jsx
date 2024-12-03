@@ -11,6 +11,7 @@ import {
     getEmployeeRange,
 } from '../../utils/requests';
 import './EmployeeList.css';
+import { Link } from 'react-router-dom';
 
 function EmployeeList() {
     const navigate = useNavigate();
@@ -61,10 +62,7 @@ function EmployeeList() {
 
         if (filter !== 'Default') {
             getFilteredEmployees();
-            console.log(filterGroup, filter);
         } else {
-            console.log(filter);
-            console.log('filter is default');
             getEmployees();
         }
     }, [offset, filter]);
@@ -72,8 +70,9 @@ function EmployeeList() {
     return (
         <section id='list'>
             {employees?.length < 1 ? (
-                <div>
-                    <p>There doesn't seem to be any employees currently!</p>
+                <div id='emptyList'>
+                    <p>Employee list is currently empty!</p>
+                    <Link to='/home/add'>Add employees</Link>
                 </div>
             ) : (
                 <>

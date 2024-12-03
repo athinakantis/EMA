@@ -18,7 +18,7 @@ If there is no user you can create it by running a few commands:
 
 Then, create an `.env` file in the `/backend` directory with the following properties:
 
-```
+```js
 DB_HOST = localhost
 DB_USER = username
 DB_PASSWORD = secret123,

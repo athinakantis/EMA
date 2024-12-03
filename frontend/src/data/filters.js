@@ -1,15 +1,55 @@
 const options = {
     location: {
-        id: 0,
-        data: ['Pasila', 'Helsinki'],
+        data: [
+            {
+                id: 0,
+                data: 'Pasila',
+                value: 'Pasila',
+            },
+            {
+                id: 1,
+                data: 'Helsinki',
+                value: 'Helsinki',
+            },
+        ],
     },
     department: {
-        id: 1,
-        data: ['IT', 'Marketing', 'Admin', 'Finance'],
+        data: [
+            {
+                id: 0,
+                data: 'IT',
+                value: 'IT',
+            },
+            {
+                id: 1,
+                data: 'Marketing',
+                value: 'Marketing',
+            },
+            {
+                id: 2,
+                data: 'Admin',
+                value: 'Admin',
+            },
+            {
+                id: 3,
+                data: 'Finance',
+                value: 'Finance',
+            },
+        ],
     },
     salary: {
-        id: 2,
-        data: ['Descending: Highest to lowest', 'Ascending: Lowest to highest'],
+        data: [
+            {
+                id: 0,
+                data: 'Descending: Highest to lowest',
+                value: 'desc',
+            },
+            {
+                id: 1,
+                data: 'Ascending: Lowest to highest',
+                value: 'asc',
+            },
+        ],
     },
 };
 

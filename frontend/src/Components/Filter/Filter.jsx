@@ -8,6 +8,7 @@ function Filter({ setFilter, setOffset, setFilterGroup, filterGroup }) {
             setFilterGroup(value.toLowerCase());
         } else {
             setFilterGroup('Default');
+            setFilter('Default');
         }
     }
 

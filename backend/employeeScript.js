@@ -2,7 +2,7 @@ const createdb = `create database if not exists staffoverflow;`;
 
 const usedb = `use staffoverflow;`;
 
-const createTable = `CREATE TABLE IF NOT EXISTS employees (
+const createTable = `create table if not exists employees (
     id INT AUTO_INCREMENT,
     firstname VARCHAR(30) NOT NULL,
     lastname VARCHAR(30) NOT NULL,
@@ -15,11 +15,8 @@ const createTable = `CREATE TABLE IF NOT EXISTS employees (
     PRIMARY KEY (id)
 );`;
 
-// Note to self: if creating teamleads and department table,
-// department of employees table has to be updated
-
 // const createTeamLeadsTable = `CREATE TABLE IF NOT EXISTS teamleads(
-//     departmentId varchar(30) NOT NULL,
+//     departmentId integer NOT NULL,
 //     employeeId integer not null,
 //     primary key (departmentId, employeeId)
 //     foreign key (departmentId) references department(id),
@@ -31,7 +28,7 @@ const createTable = `CREATE TABLE IF NOT EXISTS employees (
 //     name varchar(30) not null
 // );`;
 
-const addEmployees = `INSERT INTO employees (firstname, lastname, employment_type, role, startdate, department, location, salary) VALUES
+const addEmployees = `insert into employees (firstname, lastname, employment_type, role, startdate, department, location, salary) VALUES
 ('Mia', 'Virtanen', 'Full-time', 'Developer', '2014-03-17', 'IT', 'Helsinki', 4580),
 ('Elias', 'Laine', 'Part-time', 'IT Support', '2016-07-22', 'IT', 'Pasila', 2170),
 ('Sofia', 'Niemi', 'Full-time', 'Marketing Lead', '2023-10-01', 'Marketing', 'Helsinki', 5200),

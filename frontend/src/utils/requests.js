@@ -30,9 +30,16 @@ export async function getEmployeeCount() {
 }
 
 export async function getFilteredCount(filter, value) {
-    const employeeCount = await axios.get(
-        `${import.meta.env.VITE_API_URL}/employeeCount/${filter}/${value}`
-    );
+    let employeeCount;
+    if (filter === 'salary') {
+        employeeCount = await axios.get(
+            `${import.meta.env.VITE_API_URL}/employeeCount/`
+        );
+    } else {
+        employeeCount = await axios.get(
+            `${import.meta.env.VITE_API_URL}/employeeCount/${filter}/${value}`
+        );
+    }
     return employeeCount.data;
 }
 

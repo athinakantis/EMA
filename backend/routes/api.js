@@ -46,11 +46,9 @@ router.get('/employee/:id/', async (req, res) => {
         const { id } = req.params;
         const sql = `select * from employees where id=?`;
 
-        db.query(sql, [id]).then(([rows]) => {
-            res.send(rows);
-        });
+        db.query(sql, [id]).then(([rows]) => res.send(rows));
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
     }
 });
 
@@ -70,8 +68,15 @@ router.get('/employeeCount/:filter/:value', async (req, res) => {
 router.get('/employees/:filter/:value/:offset', async (req, res) => {
     const { filter, value, offset } = req.params;
     try {
-        const sql = `select * from employees where ${filter} = ? order by firstname limit 8 offset ?;`;
-        db.execute(sql, [value, +offset]).then(([rows]) => res.send(rows));
+        if (filter === 'salary') {
+            db.execute(
+                `select * from employees order by salary ${value} limit 8 offset ?;`,
+                [+offset]
+            ).then(([rows]) => res.send(rows));
+        } else {
+            const sql = `select * from employees where ${filter} = ? order by firstname limit 8 offset ?;`;
+            db.execute(sql, [value, +offset]).then(([rows]) => res.send(rows));
+        }
     } catch (err) {
         console.error(err);
     }
@@ -121,7 +126,6 @@ router.post('/add', async (req, res) => {
 // DELETE requests
 router.delete('/employee/:id', async (req, res) => {
     try {
-        console.log('Received request to delete employee');
         const { id } = req.params;
         const sql = `delete from employees where id=? limit 1`;
         db.query(sql, [id]);
