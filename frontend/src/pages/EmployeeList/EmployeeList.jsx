@@ -5,7 +5,8 @@ import Button from '../../Components/CustomComponents/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { calcListPages } from '../../utils/calc';
 import {
-    getAllEmployees,
+    getFilteredCount,
+    getFilteredRange,
     getEmployeeCount,
     getEmployeeRange,
 } from '../../utils/requests';
@@ -14,11 +15,12 @@ import './EmployeeList.css';
 function EmployeeList() {
     const navigate = useNavigate();
     const [employees, setEmployees] = useState([]);
-    const [sortedEmployees, setSortedEmployees] = useState([]);
     const [offset, setOffset] = useState(0);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const totalPages = useRef(0);
+    const [filter, setFilter] = useState('Default');
+    const [filterGroup, setFilterGroup] = useState('Default');
 
     function handleNavigate(id) {
         navigate(`/home/employees/${id}`);
@@ -33,18 +35,39 @@ function EmployeeList() {
 
     // Effect to fetch employee data from backend
     useEffect(() => {
-        const getAll = async () => {
+        const getEmployees = async () => {
             try {
                 totalPages.current = calcListPages(await getEmployeeCount());
                 setEmployees(await getEmployeeRange(offset));
-                setSortedEmployees(await getAllEmployees());
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data: ', error);
             }
         };
-        getAll();
-    }, [offset]);
+
+        const getFilteredEmployees = async () => {
+            try {
+                totalPages.current = calcListPages(
+                    await getFilteredCount(filterGroup, filter)
+                );
+                setEmployees(
+                    await getFilteredRange(filterGroup, filter, offset)
+                );
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching data: ', error);
+            }
+        };
+
+        if (filter !== 'Default') {
+            getFilteredEmployees();
+            console.log(filterGroup, filter);
+        } else {
+            console.log(filter);
+            console.log('filter is default');
+            getEmployees();
+        }
+    }, [offset, filter]);
 
     return (
         <section id='list'>
@@ -56,7 +79,10 @@ function EmployeeList() {
                 <>
                     <Filter
                         employees={employees}
-                        setSortedEmployees={setSortedEmployees}
+                        setFilter={setFilter}
+                        setOffset={setOffset}
+                        setFilterGroup={setFilterGroup}
+                        filterGroup={filterGroup}
                     />
                     <div className='listContainer'>
                         <div id='employeeList'>
