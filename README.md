@@ -35,6 +35,10 @@ Framework: React
     -   express
     -   dotenv
 
+## Known flaws
+
+Team leads don't persist between sessions yet.
+
 ## What I've practiced and learnt
 
 ### Mapping, and when to return
@@ -157,8 +161,6 @@ const totalPages = useRef(0);
 
 I initially set the totalPages to zero.
 Later, I use a function I created to calculate how many pages will be needed based on how many total employees there are.
-
-I could've technically used useState, however since there is no rendering depending on the value of the total pages I went with useRef
 
 ```js
 totalPages.current = calcListPages(await getEmployeeCount());
