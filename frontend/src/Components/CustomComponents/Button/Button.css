@@ -37,6 +37,7 @@ main button {
 }
 
 .emOptions button,
+.newEmployeeCard button,
 .removeContainer .btn,
 .removeEmp {
     width: fit-content;
