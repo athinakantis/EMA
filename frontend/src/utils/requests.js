@@ -29,6 +29,20 @@ export async function getEmployeeCount() {
     return employeeCount.data;
 }
 
+export async function getFilteredCount(filter, value) {
+    const employeeCount = await axios.get(
+        `${import.meta.env.VITE_API_URL}/employeeCount/${filter}/${value}`
+    );
+    return employeeCount.data;
+}
+
+export async function getFilteredRange(filter, value, offset) {
+    const employeeCount = await axios.get(
+        `${import.meta.env.VITE_API_URL}/employees/${filter}/${value}/${offset}`
+    );
+    return employeeCount.data;
+}
+
 /* PATCH */
 export function updateEmployee(formData) {
     return axios.patch(
