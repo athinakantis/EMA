@@ -1,31 +1,25 @@
-import { filterEmployees, filterSalary } from '../../../utils/filterEmployees';
 import options from '../../../data/filters';
 import './Select.css';
 
-function Select({ group, setSortedEmployees, employees }) {
+function Select({ group, setFilter, setOffset }) {
     const { data } = options[group];
 
     function handleFilterChange(e) {
         const { value } = e.target;
-        if (value === 'Default') {
-            setSortedEmployees(employees);
-        } else if (group === 'salary') {
-            setSortedEmployees(filterSalary(employees, value));
-        } else {
-            setSortedEmployees(filterEmployees(employees, group, value));
-        }
+        setFilter(value);
+        setOffset(0);
     }
 
     return (
         <select
-            onChange={(e) => handleFilterChange(e)}
+            onChange={handleFilterChange}
             name='emFilter'
             id='emFilter'
         >
             <option value='Default'></option>
-            {data.map((option, index) => (
+            {data.map((option) => (
                 <option
-                    key={index}
+                    key={option.id}
                     value={option}
                 >
                     {option}
