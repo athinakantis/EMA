@@ -54,6 +54,29 @@ router.get('/employee/:id/', async (req, res) => {
     }
 });
 
+router.get('/employeeCount/:filter/:value', async (req, res) => {
+    const { filter, value } = req.params;
+    try {
+        const sql = `select count(id) as count from employees where ${filter} = ?;`;
+
+        db.execute(sql, [value]).then((data) => {
+            res.send(JSON.stringify(data[0][0].count));
+        });
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+router.get('/employees/:filter/:value/:offset', async (req, res) => {
+    const { filter, value, offset } = req.params;
+    try {
+        const sql = `select * from employees where ${filter} = ? order by firstname limit 8 offset ?;`;
+        db.execute(sql, [value, +offset]).then(([rows]) => res.send(rows));
+    } catch (err) {
+        console.error(err);
+    }
+});
+
 // POST requests
 router.post('/add', async (req, res) => {
     const {
@@ -68,7 +91,6 @@ router.post('/add', async (req, res) => {
     } = req.body;
 
     try {
-        console.log('Received request to api/add');
         const sql = `insert into employees (firstname, lastname, employment_type, role, startdate, department, location, salary) VALUES(?, ?, ?, ?, ?, ?, ?, ?)`;
 
         db.execute(sql, [
@@ -117,9 +139,7 @@ router.delete('/employee/:id', async (req, res) => {
 // PUT requests
 router.patch('/employee/:id', async (req, res) => {
     try {
-        console.log('Received request to update employee');
         const { department, location, salary, id } = req.body.data;
-        console.log(department, location, salary, id);
         const sql = `update employees set department = ? , location = ? , salary = ? where id = ?`;
         db.execute(sql, [department, location, salary, id]);
         res.send(
