@@ -52,10 +52,6 @@ form select {
 
 .newEmployeeCard.edit button {
     margin: 1rem 0 0;
-
-    &:hover {
-        background-color: var(--mainColorAccent);
-    }
 }
 
 .newEmployeeCard form > div:last-of-type {
