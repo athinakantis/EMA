@@ -22,17 +22,33 @@ function EmployeeList() {
     const totalPages = useRef(0);
     const [filter, setFilter] = useState('Default');
     const [filterGroup, setFilterGroup] = useState('Default');
+    const [teamLeads, setTeamLeads] = useState({});
 
     function handleNavigate(id) {
         navigate(`/home/employees/${id}`);
     }
 
-    const [teamLeads, setTeamLeads] = useState({
-        IT: '',
-        Marketing: '',
-        Admin: '',
-        Finance: '',
-    });
+    // Effect to fetch teamleads (2 default teamleads)
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_API_URL}/teamleads`)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                data.map((department) => {
+                    setTeamLeads((prev) => ({
+                        ...prev,
+                        [department.departmentId]: {
+                            employeeId: department.employeeId,
+                            employeeName: `${department.firstname} ${department.lastname}`,
+                        },
+                    }));
+                });
+            });
+    }, []);
+
+    useEffect(() => {
+        console.log(teamLeads);
+    }, [teamLeads]);
 
     // Effect to fetch employee data from backend
     useEffect(() => {
@@ -92,9 +108,7 @@ function EmployeeList() {
                                             key={employee?.id}
                                             {...employee}
                                             initialRole={employee?.role}
-                                            setTeamLeads={setTeamLeads}
                                             teamLeads={teamLeads}
-                                            employees={employees}
                                             handleNavigate={handleNavigate}
                                         />
                                     );
