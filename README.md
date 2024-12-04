@@ -9,10 +9,10 @@
 
 ## Prerequisites
 
-In mysql, there needs to be a user with privileges to create a database.  
+In mysql, **there needs to be a user with privileges to create a database.**  
 If there is no user you can create it by running a few commands:
 
-1. `mysql`
+1. Launch mysql: `mysql`
 2. `create user username@localhost identified by 'secret123'`
 3. `grant all privileges on staffoverflow.* to username@localhost`
 
@@ -53,10 +53,6 @@ Framework: React
     -   mysql2
     -   express
     -   dotenv
-
-## Known flaws
-
-Team leads don't persist between sessions yet.
 
 ## What I've practiced and learnt
 
