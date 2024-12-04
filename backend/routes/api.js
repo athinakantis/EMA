@@ -23,6 +23,27 @@ router.get('/employees/range/:offset', (req, res) => {
         .catch(console.log);
 });
 
+router.get('/teamleads/', (req, res) => {
+    // Get department, employeeId, employee firstname, lastname and departmentId
+    const sql = `SELECT 
+    d.departmentName,
+    d.departmentId,
+     tl.employeeId,
+    e.firstname,
+    e.lastname
+    FROM 
+    teamleads tl
+    JOIN 
+    department d ON tl.departmentId = d.departmentId
+    JOIN 
+    employees e ON tl.employeeId = e.id;`;
+
+    db.query(sql).then((data) => {
+        console.log(data[0]);
+        res.send(data[0]);
+    });
+});
+
 router.get('/employeeCount', (req, res) => {
     const sql = `select count(id) as count from employees;`;
 
