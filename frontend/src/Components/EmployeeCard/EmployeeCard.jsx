@@ -11,7 +11,7 @@ function EmployeeCard(props) {
         firstname,
         lastname,
         employment_type,
-        department,
+        departmentId,
         salary,
         startdate,
         location,
@@ -25,8 +25,6 @@ function EmployeeCard(props) {
     const [role, setRole] = useState(initialRole);
     const [msg, setMsg] = useState('');
 
-    const deptTeamLead = teamLeads[department];
-
     let monthsEmployed;
     let yearsEmployed = calcYearsWorked(startdate);
     if (yearsEmployed < 1) {
@@ -34,10 +32,10 @@ function EmployeeCard(props) {
     }
 
     function handleRoleChange() {
-        if (deptTeamLead === id) {
-            setTeamLeads({ ...teamLeads, [department]: '' });
+        if (deptTeamLead?.employeeId === id) {
+            setTeamLeads({ ...teamLeads, [departmentId]: '' });
             setRole(initialRole);
-        } else if (deptTeamLead && deptTeamLead !== id) {
+        } else if (deptTeamLead && deptTeamLead.id !== id) {
             const teamLeader = employees.find((e) => e.id == deptTeamLead);
             setMsg(
                 `Error: ${teamLeader.firstname} ${teamLeader.lastname} is currently team leader`
@@ -45,7 +43,7 @@ function EmployeeCard(props) {
             setTimeout(() => setMsg(''), 3000);
         } else if (!deptTeamLead) {
             setMsg('');
-            setTeamLeads({ ...teamLeads, [department]: id });
+            setTeamLeads({ ...teamLeads, [departmentId]: id });
             setRole('Team Lead');
         }
     }
@@ -61,7 +59,7 @@ function EmployeeCard(props) {
                 <img
                     src={`https://robohash.org/${firstname}${lastname}.png?set=set5&size=140x140`}
                 />
-                {deptTeamLead === id && (
+                {teamLeads?.[departmentId]?.employeeId === id && (
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
                         viewBox='0 0 24 24'
