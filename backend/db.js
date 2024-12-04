@@ -1,36 +1,42 @@
 const mysql = require('mysql2/promise');
 const dotenv = require('dotenv');
-const { createTable, addEmployees } = require('./employeeScript');
+const {
+    createDepartmentTable,
+    createEmployeeTable,
+    addEmployees,
+    createTeamLeadsTable,
+    addToDepartmentTable,
+    addTeamLeads,
+} = require('./employeeScript');
 
 dotenv.config();
 
 async function initializeDatabase() {
     try {
-        // Step 1: Connect to the MySQL server (without selecting a database)
+        // Create connection to the database
         const connection = await mysql.createConnection({
             host: process.env.DB_HOST,
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
         });
 
-        console.log('Checking if database exists...');
-
-        // Step 2: Check if the database exists
+        // Seeing if database already exists
         const [rows] = await connection.query(
             `SELECT SCHEMA_NAME 
              FROM INFORMATION_SCHEMA.SCHEMATA 
              WHERE SCHEMA_NAME = 'staffoverflow';`
         );
 
+        // If not, create db + tables
         if (rows.length === 0) {
-            console.log('Database does not exist. Creating it now...');
             await connection.query(`CREATE DATABASE staffoverflow;`);
             await connection.query(`USE staffoverflow;`);
-            console.log('Employees table created or verified.');
-            await connection.query(createTable);
-            console.log('Initial data inserted into employees table.');
+            await connection.query(createDepartmentTable);
+            await connection.query(addToDepartmentTable);
+            await connection.query(createEmployeeTable);
             await connection.query(addEmployees);
-            console.log('Database created successfully.');
+            await connection.query(createTeamLeadsTable);
+            await connection.query(addTeamLeads);
             await connection.end();
         } else {
             console.log('Database already exists.');
@@ -40,7 +46,6 @@ async function initializeDatabase() {
     }
 }
 
-// Call the initialization function on startup
 initializeDatabase();
 module.exports = mysql.createPool({
     host: process.env.DB_HOST,
