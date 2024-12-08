@@ -1,76 +1,85 @@
-import axios from 'axios';
+/* GET requests */
 
-/* GET */
-export async function getAllEmployees() {
-    const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/employees`
+// Single employee
+export async function fetchEmployee(id) {
+    const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/employees/${id}`
     );
-    return response.data;
+    const data = await response.json();
+    return data;
 }
 
-export async function getEmployeeRange(offset) {
-    const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/employees/range/${offset}`
-    );
-    return response.data;
-}
-
-export async function getEmployee(id) {
-    const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/employee/${id}`
-    );
-    return response.data[0];
-}
-
-export async function getEmployeeCount() {
-    const employeeCount = await axios.get(
-        `${import.meta.env.VITE_API_URL}/employeeCount`
-    );
-    return employeeCount.data;
-}
-
-export async function getFilteredCount(filter, value) {
-    let employeeCount;
-    if (filter === 'salary') {
-        employeeCount = await axios.get(
-            `${import.meta.env.VITE_API_URL}/employeeCount/`
+export async function fetchFilteredEmployees(filterGroup, filter, page) {
+    try {
+        const response = await fetch(
+            `${
+                import.meta.env.VITE_API_URL
+            }/employees?${filterGroup}=${filter}&_page=${page}&_sort=firstname&_order=asc`
         );
-    } else {
-        employeeCount = await axios.get(
-            `${import.meta.env.VITE_API_URL}/employeeCount/${filter}/${value}`
-        );
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.error(`Error when fetching filtered employees`);
     }
-    return employeeCount.data;
 }
 
-export async function getFilteredRange(filter, value, offset) {
-    const employeeCount = await axios.get(
-        `${import.meta.env.VITE_API_URL}/employees/${filter}/${value}/${offset}`
-    );
-    return employeeCount.data;
+/* PUT requests */
+export async function promoteEmployee(department, id, name) {
+    await fetch(`${import.meta.env.VITE_API_URL}/teamleads/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            department: department,
+            employeeId: id,
+            employeeName: name,
+        }),
+    });
+    return true;
 }
 
-/* PATCH */
-export function updateEmployee(formData) {
-    return axios.patch(
-        `${import.meta.env.VITE_API_URL}/employee/${formData.id}`,
+export async function demoteEmployee(id) {
+    await fetch(`${import.meta.env.VITE_API_URL}/teamleads/${id}`, {
+        method: 'DELETE',
+    });
+    return true;
+}
+
+export async function addNewEmployee(formData) {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/employees/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
+}
+
+/* PATCH requests */
+export async function updateEmployee(formData, id) {
+    console.log(formData);
+    const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/employees/${id}`,
         {
-            data: {
-                department: formData.department,
-                location: formData.location,
-                salary: formData.salary,
-                id: formData.id,
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
             },
+            body: JSON.stringify(formData),
         }
     );
+    return await response.json();
 }
 
-/* POST */
-export function addNewEmployee(formData) {
-    return axios.post(`${import.meta.env.VITE_API_URL}/add`, formData);
-}
-
-/* DELETE */
-export function deleteEmployee(id) {
-    return axios.delete(`${import.meta.env.VITE_API_URL}/employee/${id}`);
+/* DELETE requests */
+export async function deleteEmployee(id) {
+    const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/employees/${id}`,
+        { method: 'DELETE' }
+    );
+    return response;
 }

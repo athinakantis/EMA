@@ -1,7 +1,7 @@
 import Select from '../CustomComponents/Select/Select';
 import './Filter.css';
 
-function Filter({ setFilter, setOffset, setFilterGroup, filterGroup }) {
+function Filter({ setFilter, setPage, setFilterGroup, filterGroup }) {
     function handleFilterGroup(e) {
         const { value } = e.target;
         if (value !== 'Default') {
@@ -23,13 +23,12 @@ function Filter({ setFilter, setOffset, setFilterGroup, filterGroup }) {
                 <option value='Default'>Name</option>
                 <option value='Location'>Location</option>
                 <option value='Department'>Department</option>
-                <option value='Salary'>Salary</option>
             </select>
             {filterGroup !== 'Default' && (
                 <Select
                     group={filterGroup}
                     setFilter={setFilter}
-                    setOffset={setOffset}
+                    setPage={setPage}
                 />
             )}
         </div>

@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './EmployeeCard.css';
 import Button from '../CustomComponents/Button/Button';
 import { calcMonthsWorked, calcYearsWorked } from '../../utils/calc';
 import { useNavigate } from 'react-router-dom';
+import { demoteEmployee, promoteEmployee } from '../../utils/requests';
 
 function EmployeeCard(props) {
     const {
@@ -10,17 +11,16 @@ function EmployeeCard(props) {
         initialRole,
         firstname,
         lastname,
-        employment_type,
-        departmentId,
-        salary,
+        department,
         startdate,
-        location,
         teamLeads,
         setTeamLeads,
-        employees,
         handleNavigate,
     } = props;
-    const navigate = useNavigate();
+
+    const currentTeamLead = teamLeads.find(
+        (lead) => lead.department === department
+    );
 
     const [role, setRole] = useState(initialRole);
     const [msg, setMsg] = useState('');
@@ -31,20 +31,20 @@ function EmployeeCard(props) {
         monthsEmployed = calcMonthsWorked(startdate);
     }
 
-    function handleRoleChange() {
-        if (deptTeamLead?.employeeId === id) {
-            setTeamLeads({ ...teamLeads, [departmentId]: '' });
-            setRole(initialRole);
-        } else if (deptTeamLead && deptTeamLead.id !== id) {
-            const teamLeader = employees.find((e) => e.id == deptTeamLead);
-            setMsg(
-                `Error: ${teamLeader.firstname} ${teamLeader.lastname} is currently team leader`
-            );
-            setTimeout(() => setMsg(''), 3000);
-        } else if (!deptTeamLead) {
-            setMsg('');
-            setTeamLeads({ ...teamLeads, [departmentId]: id });
-            setRole('Team Lead');
+    async function handleRoleChange() {
+        try {
+            if (currentTeamLead && currentTeamLead.employeeId != id) {
+                setMsg(
+                    `${currentTeamLead.employeeName} is currently Team Leader`
+                );
+                setTimeout(() => setMsg(''), 2000);
+            } else if (currentTeamLead && currentTeamLead.employeeId == id) {
+                demoteEmployee(currentTeamLead.id);
+            } else if (!currentTeamLead) {
+                promoteEmployee(department, id, `${firstname} ${lastname}`);
+            }
+        } catch (err) {
+            console.error(err);
         }
     }
 
@@ -59,7 +59,7 @@ function EmployeeCard(props) {
                 <img
                     src={`https://robohash.org/${firstname}${lastname}.png?set=set5&size=140x140`}
                 />
-                {teamLeads?.[departmentId]?.employeeId === id && (
+                {currentTeamLead?.employeeId == id && (
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
                         viewBox='0 0 24 24'
@@ -96,7 +96,9 @@ function EmployeeCard(props) {
                     id='changeRole'
                     handleClick={handleRoleChange}
                     type='button'
-                    text={role === initialRole ? 'Promote' : 'Demote'}
+                    text={
+                        currentTeamLead?.employeeId == id ? 'Demote' : 'Promote'
+                    }
                 />
                 <Button
                     text='See more'

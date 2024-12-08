@@ -40,6 +40,10 @@ const router = createBrowserRouter([
             },
         ],
     },
+    {
+        path: '/Error',
+        element: <Error />,
+    },
 ]);
 
 export default router;
