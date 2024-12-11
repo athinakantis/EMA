@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import useAxios from '../../utils/useAxios';
-import { fetchFilteredEmployees } from '../../utils/requests';
 import EmployeeCard from '../../Components/EmployeeCard/EmployeeCard';
 import Filter from '../../Components/Filter/Filter';
 import Button from '../../Components/CustomComponents/Button/Button';
@@ -21,7 +20,6 @@ function EmployeeList() {
         navigate(`/home/employees/${id}`);
     }
 
-    // Effect to fetch teamleads (2 default teamleads) on mount
     useEffect(() => {
         const getTeamLeads = async () => {
             try {
@@ -71,13 +69,11 @@ function EmployeeList() {
     }, [page, filter]);
 
     const showError = () => {
-        navigate('/error', {
-            state: {
-                status: 500,
-                message: 'Failed to retrieve employee data',
-            },
-        });
-    };
+        navigate('/error', {state: {
+            message: err.message,
+            status: 500
+        }})
+    }
 
     return (
         <section id='list'>
