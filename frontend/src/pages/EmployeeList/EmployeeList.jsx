@@ -7,7 +7,9 @@ import Button from '../../Components/CustomComponents/Button/Button';
 import './EmployeeList.css';
 
 function EmployeeList() {
-    const { data, loading, error, get } = useAxios(`${import.meta.env.VITE_API_URL}`)
+    const { data, loading, error, get } = useAxios(
+        `${import.meta.env.VITE_API_URL}`
+    );
     const navigate = useNavigate();
     const [employees, setEmployees] = useState([]);
     const [page, setPage] = useState(1);
@@ -21,21 +23,22 @@ function EmployeeList() {
     }
 
     useEffect(() => {
-        const getTeamLeads = async () => {
-            try {
-                const response = await get(`/teamleads`);
-                setTeamLeads(response);
-            } catch (err) {
-                navigate('/error', {
-                    state: {
-                        status: 500,
-                        message: 'Failed to retrieve team leaders data',
-                    },
-                });
-            }
-        };
         getTeamLeads();
     }, []);
+
+    const getTeamLeads = async () => {
+        try {
+            const response = await get(`/teamleads`);
+            setTeamLeads(response);
+        } catch (err) {
+            navigate('/error', {
+                state: {
+                    status: 500,
+                    message: 'Failed to retrieve team leaders data',
+                },
+            });
+        }
+    };
 
     // Effect to fetch employee data from backend
     useEffect(() => {
@@ -53,7 +56,9 @@ function EmployeeList() {
 
         const getFilteredEmployees = async () => {
             try {
-                const response = await get(`/employees?${filterGroup}=${filter}&_page=${page}&_sort=firstname`)
+                const response = await get(
+                    `/employees?${filterGroup}=${filter}&_page=${page}&_sort=firstname`
+                );
                 setEmployees(response.data);
                 totalPages.current = response.pages;
             } catch (err) {
@@ -69,11 +74,13 @@ function EmployeeList() {
     }, [page, filter]);
 
     const showError = () => {
-        navigate('/error', {state: {
-            message: err.message,
-            status: 500
-        }})
-    }
+        navigate('/error', {
+            state: {
+                message: err.message,
+                status: 500,
+            },
+        });
+    };
 
     return (
         <section id='list'>

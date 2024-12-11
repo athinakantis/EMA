@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import './EmployeeCard.css';
 import Button from '../CustomComponents/Button/Button';
-import { calcMonthsWorked, calcYearsWorked } from '../../utils/calc';
 import { useNavigate } from 'react-router-dom';
-import { demoteEmployee, promoteEmployee } from '../../utils/requests';
+import useEmployeeStatus from '../../utils/useEmployeeStatus';
+
+import useAxios from '../../utils/useAxios';
 
 function EmployeeCard(props) {
     const {
@@ -18,30 +19,47 @@ function EmployeeCard(props) {
         handleNavigate,
     } = props;
 
-    const currentTeamLead = teamLeads.find(
-        (lead) => lead.department === department
-    );
+    const currentTeamLead = teamLeads.find((a) => a.department === department);
 
+    const { data, error, patch } = useAxios(
+        `${import.meta.env.VITE_API_URL}`
+    );
     const [role, setRole] = useState(initialRole);
     const [msg, setMsg] = useState('');
-
-    let monthsEmployed;
-    let yearsEmployed = calcYearsWorked(startdate);
-    if (yearsEmployed < 1) {
-        monthsEmployed = calcMonthsWorked(startdate);
-    }
+    const { yearsWorked, isProbation, isAnniversary } =
+        useEmployeeStatus(startdate);
 
     async function handleRoleChange() {
         try {
-            if (currentTeamLead && currentTeamLead.employeeId != id) {
+            if (currentTeamLead.employeeId && currentTeamLead.employeeId != id) {
                 setMsg(
                     `${currentTeamLead.employeeName} is currently Team Leader`
                 );
-                setTimeout(() => setMsg(''), 2000);
+                setTimeout(() => setMsg(''), 3000);
             } else if (currentTeamLead && currentTeamLead.employeeId == id) {
-                demoteEmployee(currentTeamLead.id);
-            } else if (!currentTeamLead) {
-                promoteEmployee(department, id, `${firstname} ${lastname}`);
+                console.log('received request to remove teamlead')
+                await patch(
+                    `/teamleads/${currentTeamLead.id}`,
+                    {
+                        employeeId: null,
+                        employeeName: null,
+                    },
+                    {
+                        'Content-Type': 'application/json',
+                    }
+                );
+            } else if (!currentTeamLead.employeeId) {
+                console.log('received request to add teamlead')
+                await patch(
+                    `/teamleads/${currentTeamLead.id}`,
+                    {
+                        employeeId: id,
+                        employeeName: `${firstname} ${lastname}`,
+                    },
+                    {
+                        'Content-Type': 'application/json',
+                    }
+                );
             }
         } catch (err) {
             console.error(err);
@@ -81,11 +99,11 @@ function EmployeeCard(props) {
                 <p>
                     Time employed{' '}
                     <span>
-                        {yearsEmployed > 1
-                            ? `${yearsEmployed} years`
-                            : yearsEmployed === 1
-                            ? `${yearsEmployed} year`
-                            : `${monthsEmployed} months`}{' '}
+                        {yearsWorked > 1
+                            ? `${yearsWorked} years`
+                            : yearsWorked === 1
+                            ? `${yearsWorked} year`
+                            : `${yearsWorked} months`}
                     </span>
                 </p>
             </div>
@@ -105,14 +123,14 @@ function EmployeeCard(props) {
                     role='primary'
                     handleClick={() => handleNavigate(id)}
                 />
-                {yearsEmployed % 5 === 0 && yearsEmployed > 1 && (
+                {isAnniversary && (
                     <Button
                         text='Schedule recognition meeting'
                         role='schedule recognition'
                         img={`${import.meta.env.VITE_REACT_URL}/cake.svg`}
                     />
                 )}
-                {monthsEmployed < 6 && (
+                {isProbation && (
                     <Button
                         text='Schedule assessment review'
                         role='schedule assessment'
