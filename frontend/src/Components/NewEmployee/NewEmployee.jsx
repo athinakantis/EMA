@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import './NewEmployee.css';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { validateNewEmp } from '../../utils/validateInput';
 import { addNewEmployee } from '../../utils/requests';
@@ -11,13 +10,13 @@ function NewEmployee() {
     const [msg, setMsg] = useState('');
     const currentDate = new Date().toISOString().substring(0, 10);
     const [formData, setFormData] = useState({
-        firstname: '',
-        lastname: '',
-        role: '',
-        department: 'default',
-        employment_type: 'default',
-        location: 'default',
-        salary: '',
+        firstname: 'Athina',
+        lastname: 'Kantis',
+        role: 'Web Developer',
+        department: 'IT',
+        employment_type: 'Full-time',
+        location: 'Helsinki',
+        salary: '5000',
         startdate: currentDate,
     });
 
@@ -45,11 +44,15 @@ function NewEmployee() {
         if (submitted) {
             async function submitForm() {
                 try {
-                    const response = addNewEmployee(formData);
-                    navigate('/home/success', { state: response.data });
+                    const response = await addNewEmployee(formData);
+                    navigate(`/home/employees/${response.id}`);
                 } catch (error) {
-                    console.error(error);
-                    setMsg(error.message);
+                    navigate('/error', {
+                        state: {
+                            status: 500,
+                            message: 'Server error when adding employee',
+                        },
+                    });
                 }
             }
             submitForm();

@@ -1,14 +1,25 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Success.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function Success() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { message, id } = location.state;
+    const [successInfo, setSuccessInfo] = useState({});
 
     useEffect(() => {
-        setTimeout(() => navigate('/home/employees'), 3000);
+        if (location.state) {
+            setSuccessInfo({
+                status: location.state.status,
+                message: location.state.message,
+            });
+            setTimeout(() => navigate('/home/employees'), 3000);
+        } else {
+            setSuccessInfo({
+                status: 200,
+                message: 'Operation successful',
+            });
+        }
     }, []);
 
     return (
@@ -20,7 +31,7 @@ function Success() {
                 />
                 <div>
                     <h2>Success</h2>
-                    <p>{message}</p>
+                    <p>{successInfo.message}</p>
                 </div>
             </div>
         </section>

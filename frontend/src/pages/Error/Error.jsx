@@ -1,7 +1,24 @@
+import { useEffect, useState } from 'react';
 import './Error.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-function Error({ status = 404, message = 'Page not found' }) {
+function Error() {
+    const location = useLocation();
+    const [errorInfo, setErrorInfo] = useState({});
+
+    useEffect(() => {
+        if (location.state) {
+            setErrorInfo({
+                status: location.state.status,
+                message: location.state.message,
+            });
+        } else {
+            setErrorInfo({
+                status: 404,
+                message: 'Page not found',
+            });
+        }
+    }, []);
 
     return (
         <section id='errorPage'>
@@ -16,9 +33,8 @@ function Error({ status = 404, message = 'Page not found' }) {
                     alt='staffoverflow logo'
                     className='logo'
                 />
-                <h2>
-                    {status} {message}
-                </h2>
+                <h2>{errorInfo.status}</h2>
+                <p>{errorInfo.message}</p>
                 <Link to='/'>Back home</Link>
             </div>
         </section>

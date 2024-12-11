@@ -4,27 +4,8 @@
 
 -   Creates a database for employees and enters 20 default employees.
 -   Options to **update, remove or add employees**
--   Options to filter employees based on **department, location or salary**
+-   Options to filter employees based on **department or location**
 -   Option to promote one member of each department to teamleader
-
-## Prerequisites
-
-In mysql, **there needs to be a user with privileges to create a database.**  
-If there is no user you can create it by running a few commands:
-
-1. Launch mysql: `mysql`
-2. `create user username@localhost identified by 'secret123'`
-3. `grant all privileges on staffoverflow.* to username@localhost`
-
-Then, create an `.env` file in the `/backend` directory with the following properties:
-
-```js
-DB_HOST = localhost
-DB_USER = username
-DB_PASSWORD = secret123,
-```
-
-Now the program will use your user details when running the database!
 
 ## How To Use It
 
@@ -50,9 +31,7 @@ Framework: React
 -   Frontend packages:
     -   axios
 -   Backend packages:
-    -   mysql2
-    -   express
-    -   dotenv
+    -   json-server
 
 ## What I've practiced and learnt
 
@@ -160,9 +139,24 @@ Because I wanted to pass the username from my Login component to my Menu compone
 Navigate takes an **optional 'options' object** as a parameter. This object can store multiple optional properties, one of these being `state`  
 **State** can be of type **any**
 
-The **problem** with this code is that when you navigate from another page, back to menu, it will set the username to be null. _whomp whomp_
+I've used the state property to pass error data in my try/catch blocks.  
+However it's important to use an effect upon mount otherwise the app will crash because <q>Location state is null</q>.
 
-Therefor my solution for now is to set the username in localstorage upon redirect, until maybe I find a better solution.
+```js
+useEffect(() => {
+    if (location.state) {
+        setErrorInfo({
+            status: location.state.status,
+            message: location.state.message,
+        });
+    } else {
+        setErrorInfo({
+            status: 404,
+            message: 'Page not found',
+        });
+    }
+}, []);
+```
 
 ### useRef hook
 
@@ -178,5 +172,5 @@ I initially set the totalPages to zero.
 Later, I use a function I created to calculate how many pages will be needed based on how many total employees or filtered employees there are.
 
 ```js
-totalPages.current = calcListPages(await getEmployeeCount());
+totalPages.current = responseData.pages;
 ```

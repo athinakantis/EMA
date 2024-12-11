@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Button from '../../Components/CustomComponents/Button/Button';
 import { updateFormCheck, validateUpdateEmp } from '../../utils/validateInput';
 import { useState, useEffect } from 'react';
@@ -6,12 +6,13 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Spinner from '../../Components/Spinner/Spinner';
 import './SinglePage.css';
 import {
-    getEmployee,
-    updateEmployee,
+    fetchEmployee,
     deleteEmployee,
+    updateEmployee,
 } from '../../utils/requests';
 
 function SinglePage() {
+    const location = useLocation();
     const navigate = useNavigate();
     const { id } = useParams();
     const [employee, setEmployee] = useState({});
@@ -27,13 +28,21 @@ function SinglePage() {
         const removeEmployee = async () => {
             try {
                 if (verifyRemove) {
-                    const response = await deleteEmployee(id);
+                    await deleteEmployee(id);
                     navigate('/home/success', {
-                        state: response.data,
+                        state: {
+                            status: 200,
+                            message: 'Employee was successfully removed!',
+                        },
                     });
                 }
             } catch (err) {
-                console.error(err);
+                navigate('/error', {
+                    state: {
+                        status: 500,
+                        message: 'A server error occurred',
+                    },
+                });
             }
         };
 
@@ -42,9 +51,13 @@ function SinglePage() {
 
     // Get employee
     useEffect(() => {
-        const fetchAPI = async () => {
+        if (location.state) {
+            setMsg(location.state.message);
+        }
+
+        const getEmployee = async () => {
             try {
-                const employeeData = await getEmployee(id);
+                const employeeData = await fetchEmployee(id);
                 setEmployee(employeeData);
                 setFormData({
                     department: employeeData.department,
@@ -54,10 +67,15 @@ function SinglePage() {
                 });
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching data: ', error);
+                navigate('/error', {
+                    state: {
+                        status: 500,
+                        message: 'Error when retrieving employee data',
+                    },
+                });
             }
         };
-        fetchAPI();
+        getEmployee();
     }, []);
 
     function handleChange(e) {
@@ -86,15 +104,21 @@ function SinglePage() {
 
     async function handleUpdateEmployee() {
         try {
+            // Check if any details changed
+            // If not, return without updating.
             if (updateFormCheck(formData, employee)) {
                 return setEdit((prev) => !prev);
             }
             validateUpdateEmp({ ...formData });
-            const response = await updateEmployee(formData);
-            navigate(`/home/success`, { state: response.data });
+            await updateEmployee(formData, id);
+            setEdit(false);
         } catch (err) {
-            console.error(err);
-            setMsg(err.message);
+            navigate('/error', {
+                state: {
+                    status: 500,
+                    message: 'Server error during employee update',
+                },
+            });
         }
     }
 

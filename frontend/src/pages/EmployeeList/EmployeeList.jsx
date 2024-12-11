@@ -3,76 +3,74 @@ import EmployeeCard from '../../Components/EmployeeCard/EmployeeCard';
 import Filter from '../../Components/Filter/Filter';
 import Button from '../../Components/CustomComponents/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { calcListPages } from '../../utils/calc';
-import {
-    getFilteredCount,
-    getFilteredRange,
-    getEmployeeCount,
-    getEmployeeRange,
-} from '../../utils/requests';
 import './EmployeeList.css';
 import { Link } from 'react-router-dom';
+import { fetchFilteredEmployees } from '../../utils/requests';
 
 function EmployeeList() {
     const navigate = useNavigate();
     const [employees, setEmployees] = useState([]);
-    const [offset, setOffset] = useState(0);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const totalPages = useRef(0);
     const [filter, setFilter] = useState('Default');
     const [filterGroup, setFilterGroup] = useState('Default');
-    const [teamLeads, setTeamLeads] = useState({});
+    const [teamLeads, setTeamLeads] = useState([]);
 
     function handleNavigate(id) {
         navigate(`/home/employees/${id}`);
     }
 
-    // Effect to fetch teamleads (2 default teamleads)
+    // Effect to fetch teamleads (2 default teamleads) on mount
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}/teamleads`)
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                data.map((department) => {
-                    setTeamLeads((prev) => ({
-                        ...prev,
-                        [department.departmentId]: {
-                            employeeId: department.employeeId,
-                            employeeName: `${department.firstname} ${department.lastname}`,
-                        },
-                    }));
+        const getTeamLeads = async () => {
+            try {
+                const response = await fetch(
+                    `${import.meta.env.VITE_API_URL}/teamleads`
+                );
+                const data = await response.json();
+                setTeamLeads(data);
+            } catch (err) {
+                navigate('/error', {
+                    state: {
+                        status: 500,
+                        message: 'Failed to retrieve team leaders data',
+                    },
                 });
-            });
-    }, []);
-
-    useEffect(() => {
-        console.log(teamLeads);
+            }
+        };
+        getTeamLeads();
     }, [teamLeads]);
 
     // Effect to fetch employee data from backend
     useEffect(() => {
         const getEmployees = async () => {
             try {
-                totalPages.current = calcListPages(await getEmployeeCount());
-                setEmployees(await getEmployeeRange(offset));
+                const response = await fetch(
+                    `${
+                        import.meta.env.VITE_API_URL
+                    }/employees?_page=${page}&_sort=firstname&_order=asc`
+                );
+                const responseData = await response.json();
+                totalPages.current = responseData.pages;
+                setEmployees(responseData.data);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching data: ', error);
+                showError();
             }
         };
 
         const getFilteredEmployees = async () => {
             try {
-                totalPages.current = calcListPages(
-                    await getFilteredCount(filterGroup, filter)
+                const response = await fetchFilteredEmployees(
+                    filterGroup,
+                    filter,
+                    page
                 );
-                setEmployees(
-                    await getFilteredRange(filterGroup, filter, offset)
-                );
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching data: ', error);
+                setEmployees(response.data);
+                totalPages.current = response.pages;
+            } catch (err) {
+                showError();
             }
         };
 
@@ -81,7 +79,16 @@ function EmployeeList() {
         } else {
             getEmployees();
         }
-    }, [offset, filter]);
+    }, [page, filter]);
+
+    const showError = () => {
+        navigate('/error', {
+            state: {
+                status: 500,
+                message: 'Failed to retrieve employee data',
+            },
+        });
+    };
 
     return (
         <section id='list'>
@@ -95,9 +102,9 @@ function EmployeeList() {
                     <Filter
                         employees={employees}
                         setFilter={setFilter}
-                        setOffset={setOffset}
                         setFilterGroup={setFilterGroup}
                         filterGroup={filterGroup}
+                        setPage={setPage}
                     />
                     <div className='listContainer'>
                         <div id='employeeList'>
@@ -109,6 +116,7 @@ function EmployeeList() {
                                             {...employee}
                                             initialRole={employee?.role}
                                             teamLeads={teamLeads}
+                                            setTeamLeads={setTeamLeads}
                                             handleNavigate={handleNavigate}
                                         />
                                     );
@@ -132,7 +140,6 @@ function EmployeeList() {
                                     text='Previous page'
                                     handleClick={() => {
                                         setPage((prev) => prev - 1);
-                                        setOffset((prev) => prev - 8);
                                     }}
                                     img={`${
                                         import.meta.env.VITE_REACT_URL
@@ -144,7 +151,6 @@ function EmployeeList() {
                                     role='nextPage'
                                     handleClick={() => {
                                         setPage((prev) => prev + 1);
-                                        setOffset((prev) => prev + 8);
                                     }}
                                     img={`${
                                         import.meta.env.VITE_REACT_URL
