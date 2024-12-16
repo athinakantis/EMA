@@ -40,3 +40,7 @@ main {
     min-height: calc(100vh - 10rem);
     margin: 2rem 0 0;
 }
+
+main:has(#addEmployee) {
+    min-height: calc(100vh - 6rem);
+}

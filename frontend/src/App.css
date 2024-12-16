@@ -30,6 +30,8 @@ a {
 .error {
     color: rgb(199, 15, 15);
     font-weight: var(--bold);
+    margin: 0rem 0 1rem;
+    font-size: 0.8rem;
 }
 
 .statusContainer {

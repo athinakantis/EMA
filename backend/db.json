@@ -220,31 +220,5 @@
       "location": "Pasila",
       "salary": 5500
     }
-  ],
-  "teamleads": [
-    {
-      "id": "1",
-      "department": "IT",
-      "employeeId": 5,
-      "employeeName": "Aino Koskinen"
-    },
-    {
-      "id": "2",
-      "department": "Finance",
-      "employeeId": null,
-      "employeeName": null
-    },
-    {
-      "id": "3",
-      "department": "Marketing",
-      "employeeId": null,
-      "employeeName": null
-    },
-    {
-      "id": "4",
-      "department": "Admin",
-      "employeeId": null,
-      "employeeName": null
-    }
   ]
 }

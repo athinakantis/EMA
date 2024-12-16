@@ -3,7 +3,6 @@ import './EmployeeCard.css';
 import Button from '../CustomComponents/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import useEmployeeStatus from '../../utils/useEmployeeStatus';
-
 import useAxios from '../../utils/useAxios';
 
 function EmployeeCard(props) {
@@ -19,47 +18,29 @@ function EmployeeCard(props) {
         handleNavigate,
     } = props;
 
-    const currentTeamLead = teamLeads.find((a) => a.department === department);
-
-    const { data, error, patch } = useAxios(
-        `${import.meta.env.VITE_API_URL}`
-    );
     const [role, setRole] = useState(initialRole);
     const [msg, setMsg] = useState('');
     const { yearsWorked, isProbation, isAnniversary } =
         useEmployeeStatus(startdate);
 
+    const currentTeamLead = teamLeads?.find(a => a.department == department)
     async function handleRoleChange() {
         try {
-            if (currentTeamLead.employeeId && currentTeamLead.employeeId != id) {
-                setMsg(
-                    `${currentTeamLead.employeeName} is currently Team Leader`
-                );
-                setTimeout(() => setMsg(''), 3000);
-            } else if (currentTeamLead && currentTeamLead.employeeId == id) {
-                console.log('received request to remove teamlead')
-                await patch(
-                    `/teamleads/${currentTeamLead.id}`,
-                    {
-                        employeeId: null,
-                        employeeName: null,
-                    },
-                    {
-                        'Content-Type': 'application/json',
-                    }
-                );
-            } else if (!currentTeamLead.employeeId) {
-                console.log('received request to add teamlead')
-                await patch(
-                    `/teamleads/${currentTeamLead.id}`,
-                    {
-                        employeeId: id,
-                        employeeName: `${firstname} ${lastname}`,
-                    },
-                    {
-                        'Content-Type': 'application/json',
-                    }
-                );
+            if (currentTeamLead && currentTeamLead.id != id) {
+                setMsg(`Error: ${currentTeamLead.employeeName} is currently team leader`);
+                return setTimeout(() => setMsg(''), 3000)
+            } else if (!currentTeamLead) {
+                setMsg('');
+                setTeamLeads(prev => [...prev, {
+                    department: department,
+                    id: id,
+                    employeeName: `${firstname} ${lastname}`
+                }]);
+                setRole('Team leader');
+            } else if (currentTeamLead && currentTeamLead.id == id) {
+                setMsg('');
+                setTeamLeads(teamLeads.filter(a => a.department !== department))
+                setRole(initialRole);
             }
         } catch (err) {
             console.error(err);
@@ -77,7 +58,7 @@ function EmployeeCard(props) {
                 <img
                     src={`https://robohash.org/${firstname}${lastname}.png?set=set5&size=140x140`}
                 />
-                {currentTeamLead?.employeeId == id && (
+                {currentTeamLead?.id == id && (
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
                         viewBox='0 0 24 24'
@@ -115,7 +96,7 @@ function EmployeeCard(props) {
                     handleClick={handleRoleChange}
                     type='button'
                     text={
-                        currentTeamLead?.employeeId == id ? 'Demote' : 'Promote'
+                        currentTeamLead?.id == id ? 'Demote' : 'Promote'
                     }
                 />
                 <Button

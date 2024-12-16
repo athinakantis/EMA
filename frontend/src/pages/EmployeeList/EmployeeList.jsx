@@ -7,7 +7,7 @@ import Button from '../../Components/CustomComponents/Button/Button';
 import './EmployeeList.css';
 
 function EmployeeList() {
-    const { data, loading, error, get } = useAxios(
+    const { get } = useAxios(
         `${import.meta.env.VITE_API_URL}`
     );
     const navigate = useNavigate();
@@ -21,24 +21,6 @@ function EmployeeList() {
     function handleNavigate(id) {
         navigate(`/home/employees/${id}`);
     }
-
-    useEffect(() => {
-        getTeamLeads();
-    }, []);
-
-    const getTeamLeads = async () => {
-        try {
-            const response = await get(`/teamleads`);
-            setTeamLeads(response);
-        } catch (err) {
-            navigate('/error', {
-                state: {
-                    status: 500,
-                    message: 'Failed to retrieve team leaders data',
-                },
-            });
-        }
-    };
 
     // Effect to fetch employee data from backend
     useEffect(() => {
