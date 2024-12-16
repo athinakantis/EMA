@@ -11,12 +11,12 @@ function SinglePage() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [employee, setEmployee] = useState({});
-    const [remove, setRemove] = useState(false);
+    const [isRemoving, setIsRemoving] = useState(false);
     const [verifyRemove, setVerifyRemove] = useState(false);
     const [edit, setEdit] = useState(false);
     const [msg, setMsg] = useState('');
     const [formData, setFormData] = useState({});
-    const { data, loading, error, get, patch } = useAxios(
+    const { loading, get, patch, remove } = useAxios(
         `${import.meta.env.VITE_API_URL}`
     );
 
@@ -34,6 +34,7 @@ function SinglePage() {
                     });
                 }
             } catch (err) {
+                console.error(err)
                 navigate('/error', {
                     state: {
                         status: 500,
@@ -186,11 +187,11 @@ function SinglePage() {
                         </div>
 
                         <div className='removeContainer'>
-                            {!remove ? (
+                            {!isRemoving ? (
                                 <Button
                                     text='Remove'
                                     role='removeEmp'
-                                    handleClick={() => setRemove(true)}
+                                    handleClick={() => setIsRemoving(true)}
                                 />
                             ) : (
                                 <>
@@ -205,7 +206,7 @@ function SinglePage() {
                                         <Button
                                             role='warningReturn'
                                             text='No, go back ✘'
-                                            handleClick={() => setRemove(false)}
+                                            handleClick={() => setIsRemoving(false)}
                                         />
                                         <Button
                                             role='confirm'

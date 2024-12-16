@@ -174,3 +174,82 @@ Later, I use a function I created to calculate how many pages will be needed bas
 ```js
 totalPages.current = responseData.pages;
 ```
+
+## Modules
+
+Because I created the whole project based on the idea that elements would have shared characteristics unless specified otherwise, I did not want to alter every css file there is when I found out we should implement _modules_.
+
+That's why there is currently an inconsistency in the css files.  
+Now I know however, that if one wants to have style specific to the component, you can create a module for it.
+
+I have used module styling for `Login.jsx`
+
+### How I used module styling
+
+1. Renamed the css file  
+   A css module should include 'module' in it's filename. In my case `Login.css` became `Login.module.css`
+
+2. Created the classes
+
+```css
+.logInPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: fit-content;
+    flex-direction: column;
+    position: relative;
+    top: -160px;
+    gap: 1rem;
+}
+
+.formDiv {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+
+    &:not(:last-of-type) {
+        margin: 0 0 0.5rem;
+    }
+}
+```
+
+3. Import styles
+
+```js
+// In Login.jsx
+
+import styles from './Login.module.css';
+```
+
+4. Apply styles
+
+```js
+<form className={`${styles.form}`}>
+    <div className={`${styles.formDiv}`}>
+        <label htmlFor='username'>Username</label>
+        <input
+            className={`${styles.input}`}
+            type='text'
+            name='username'
+            id='username'
+            value={user.username}
+            onChange={handleUser}
+        />
+    </div>
+    <div className={`${styles.formDiv}`}>
+        <label htmlFor='password'>Password</label>
+
+        <input
+            type='password'
+            name='password'
+            id='password'
+            value={user.password}
+            onChange={handleUser}
+        />
+    </div>
+</form>
+```
+
+Then I applied the styles using **className**. This has to be done with a JSX expression, a template literal and then accessing that class through the styles object.

@@ -1,7 +1,7 @@
-import './Login.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../Components/CustomComponents/Button/Button';
+import styles from './Login.module.css'
 
 function Login({}) {
     const [user, setUser] = useState({
@@ -21,14 +21,15 @@ function Login({}) {
     }
 
     return (
-        <section id='logInPage'>
+        <section className={`${styles.logInPage}`}>
                 <img src={`${import.meta.env.VITE_REACT_URL}/staffOverflow_logo.svg`} alt="Staffoverflow Logo" />
-            <div id='loginContainer'>
-                <h2>Log in</h2>
-                <form>
-                    <div>
+            <div className={`${styles.logInContainer}`}>
+                <h2 className={`${styles.h2}`}>Log in</h2>
+                <form className={`${styles.form}`}>
+                    <div className={`${styles.formDiv}`}>
                         <label htmlFor='username'>Username</label>
                         <input
+                            className={`${styles.input}`}
                             type='text'
                             name='username'
                             id='username'
@@ -36,7 +37,7 @@ function Login({}) {
                             onChange={handleUser}
                         />
                     </div>
-                    <div>
+                    <div className={`${styles.formDiv}`}>
                         <label htmlFor='password'>Password</label>
 
                         <input
@@ -49,6 +50,7 @@ function Login({}) {
                     </div>
                 </form>
                 <Button
+                    role={`${styles.logInBtn}`}
                     text='Login'
                     handleClick={handleNavigate}
                 />
