@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import './EmployeeCard.css';
 import Button from '../CustomComponents/Button/Button';
-import { calcMonthsWorked, calcYearsWorked } from '../../utils/calc';
 import { useNavigate } from 'react-router-dom';
-import { demoteEmployee, promoteEmployee } from '../../utils/requests';
+import useEmployeeStatus from '../../utils/useEmployeeStatus';
+import useAxios from '../../utils/useAxios';
 
 function EmployeeCard(props) {
     const {
@@ -18,30 +18,29 @@ function EmployeeCard(props) {
         handleNavigate,
     } = props;
 
-    const currentTeamLead = teamLeads.find(
-        (lead) => lead.department === department
-    );
-
     const [role, setRole] = useState(initialRole);
     const [msg, setMsg] = useState('');
+    const { yearsWorked, isProbation, isAnniversary } =
+        useEmployeeStatus(startdate);
 
-    let monthsEmployed;
-    let yearsEmployed = calcYearsWorked(startdate);
-    if (yearsEmployed < 1) {
-        monthsEmployed = calcMonthsWorked(startdate);
-    }
-
+    const currentTeamLead = teamLeads?.find(a => a.department == department)
     async function handleRoleChange() {
         try {
-            if (currentTeamLead && currentTeamLead.employeeId != id) {
-                setMsg(
-                    `${currentTeamLead.employeeName} is currently Team Leader`
-                );
-                setTimeout(() => setMsg(''), 2000);
-            } else if (currentTeamLead && currentTeamLead.employeeId == id) {
-                demoteEmployee(currentTeamLead.id);
+            if (currentTeamLead && currentTeamLead.id != id) {
+                setMsg(`Error: ${currentTeamLead.employeeName} is currently team leader`);
+                return setTimeout(() => setMsg(''), 3000)
             } else if (!currentTeamLead) {
-                promoteEmployee(department, id, `${firstname} ${lastname}`);
+                setMsg('');
+                setTeamLeads(prev => [...prev, {
+                    department: department,
+                    id: id,
+                    employeeName: `${firstname} ${lastname}`
+                }]);
+                setRole('Team leader');
+            } else if (currentTeamLead && currentTeamLead.id == id) {
+                setMsg('');
+                setTeamLeads(teamLeads.filter(a => a.department !== department))
+                setRole(initialRole);
             }
         } catch (err) {
             console.error(err);
@@ -59,7 +58,7 @@ function EmployeeCard(props) {
                 <img
                     src={`https://robohash.org/${firstname}${lastname}.png?set=set5&size=140x140`}
                 />
-                {currentTeamLead?.employeeId == id && (
+                {currentTeamLead?.id == id && (
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
                         viewBox='0 0 24 24'
@@ -81,11 +80,11 @@ function EmployeeCard(props) {
                 <p>
                     Time employed{' '}
                     <span>
-                        {yearsEmployed > 1
-                            ? `${yearsEmployed} years`
-                            : yearsEmployed === 1
-                            ? `${yearsEmployed} year`
-                            : `${monthsEmployed} months`}{' '}
+                        {yearsWorked > 1
+                            ? `${yearsWorked} years`
+                            : yearsWorked === 1
+                            ? `${yearsWorked} year`
+                            : `${yearsWorked} months`}
                     </span>
                 </p>
             </div>
@@ -97,7 +96,7 @@ function EmployeeCard(props) {
                     handleClick={handleRoleChange}
                     type='button'
                     text={
-                        currentTeamLead?.employeeId == id ? 'Demote' : 'Promote'
+                        currentTeamLead?.id == id ? 'Demote' : 'Promote'
                     }
                 />
                 <Button
@@ -105,14 +104,14 @@ function EmployeeCard(props) {
                     role='primary'
                     handleClick={() => handleNavigate(id)}
                 />
-                {yearsEmployed % 5 === 0 && yearsEmployed > 1 && (
+                {isAnniversary && (
                     <Button
                         text='Schedule recognition meeting'
                         role='schedule recognition'
                         img={`${import.meta.env.VITE_REACT_URL}/cake.svg`}
                     />
                 )}
-                {monthsEmployed < 6 && (
+                {isProbation && (
                     <Button
                         text='Schedule assessment review'
                         role='schedule assessment'

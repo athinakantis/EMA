@@ -16,9 +16,6 @@ section {
     margin: 6rem auto 0;
 }
 
-#emptyList p {
-}
-
 #employeeList {
     display: flex;
     gap: 1rem;

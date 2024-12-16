@@ -10,13 +10,13 @@ function NewEmployee() {
     const [msg, setMsg] = useState('');
     const currentDate = new Date().toISOString().substring(0, 10);
     const [formData, setFormData] = useState({
-        firstname: 'Athina',
-        lastname: 'Kantis',
-        role: 'Web Developer',
-        department: 'IT',
-        employment_type: 'Full-time',
-        location: 'Helsinki',
-        salary: '5000',
+        firstname: '',
+        lastname: '',
+        role: '',
+        department: 'Default',
+        employment_type: 'Default',
+        location: '',
+        salary: null,
         startdate: currentDate,
     });
 
@@ -32,7 +32,7 @@ function NewEmployee() {
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            await validateNewEmp({ ...formData });
+            validateNewEmp({ ...formData });
             setSubmitted(true);
         } catch (err) {
             setMsg(`Error: ${err.message}`);

@@ -1,16 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import useAxios from '../../utils/useAxios';
 import EmployeeCard from '../../Components/EmployeeCard/EmployeeCard';
 import Filter from '../../Components/Filter/Filter';
 import Button from '../../Components/CustomComponents/Button/Button';
-import { useNavigate } from 'react-router-dom';
 import './EmployeeList.css';
-import { Link } from 'react-router-dom';
-import { fetchFilteredEmployees } from '../../utils/requests';
 
 function EmployeeList() {
+    const { get } = useAxios(
+        `${import.meta.env.VITE_API_URL}`
+    );
     const navigate = useNavigate();
     const [employees, setEmployees] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const totalPages = useRef(0);
     const [filter, setFilter] = useState('Default');
@@ -21,40 +22,15 @@ function EmployeeList() {
         navigate(`/home/employees/${id}`);
     }
 
-    // Effect to fetch teamleads (2 default teamleads) on mount
-    useEffect(() => {
-        const getTeamLeads = async () => {
-            try {
-                const response = await fetch(
-                    `${import.meta.env.VITE_API_URL}/teamleads`
-                );
-                const data = await response.json();
-                setTeamLeads(data);
-            } catch (err) {
-                navigate('/error', {
-                    state: {
-                        status: 500,
-                        message: 'Failed to retrieve team leaders data',
-                    },
-                });
-            }
-        };
-        getTeamLeads();
-    }, [teamLeads]);
-
     // Effect to fetch employee data from backend
     useEffect(() => {
         const getEmployees = async () => {
             try {
-                const response = await fetch(
-                    `${
-                        import.meta.env.VITE_API_URL
-                    }/employees?_page=${page}&_sort=firstname&_order=asc`
+                const response = await get(
+                    `/employees?_page=${page}&_sort=firstname`
                 );
-                const responseData = await response.json();
-                totalPages.current = responseData.pages;
-                setEmployees(responseData.data);
-                setLoading(false);
+                totalPages.current = response.pages;
+                setEmployees(response.data);
             } catch (error) {
                 showError();
             }
@@ -62,10 +38,8 @@ function EmployeeList() {
 
         const getFilteredEmployees = async () => {
             try {
-                const response = await fetchFilteredEmployees(
-                    filterGroup,
-                    filter,
-                    page
+                const response = await get(
+                    `/employees?${filterGroup}=${filter}&_page=${page}&_sort=firstname`
                 );
                 setEmployees(response.data);
                 totalPages.current = response.pages;
@@ -84,8 +58,8 @@ function EmployeeList() {
     const showError = () => {
         navigate('/error', {
             state: {
+                message: err.message,
                 status: 500,
-                message: 'Failed to retrieve employee data',
             },
         });
     };

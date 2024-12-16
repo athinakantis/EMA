@@ -1,4 +1,4 @@
-#logInPage {
+.logInPage {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,12 +10,12 @@
     gap: 1rem;
 }
 
-#logInPage img {
+.logInPage img {
     width: 12rem;
     align-self: start;
 }
 
-#loginContainer {
+.logInContainer {
     display: flex;
     flex-direction: column;
     width: 370px;
@@ -25,26 +25,35 @@
     border-radius: 15px;
 }
 
-#logInPage h2 {
+h2 {
     margin: 0 0 1rem;
 }
 
-#logInPage input {
+input {
     margin: 0 0 0.7rem;
     text-align: end;
     width: 170px;
+
+    &:last-of-type {
+        margin: 0 0 0 0.7rem;
+    }
 }
 
-#logInPage input:last-of-type {
-    margin: 0 0 0.7rem;
-}
-
-#loginContainer div {
+.formDiv {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
+
+    &:not(:last-of-type) {
+        margin: 0 0 0.5rem;
+    }
 }
 
-#logInPage .btn {
+.logInBtn {
     margin: 1rem auto 0;
+    padding: 0.1rem 0.5rem;
+}
+
+form {
+    margin: 0 0 1rem;
 }
